@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ixi & Ricardo | 17.04.2027</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Playfair+Display:ital,wght@0,700;1,700&family=Pinyon+Script&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --p-dark: #503459; --p-mid: #81638b; --p-soft: #dac9df;
+            --a-steel: #666F88; --a-light: #b5bac9;
+            --paper-base: #e2e8f0; 
+            --table-bg: #1e2126;
+        }
+
+        body {
+            background-color: var(--table-bg);
+            background-image: radial-gradient(circle at center, #2d323c 0%, #111317 100%);
+            font-family: 'Cormorant Garamond', serif;
+            display: flex;
+            justify-content: center;
+            padding: 50px 15px;
+            color: var(--p-dark);
+        }
+
+        /* EFECTO PAPEL RUGOSO */
+        .paper-sheet {
+            max-width: 900px;
+            width: 100%;
+            background-color: var(--paper-base);
+            /* Mezcla de texturas para rugosidad */
+            background-image: 
+                url('https://www.transparenttextures.com/patterns/handmade-paper.png'),
+                url('https://www.transparenttextures.com/patterns/asfalt-light.png');
+            
+            /* Sombras externas para elevación y sombras internas para relieve rugoso */
+            box-shadow: 
+                30px 30px 60px rgba(0,0,0,0.6),
+                inset 5px 5px 20px rgba(255,255,255,0.4),
+                inset -5px -5px 20px rgba(0,0,0,0.1);
+            
+            padding: 70px 50px;
+            position: relative;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        /* Superposición para granulo extra */
+        .paper-sheet::after {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: url('https://www.transparenttextures.com/patterns/p6-grain.png');
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        .inner-border {
+            border: 1px solid rgba(80, 52, 89, 0.15);
+            padding: 40px 25px;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* ESTILO POLAROID MEJORADO */
+        .polaroid {
+            background: #ffffff;
+            padding: 12px 12px 40px 12px;
+            box-shadow: 8px 12px 25px rgba(0,0,0,0.25);
+            display: inline-block;
+            border: 1px solid rgba(0,0,0,0.05);
+            position: relative;
+        }
+        .polaroid img {
+            width: 100%;
+            height: auto;
+            border: 1px solid #f0f0f0;
+        }
+
+        .playfair { font-family: 'Playfair Display', serif; }
+        .pinyon { font-family: 'Pinyon Script', cursive; font-size: 3.5rem; }
+
+        /* CUENTA REGRESIVA */
+        .countdown-item {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(2px);
+            padding: 15px;
+            border-radius: 2px;
+            min-width: 85px;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.05);
+        }
+        .border-lila { border-bottom: 3px solid var(--p-mid); }
+        .border-azul { border-bottom: 3px solid var(--a-steel); }
+
+        .btn-confirm {
+            background-color: var(--p-dark);
+            color: white;
+            padding: 18px 40px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            transition: all 0.4s;
+            display: inline-block;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        .btn-confirm:hover { 
+            background-color: var(--a-steel); 
+            transform: scale(1.02);
+        }
+
+        .audio-control {
+            position: fixed; bottom: 30px; right: 30px;
+            background: #fff; padding: 12px; border-radius: 50%;
+            cursor: pointer; z-index: 100; box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        @media (max-width: 640px) {
+            .paper-sheet { padding: 40px 20px; }
+            .pinyon { font-size: 2.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="musica" loop>
+        <source src="assets/audio/musica.mp3" type="audio/mpeg">
+    </audio>
+    <div class="audio-control" onclick="togglePlay()">🎵</div>
+
+    <main class="paper-sheet" data-aos="zoom-in">
+        <div class="inner-border">
+            
+            <header class="text-center mb-20" data-aos="fade-down">
+                <div class="polaroid rotate-[-2deg] mb-10 max-w-xs mx-auto">
+                    <img src="assets/img/portada.jpg" alt="Portada">
+                </div>
+                <p class="uppercase tracking-[0.4em] text-[10px] text-[#666F88] mb-4 font-semibold">Con la bendición de Dios y nuestros padres</p>
+                <h1 class="text-6xl md:text-7xl playfair mb-2">Ixi & Ricardo</h1>
+                <p class="pinyon text-[#81638b]">Faltan solo...</p>
+
+                <div id="countdown" class="flex justify-center gap-3 mt-8">
+                    <div class="countdown-item border-lila">
+                        <span id="days" class="block text-3xl font-bold text-[#503459]">00</span>
+                        <span class="text-[10px] uppercase tracking-widest text-[#81638b]">Días</span>
+                    </div>
+                    <div class="countdown-item border-azul">
+                        <span id="hours" class="block text-3xl font-bold text-[#666F88]">00</span>
+                        <span class="text-[10px] uppercase tracking-widest text-[#666F88]">Hrs</span>
+                    </div>
+                    <div class="countdown-item border-lila">
+                        <span id="minutes" class="block text-3xl font-bold text-[#503459]">00</span>
+                        <span class="text-[10px] uppercase tracking-widest text-[#81638b]">Min</span>
+                    </div>
+                </div>
+            </header>
+
+            <section class="text-center mb-24" data-aos="fade-up">
+                <h3 class="text-4xl playfair text-[#503459] mb-4">Nuestro Escenario</h3>
+                <p class="italic text-lg mb-10 text-[#666F88]">La ceremonia y la recepción se celebrarán en el mismo lugar:</p>
+                <div class="polaroid mb-10 max-w-2xl mx-auto">
+                    <img src="assets/img/jardin.jpg" alt="Jardín">
+                </div>
+                <div class="space-y-2">
+                    <p class="text-3xl font-bold text-[#503459]">Jardín Paraíso del Lago</p>
+                    <p class="text-xl italic text-[#666F88]">Jiutepec, Morelos</p>
+                    <a href="https://maps.google.com" target="_blank" class="text-xs border-b border-[#81638b] text-[#81638b] uppercase tracking-widest mt-4 inline-block font-bold">Ver Ubicación en Maps</a>
+                </div>
+            </section>
+
+            <section class="grid md:grid-cols-2 gap-12 items-center mb-24">
+                <div data-aos="fade-right">
+                    <div class="polaroid rotate-[3deg]">
+                        <img src="assets/img/foto1.jpg" alt="Foto 1">
+                    </div>
+                </div>
+                <div class="text-center md:text-left" data-aos="fade-left">
+                    <h3 class="text-4xl playfair text-[#503459] mb-2">Sábado, 17 de Abril</h3>
+                    <p class="text-2xl font-light italic text-[#666F88] mb-6">Dos mil veintisiete</p>
+                    <p class="text-[#81638b] leading-relaxed italic border-l-2 border-[#b5bac9] pl-6 py-2">
+                        "En un rincón mágico de Jiutepec, rodeados de naturaleza y amor, uniremos nuestras vidas para siempre."
+                    </p>
+                </div>
+            </section>
+
+            <section class="mb-24 grid grid-cols-1 md:grid-cols-2 gap-10">
+                <div class="polaroid rotate-[-1deg] mx-auto md:mx-0" data-aos="zoom-in">
+                    <img src="assets/img/foto2.jpg" alt="Foto 2">
+                </div>
+                <div class="polaroid rotate-[2deg] mx-auto md:mx-0" data-aos="zoom-in" data-aos-delay="200">
+                    <img src="assets/img/gal1.jpg" alt="Gal 1">
+                </div>
+            </section>
+
+            <section class="bg-black/5 p-12 text-center border-y border-white/50 mb-24 shadow-inner" data-aos="fade-up">
+                <div class="mb-12">
+                    <h4 class="playfair text-3xl mb-4 text-[#503459]">Código de Vestimenta</h4>
+                    <p class="text-xl italic mb-6 text-[#666F88]">Formal - Vintage</p>
+                    <div class="bg-white/80 py-3 px-8 inline-block border-x-2 border-[#81638b]">
+                        <p class="text-[11px] uppercase tracking-[0.2em] font-bold text-[#503459]">
+                            NO BLANCO • NO ROJO • NO AZUL • NO LILA
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="grid md:grid-cols-2 gap-10 max-w-xl mx-auto">
+                    <div class="border-t border-[#81638b] pt-6">
+                        <h4 class="playfair text-2xl mb-2">Liverpool</h4>
+                        <p class="text-sm text-[#666F88]">Evento: 12345678</p>
+                    </div>
+                    <div class="border-t border-[#666F88] pt-6">
+                        <h4 class="playfair text-2xl mb-2">Lluvia de Sobres</h4>
+                        <p class="text-sm text-[#666F88]">En la recepción</p>
+                    </div>
+                </div>
+            </section>
+
+            <footer class="text-center space-y-12">
+                <div data-aos="fade-up">
+                    <div class="polaroid mb-10 max-w-xs mx-auto rotate-[-1deg]">
+                        <img src="assets/img/IMG_2122.jpg" alt="Final">
+                    </div>
+                    <h2 class="playfair text-4xl italic text-[#503459]">¡Acompáñanos a celebrar!</h2>
+                    <p class="text-[#666F88] text-sm">Por favor, confirma tu asistencia antes del 15 de marzo.</p>
+                </div>
+
+                <a href="https://wa.me/521234567890" class="btn-confirm">
+                    Confirmar mi Asistencia
+                </a>
+
+                <div class="pt-16">
+                    <p class="pinyon text-[#81638b]">Ixi & Ricardo</p>
+                    <p class="text-[10px] tracking-[0.5em] uppercase text-[#666F88] mt-4 font-bold">17 . Abril . 2027</p>
+                </div>
+            </footer>
+
+        </div>
+    </main>
+
+    <script>
+        AOS.init({ duration: 1200, once: true });
+
+        const targetDate = new Date("April 17, 2027 17:00:00").getTime();
+        const updateCountdown = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+            const d = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+
+            document.getElementById("days").innerText = d < 10 ? "0" + d : d;
+            document.getElementById("hours").innerText = h < 10 ? "0" + h : h;
+            document.getElementById("minutes").innerText = m < 10 ? "0" + m : m;
+
+            if (distance < 0) {
+                clearInterval(updateCountdown);
+                document.getElementById("countdown").innerHTML = "<p class='playfair text-2xl'>¡Hoy es el gran día!</p>";
+            }
+        }, 1000);
+
+        const music = document.getElementById('musica');
+        function togglePlay() { return music.paused ? music.play() : music.pause(); }
+        window.addEventListener('scroll', () => { if (music.paused) music.play().catch(()=>{}); }, { once: true });
+    </script>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invitación: Ixi & Ricardo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Playfair+Display:ital,wght@0,700;1,700&family=Pinyon+Script&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <style>
+        :root {
+            --dark-purple: #503459;
+            --mid-purple: #81638b;
+            --steel-blue: #666F88;
+            --paper-color: #fcfaf7;
+        }
+
+        body {
+            background-color: #d1d5db; /* Fondo mesa */
+            font-family: 'Cormorant Garamond', serif;
+            color: var(--dark-purple);
+        }
+
+        /* Efecto de textura de papel */
+        .paper-canvas {
+            background-color: var(--paper-color);
+            background-image: url('https://www.transparenttextures.com/patterns/cream-paper.png');
+            box-shadow: 0 20px 50px rgba(0,0,0,0.2), inset 0 0 100px rgba(0,0,0,0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Animación personalizada para los nombres */
+        .name-focus {
+            animation: tracking-in-expand 1.5s cubic-bezier(0.215, 0.610, 0.355, 1.000) both;
+        }
+
+        @keyframes tracking-in-expand {
+            0% { letter-spacing: -0.5em; opacity: 0; }
+            40% { opacity: 0.6; }
+            100% { opacity: 1; }
+        }
+
+        .serif-script { font-family: 'Pinyon Script', cursive; }
+        .playfair { font-family: 'Playfair Display', serif; }
+
+        /* Sello de lacre/cera para el vínculo */
+        .wax-seal {
+            background: radial-gradient(circle, #81638b 0%, #503459 100%);
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-family: 'Playfair Display', serif;
+            box-shadow: 3px 3px 10px rgba(0,0,0,0.3);
+            cursor: pointer;
+            transition: transform 0.3s;
+            text-decoration: none;
+            margin: 0 auto;
+        }
+        .wax-seal:hover { transform: scale(1.1) rotate(5deg); }
+
+        .ornament {
+            color: var(--mid-purple);
+            font-size: 2rem;
+            margin: 1rem 0;
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4 md:p-10">
+
+    <main class="paper-canvas max-w-4xl w-full mx-auto p-8 md:p-20 border-[16px] border-white shadow-inner animate__animated animate__fadeIn">
+        
+        <div class="absolute top-0 left-0 w-24 h-24 border-t-2 border-l-2 border-[#b5bac9] m-4"></div>
+        <div class="absolute bottom-0 right-0 w-24 h-24 border-b-2 border-r-2 border-[#b5bac9] m-4"></div>
+
+        <div class="text-center space-y-8">
+            <p class="uppercase tracking-[0.6em] text-xs text-[#666F88] animate__animated animate__fadeInDown animate__delay-1s">
+                Junto a sus familias
+            </p>
+            
+            <div class="ornament">❦</div>
+
+            <div class="py-10">
+                <h1 class="text-6xl md:text-9xl playfair name-focus mb-2">Ixi & Ricardo</h1>
+                <p class="serif-script text-4xl md:text-5xl text-[#81638b] animate__animated animate__fadeIn animate__delay-2s">
+                    Nuestra Boda
+                </p>
+            </div>
+
+            <div class="space-y-4 max-w-md mx-auto animate__animated animate__fadeInUp animate__delay-2s">
+                <div class="h-[1px] w-full bg-gradient-to-r from-transparent via-[#81638b] to-transparent"></div>
+                <p class="text-2xl tracking-[0.2em] uppercase font-light">17 de Abril</p>
+                <p class="text-xl italic">Dos mil veintisiete</p>
+                <div class="h-[1px] w-full bg-gradient-to-r from-transparent via-[#81638b] to-transparent"></div>
+            </div>
+
+            <div class="pt-12 animate__animated animate__zoomIn animate__delay-3s">
+                <p class="mb-4 text-xs uppercase tracking-widest text-[#788199]">Presiona aquí</p>
+                <a href="invitacion.html" class="wax-seal">
+                    <span class="text-2xl">I&R</span>
+                </a>
+                <p class="mt-4 italic text-sm">Ver Invitación</p>
+            </div>
+        </div>
+
+        <div class="absolute top-1/2 left-0 -translate-y-1/2 hidden lg:block">
+            <div class="w-1 h-32 bg-[#666F88] mb-1"></div>
+            <div class="w-1 h-16 bg-[#b5bac9]"></div>
+        </div>
+    </main>
+
+</body>
+</html>

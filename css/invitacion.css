@@ -1,0 +1,81 @@
+body {
+  margin: 0;
+  background: #000;
+  color: #fff;
+  font-family: 'Playfair Display', serif;
+}
+
+#musicBtn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+
+.scene {
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+}
+
+.scene img {
+  width: 100%;
+  height: 120%;
+  object-fit: cover;
+  filter: blur(12px);
+  opacity: 0;
+  transform: scale(1.1);
+  transition: all 1.5s ease;
+}
+
+.scene.active img {
+  filter: blur(0);
+  opacity: 1;
+  transform: scale(1);
+}
+
+.text {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.timeline {
+  padding: 100px 20px;
+  background: #1f3a44;
+}
+
+.event {
+  margin-bottom: 40px;
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.event span {
+  font-size: 2rem;
+  color: #b9a3c9;
+}
+
+.event.active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: 1s ease;
+}
+
+.gallery {
+  height: 100vh;
+  overflow: hidden;
+}
+
+.slider {
+  display: flex;
+  height: 100%;
+  transition: transform 0.6s ease;
+}
+
+.slider img {
+  min-width: 100%;
+  object-fit: cover;
+}
