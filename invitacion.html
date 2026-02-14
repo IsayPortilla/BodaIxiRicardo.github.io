@@ -1,6 +1,6 @@
-
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,13 +8,18 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Playfair+Display:ital,wght@0,700;1,700&family=Birthstone+Bounce:wght@500&family=Pinyon+Script&display=swap" rel="stylesheet">
-    
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Playfair+Display:ital,wght@0,700;1,700&family=Birthstone+Bounce:wght@500&family=Pinyon+Script&display=swap"
+        rel="stylesheet">
+
     <style>
         :root {
-            --p-dark: #503459; --p-mid: #81638b; --p-soft: #dac9df;
-            --a-steel: #666F88; --a-light: #b5bac9;
-            --paper-base: #e2e8f0; 
+            --p-dark: #503459;
+            --p-mid: #81638b;
+            --p-soft: #dac9df;
+            --a-steel: #666F88;
+            --a-light: #b5bac9;
+            --paper-base: #e2e8f0;
             --table-bg: #1e2126;
         }
 
@@ -35,27 +40,49 @@
             z-index: 50;
             pointer-events: none;
             opacity: 0.95;
-            filter: drop-shadow(4px 8px 10px rgba(0,0,0,0.15));
+            filter: drop-shadow(4px 8px 10px rgba(0, 0, 0, 0.15));
         }
-        .flower-tl { top: -10px; left: -10px; width: 350px; }
-        .flower-tr { top: -15px; right: -15px; width: 320px; }
-        .flower-bl { bottom: -15px; left: -15px; width: 320px; transform: rotate(-180deg); }
-        .flower-br { bottom: -10px; right: -10px; width: 350px; transform: rotate(180deg); }
+
+        .flower-tl {
+            top: -10px;
+            left: -10px;
+            width: 350px;
+        }
+
+        .flower-tr {
+            top: -15px;
+            right: -15px;
+            width: 320px;
+        }
+
+        .flower-bl {
+            bottom: -15px;
+            left: -15px;
+            width: 320px;
+            transform: rotate(-180deg);
+        }
+
+        .flower-br {
+            bottom: -10px;
+            right: -10px;
+            width: 350px;
+            transform: rotate(180deg);
+        }
 
         /* EFECTO PAPEL RUGOSO */
         .paper-sheet {
             max-width: 900px;
             width: 100%;
             background-color: var(--paper-base);
-            background-image: 
+            background-image:
                 url('https://www.transparenttextures.com/patterns/handmade-paper.png'),
                 url('https://www.transparenttextures.com/patterns/asfalt-light.png');
-            
-            box-shadow: 
-                30px 30px 60px rgba(0,0,0,0.6),
-                inset 5px 5px 20px rgba(255,255,255,0.4),
-                inset -5px -5px 20px rgba(0,0,0,0.1);
-            
+
+            box-shadow:
+                30px 30px 60px rgba(0, 0, 0, 0.6),
+                inset 5px 5px 20px rgba(255, 255, 255, 0.4),
+                inset -5px -5px 20px rgba(0, 0, 0, 0.1);
+
             padding: 70px 50px;
             position: relative;
             border-radius: 4px;
@@ -65,7 +92,10 @@
         .paper-sheet::after {
             content: "";
             position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background: url('https://www.transparenttextures.com/patterns/p6-grain.png');
             opacity: 0.3;
             pointer-events: none;
@@ -82,20 +112,30 @@
         .polaroid {
             background: #ffffff;
             padding: 12px 12px 45px 12px;
-            box-shadow: 15px 20px 40px rgba(0,0,0,0.2);
+            box-shadow: 15px 20px 40px rgba(0, 0, 0, 0.2);
             display: inline-block;
-            border: 1px solid rgba(0,0,0,0.05);
+            border: 1px solid rgba(0, 0, 0, 0.05);
             position: relative;
         }
+
         .polaroid img {
             width: 100%;
             height: auto;
             border: 1px solid #f0f0f0;
         }
 
-        .playfair { font-family: 'Playfair Display', serif; }
-        .pinyon { font-family: 'Pinyon Script', cursive; }
-        .birthstone { font-family: 'Birthstone Bounce', cursive; font-weight: 500; }
+        .playfair {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .pinyon {
+            font-family: 'Pinyon Script', cursive;
+        }
+
+        .birthstone {
+            font-family: 'Birthstone Bounce', cursive;
+            font-weight: 500;
+        }
 
         /* CUENTA REGRESIVA */
         .countdown-item {
@@ -104,7 +144,7 @@
             padding: 20px;
             min-width: 100px;
             border-radius: 4px;
-            box-shadow: 2px 2px 10px rgba(0,0,0,0.05);
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.05);
         }
 
         .btn-confirm {
@@ -120,26 +160,49 @@
             border-radius: 2px;
             transition: transform 0.3s ease, background-color 0.3s;
         }
-        .btn-confirm:hover { 
-            transform: translateY(-3px); 
+
+        .btn-confirm:hover {
+            transform: translateY(-3px);
             background-color: #63426e;
         }
 
         .audio-control {
-            position: fixed; bottom: 30px; right: 30px;
-            background: #fff; padding: 15px; border-radius: 50%;
-            cursor: pointer; z-index: 100; box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #fff;
+            padding: 15px;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 100;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
         }
 
         @media (max-width: 768px) {
-            .flower { width: 180px !important; }
-            .paper-sheet { padding: 60px 15px; }
-            .inner-border { padding: 40px 10px; }
-            .birthstone { font-size: 3rem !important; }
-            .countdown-item { min-width: 80px; padding: 10px; }
+            .flower {
+                width: 180px !important;
+            }
+
+            .paper-sheet {
+                padding: 60px 15px;
+            }
+
+            .inner-border {
+                padding: 40px 10px;
+            }
+
+            .birthstone {
+                font-size: 3rem !important;
+            }
+
+            .countdown-item {
+                min-width: 80px;
+                padding: 10px;
+            }
         }
     </style>
 </head>
+
 <body>
 
     <audio id="musica" loop>
@@ -154,13 +217,14 @@
         <img src="assets/img/flor1.png" class="flower flower-br" alt="deco">
 
         <div class="inner-border">
-            
+
             <header class="text-center mb-28">
                 <div class="polaroid rotate-[-2deg] mb-14 max-w-sm mx-auto" data-aos="fade-down">
                     <img src="assets/img/portada.jpg" alt="Portada">
                 </div>
-                
-                <p class="uppercase tracking-[0.6em] text-[10px] md:text-xs text-[#666F88] mb-8 font-bold">Con la bendición de Dios y nuestros padres</p>
+
+                <p class="uppercase tracking-[0.6em] text-[10px] md:text-xs text-[#666F88] mb-8 font-bold">Con la
+                    bendición de Dios y nuestros padres</p>
                 <h1 class="text-7xl md:text-9xl playfair mb-4">Ixi & Ricardo</h1>
                 <p class="birthstone text-5xl text-[#81638b]">Faltan solo...</p>
 
@@ -181,29 +245,44 @@
             </header>
 
             <section class="text-center mb-32" data-aos="fade-up">
-                <h3 class="text-5xl playfair text-[#503459] mb-4 font-bold">Nuestro Escenario</h3>
-                <p class="italic text-lg mb-10 text-[#666F88]">La ceremonia y la recepción se celebrarán en el mismo lugar:</p>
+                <h3 class="text-5xl playfair text-[#503459] mb-4 font-bold">Acompañanos en este día especial</h3>
+                <p class="italic text-lg mb-10 text-[#666F88]">La ceremonia y la recepción se celebrarán en el mismo
+                    lugar:</p>
                 <div class="polaroid mb-14 max-w-2xl mx-auto">
                     <img src="assets/img/jardin.jpg" alt="Jardín">
                 </div>
                 <div class="space-y-4">
                     <p class="text-4xl font-bold text-[#503459]">Jardín Paraíso del Lago</p>
                     <p class="text-2xl italic text-[#666F88] font-semibold">Jiutepec, Morelos</p>
-                    <a href="https://maps.google.com" target="_blank" class="text-sm border-b-2 border-[#81638b] text-[#81638b] uppercase tracking-[0.3em] mt-8 inline-block font-black py-2">Ver Ubicación en Maps</a>
+                    <a href="https://maps.app.goo.gl/5XHYRAx1yzNRYgas7" target="_blank"
+                        class="text-sm border-b-2 border-[#81638b] text-[#81638b] uppercase tracking-[0.3em] mt-8 inline-block font-black py-2">Ver
+                        Ubicación en Maps</a>
                 </div>
             </section>
 
             <section class="grid md:grid-cols-2 gap-12 items-center mb-32 px-4">
                 <div data-aos="fade-right">
                     <div class="polaroid rotate-[3deg]">
-                        <img src="assets/img/foto1.jpg" alt="Foto 1">
+                       
+                        <img src="assets/img/gal1.jpg" alt="Foto 1">
+                    </div>
+                </div>
+                                <div data-aos="fade-right">
+                    <div class="polaroid rotate-[3deg]">
+                        <img src="assets/img/gal2.jpg" alt="Foto 1">
+                    </div>
+                </div>
+                                <div data-aos="fade-right">
+                    <div class="polaroid rotate-[3deg]">
+                        <img src="assets/img/foto3.jpg" alt="Foto 1">
                     </div>
                 </div>
                 <div class="text-center md:text-left" data-aos="fade-left">
                     <h3 class="text-4xl playfair text-[#503459] mb-2 font-bold">Sábado, 17 de Abril</h3>
                     <p class="text-2xl font-light italic text-[#666F88] mb-6">Dos mil veintisiete</p>
                     <p class="text-[#81638b] text-xl leading-relaxed italic border-l-4 border-[#dac9df] pl-6 py-2">
-                        "En un rincón mágico de Jiutepec, rodeados de naturaleza y amor, uniremos nuestras vidas para siempre."
+                        "En un rincón mágico de Jiutepec, rodeados de naturaleza y amor, uniremos nuestras vidas para
+                        siempre."
                     </p>
                 </div>
             </section>
@@ -258,10 +337,10 @@
         AOS.init({ duration: 1200, once: true });
 
         const targetDate = new Date("April 17, 2027 17:00:00").getTime();
-        const updateCountdown = setInterval(function() {
+        const updateCountdown = setInterval(function () {
             const now = new Date().getTime();
             const distance = targetDate - now;
-            
+
             const d = Math.floor(distance / (1000 * 60 * 60 * 24));
             const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
@@ -278,11 +357,12 @@
 
         const music = document.getElementById('musica');
         function togglePlay() { music.paused ? music.play() : music.pause(); }
-        
+
         // Auto-play al primer scroll (mejora experiencia móvil)
-        window.addEventListener('scroll', () => { 
-            if (music.paused) music.play().catch(()=>{}); 
+        window.addEventListener('scroll', () => {
+            if (music.paused) music.play().catch(() => { });
         }, { once: true });
     </script>
 </body>
+
 </html>
