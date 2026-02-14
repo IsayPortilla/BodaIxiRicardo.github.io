@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -7,7 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Playfair+Display:ital,wght@0,700;1,700&family=Pinyon+Script&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Playfair+Display:ital,wght@0,700;1,700&family=Birthstone+Bounce:wght@500&family=Pinyon+Script&display=swap" rel="stylesheet">
     
     <style>
         :root {
@@ -25,19 +26,31 @@
             justify-content: center;
             padding: 50px 15px;
             color: var(--p-dark);
+            overflow-x: hidden;
         }
+
+        /* FLORES EN LAS ESQUINAS DEL PAPEL */
+        .flower {
+            position: absolute;
+            z-index: 50;
+            pointer-events: none;
+            opacity: 0.95;
+            filter: drop-shadow(4px 8px 10px rgba(0,0,0,0.15));
+        }
+        .flower-tl { top: -10px; left: -10px; width: 350px; }
+        .flower-tr { top: -15px; right: -15px; width: 320px; }
+        .flower-bl { bottom: -15px; left: -15px; width: 320px; transform: rotate(-180deg); }
+        .flower-br { bottom: -10px; right: -10px; width: 350px; transform: rotate(180deg); }
 
         /* EFECTO PAPEL RUGOSO */
         .paper-sheet {
             max-width: 900px;
             width: 100%;
             background-color: var(--paper-base);
-            /* Mezcla de texturas para rugosidad */
             background-image: 
                 url('https://www.transparenttextures.com/patterns/handmade-paper.png'),
                 url('https://www.transparenttextures.com/patterns/asfalt-light.png');
             
-            /* Sombras externas para elevación y sombras internas para relieve rugoso */
             box-shadow: 
                 30px 30px 60px rgba(0,0,0,0.6),
                 inset 5px 5px 20px rgba(255,255,255,0.4),
@@ -49,7 +62,6 @@
             overflow: hidden;
         }
 
-        /* Superposición para granulo extra */
         .paper-sheet::after {
             content: "";
             position: absolute;
@@ -66,11 +78,11 @@
             z-index: 10;
         }
 
-        /* ESTILO POLAROID MEJORADO */
+        /* POLAROID */
         .polaroid {
             background: #ffffff;
-            padding: 12px 12px 40px 12px;
-            box-shadow: 8px 12px 25px rgba(0,0,0,0.25);
+            padding: 12px 12px 45px 12px;
+            box-shadow: 15px 20px 40px rgba(0,0,0,0.2);
             display: inline-block;
             border: 1px solid rgba(0,0,0,0.05);
             position: relative;
@@ -82,45 +94,49 @@
         }
 
         .playfair { font-family: 'Playfair Display', serif; }
-        .pinyon { font-family: 'Pinyon Script', cursive; font-size: 3.5rem; }
+        .pinyon { font-family: 'Pinyon Script', cursive; }
+        .birthstone { font-family: 'Birthstone Bounce', cursive; font-weight: 500; }
 
         /* CUENTA REGRESIVA */
         .countdown-item {
-            background: rgba(255, 255, 255, 0.6);
-            backdrop-filter: blur(2px);
-            padding: 15px;
-            border-radius: 2px;
-            min-width: 85px;
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(5px);
+            padding: 20px;
+            min-width: 100px;
+            border-radius: 4px;
             box-shadow: 2px 2px 10px rgba(0,0,0,0.05);
         }
-        .border-lila { border-bottom: 3px solid var(--p-mid); }
-        .border-azul { border-bottom: 3px solid var(--a-steel); }
 
         .btn-confirm {
             background-color: var(--p-dark);
             color: white;
-            padding: 18px 40px;
-            letter-spacing: 4px;
+            padding: 22px 60px;
+            letter-spacing: 5px;
             text-transform: uppercase;
-            font-size: 0.75rem;
-            transition: all 0.4s;
+            font-weight: 700;
+            font-size: 0.8rem;
             display: inline-block;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            box-shadow: 0 15px 35px rgba(80, 52, 89, 0.4);
+            border-radius: 2px;
+            transition: transform 0.3s ease, background-color 0.3s;
         }
         .btn-confirm:hover { 
-            background-color: var(--a-steel); 
-            transform: scale(1.02);
+            transform: translateY(-3px); 
+            background-color: #63426e;
         }
 
         .audio-control {
             position: fixed; bottom: 30px; right: 30px;
-            background: #fff; padding: 12px; border-radius: 50%;
-            cursor: pointer; z-index: 100; box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            background: #fff; padding: 15px; border-radius: 50%;
+            cursor: pointer; z-index: 100; box-shadow: 0 10px 25px rgba(0,0,0,0.2);
         }
 
-        @media (max-width: 640px) {
-            .paper-sheet { padding: 40px 20px; }
-            .pinyon { font-size: 2.8rem; }
+        @media (max-width: 768px) {
+            .flower { width: 180px !important; }
+            .paper-sheet { padding: 60px 15px; }
+            .inner-border { padding: 40px 10px; }
+            .birthstone { font-size: 3rem !important; }
+            .countdown-item { min-width: 80px; padding: 10px; }
         }
     </style>
 </head>
@@ -131,109 +147,107 @@
     </audio>
     <div class="audio-control" onclick="togglePlay()">🎵</div>
 
-    <main class="paper-sheet" data-aos="zoom-in">
+    <main class="paper-sheet" data-aos="fade-in">
+        <img src="assets/img/flor1.png" class="flower flower-tl" alt="deco">
+        <img src="assets/img/flor3.png" class="flower flower-tr" alt="deco">
+        <img src="assets/img/flor3.png" class="flower flower-bl" alt="deco">
+        <img src="assets/img/flor1.png" class="flower flower-br" alt="deco">
+
         <div class="inner-border">
             
-            <header class="text-center mb-20" data-aos="fade-down">
-                <div class="polaroid rotate-[-2deg] mb-10 max-w-xs mx-auto">
+            <header class="text-center mb-28">
+                <div class="polaroid rotate-[-2deg] mb-14 max-w-sm mx-auto" data-aos="fade-down">
                     <img src="assets/img/portada.jpg" alt="Portada">
                 </div>
-                <p class="uppercase tracking-[0.4em] text-[10px] text-[#666F88] mb-4 font-semibold">Con la bendición de Dios y nuestros padres</p>
-                <h1 class="text-6xl md:text-7xl playfair mb-2">Ixi & Ricardo</h1>
-                <p class="pinyon text-[#81638b]">Faltan solo...</p>
+                
+                <p class="uppercase tracking-[0.6em] text-[10px] md:text-xs text-[#666F88] mb-8 font-bold">Con la bendición de Dios y nuestros padres</p>
+                <h1 class="text-7xl md:text-9xl playfair mb-4">Ixi & Ricardo</h1>
+                <p class="birthstone text-5xl text-[#81638b]">Faltan solo...</p>
 
-                <div id="countdown" class="flex justify-center gap-3 mt-8">
-                    <div class="countdown-item border-lila">
-                        <span id="days" class="block text-3xl font-bold text-[#503459]">00</span>
-                        <span class="text-[10px] uppercase tracking-widest text-[#81638b]">Días</span>
+                <div id="countdown" class="flex justify-center gap-4 mt-12" data-aos="zoom-in">
+                    <div class="countdown-item border-b-4 border-[#81638b]">
+                        <span id="days" class="block text-4xl md:text-5xl font-bold">00</span>
+                        <span class="text-[10px] uppercase tracking-widest font-black text-[#81638b]">Días</span>
                     </div>
-                    <div class="countdown-item border-azul">
-                        <span id="hours" class="block text-3xl font-bold text-[#666F88]">00</span>
-                        <span class="text-[10px] uppercase tracking-widest text-[#666F88]">Hrs</span>
+                    <div class="countdown-item border-b-4 border-[#666F88]">
+                        <span id="hours" class="block text-4xl md:text-5xl font-bold">00</span>
+                        <span class="text-[10px] uppercase tracking-widest font-black text-[#666F88]">Hrs</span>
                     </div>
-                    <div class="countdown-item border-lila">
-                        <span id="minutes" class="block text-3xl font-bold text-[#503459]">00</span>
-                        <span class="text-[10px] uppercase tracking-widest text-[#81638b]">Min</span>
+                    <div class="countdown-item border-b-4 border-[#81638b]">
+                        <span id="minutes" class="block text-4xl md:text-5xl font-bold">00</span>
+                        <span class="text-[10px] uppercase tracking-widest font-black text-[#81638b]">Min</span>
                     </div>
                 </div>
             </header>
 
-            <section class="text-center mb-24" data-aos="fade-up">
-                <h3 class="text-4xl playfair text-[#503459] mb-4">Nuestro Escenario</h3>
+            <section class="text-center mb-32" data-aos="fade-up">
+                <h3 class="text-5xl playfair text-[#503459] mb-4 font-bold">Nuestro Escenario</h3>
                 <p class="italic text-lg mb-10 text-[#666F88]">La ceremonia y la recepción se celebrarán en el mismo lugar:</p>
-                <div class="polaroid mb-10 max-w-2xl mx-auto">
+                <div class="polaroid mb-14 max-w-2xl mx-auto">
                     <img src="assets/img/jardin.jpg" alt="Jardín">
                 </div>
-                <div class="space-y-2">
-                    <p class="text-3xl font-bold text-[#503459]">Jardín Paraíso del Lago</p>
-                    <p class="text-xl italic text-[#666F88]">Jiutepec, Morelos</p>
-                    <a href="https://maps.google.com" target="_blank" class="text-xs border-b border-[#81638b] text-[#81638b] uppercase tracking-widest mt-4 inline-block font-bold">Ver Ubicación en Maps</a>
+                <div class="space-y-4">
+                    <p class="text-4xl font-bold text-[#503459]">Jardín Paraíso del Lago</p>
+                    <p class="text-2xl italic text-[#666F88] font-semibold">Jiutepec, Morelos</p>
+                    <a href="https://maps.google.com" target="_blank" class="text-sm border-b-2 border-[#81638b] text-[#81638b] uppercase tracking-[0.3em] mt-8 inline-block font-black py-2">Ver Ubicación en Maps</a>
                 </div>
             </section>
 
-            <section class="grid md:grid-cols-2 gap-12 items-center mb-24">
+            <section class="grid md:grid-cols-2 gap-12 items-center mb-32 px-4">
                 <div data-aos="fade-right">
                     <div class="polaroid rotate-[3deg]">
                         <img src="assets/img/foto1.jpg" alt="Foto 1">
                     </div>
                 </div>
                 <div class="text-center md:text-left" data-aos="fade-left">
-                    <h3 class="text-4xl playfair text-[#503459] mb-2">Sábado, 17 de Abril</h3>
+                    <h3 class="text-4xl playfair text-[#503459] mb-2 font-bold">Sábado, 17 de Abril</h3>
                     <p class="text-2xl font-light italic text-[#666F88] mb-6">Dos mil veintisiete</p>
-                    <p class="text-[#81638b] leading-relaxed italic border-l-2 border-[#b5bac9] pl-6 py-2">
+                    <p class="text-[#81638b] text-xl leading-relaxed italic border-l-4 border-[#dac9df] pl-6 py-2">
                         "En un rincón mágico de Jiutepec, rodeados de naturaleza y amor, uniremos nuestras vidas para siempre."
                     </p>
                 </div>
             </section>
 
-            <section class="mb-24 grid grid-cols-1 md:grid-cols-2 gap-10">
-                <div class="polaroid rotate-[-1deg] mx-auto md:mx-0" data-aos="zoom-in">
-                    <img src="assets/img/foto2.jpg" alt="Foto 2">
+            <section class="bg-black/5 p-12 text-center border-y border-white/40 mb-32 shadow-inner" data-aos="fade-up">
+                <h4 class="playfair text-4xl mb-6 text-[#503459] font-bold">Código de Vestimenta</h4>
+                <p class="text-2xl italic mb-10 text-[#666F88] font-bold">Formal - Vintage</p>
+                <div class="bg-white/90 py-4 px-12 inline-block border-x-4 border-[#81638b] shadow-sm mb-12">
+                    <p class="text-[10px] md:text-xs uppercase tracking-[0.3em] font-black text-[#503459]">
+                        NO BLANCO • NO ROJO • NO AZUL • NO LILA
+                    </p>
                 </div>
-                <div class="polaroid rotate-[2deg] mx-auto md:mx-0" data-aos="zoom-in" data-aos-delay="200">
-                    <img src="assets/img/gal1.jpg" alt="Gal 1">
-                </div>
-            </section>
 
-            <section class="bg-black/5 p-12 text-center border-y border-white/50 mb-24 shadow-inner" data-aos="fade-up">
-                <div class="mb-12">
-                    <h4 class="playfair text-3xl mb-4 text-[#503459]">Código de Vestimenta</h4>
-                    <p class="text-xl italic mb-6 text-[#666F88]">Formal - Vintage</p>
-                    <div class="bg-white/80 py-3 px-8 inline-block border-x-2 border-[#81638b]">
-                        <p class="text-[11px] uppercase tracking-[0.2em] font-bold text-[#503459]">
-                            NO BLANCO • NO ROJO • NO AZUL • NO LILA
-                        </p>
-                    </div>
-                </div>
-                
                 <div class="grid md:grid-cols-2 gap-10 max-w-xl mx-auto">
                     <div class="border-t border-[#81638b] pt-6">
-                        <h4 class="playfair text-2xl mb-2">Liverpool</h4>
-                        <p class="text-sm text-[#666F88]">Evento: 12345678</p>
+                        <h4 class="playfair text-2xl mb-2 font-bold">Liverpool</h4>
+                        <p class="text-md text-[#666F88]">Evento: 12345678</p>
                     </div>
                     <div class="border-t border-[#666F88] pt-6">
-                        <h4 class="playfair text-2xl mb-2">Lluvia de Sobres</h4>
-                        <p class="text-sm text-[#666F88]">En la recepción</p>
+                        <h4 class="playfair text-2xl mb-2 font-bold">Lluvia de Sobres</h4>
+                        <p class="text-md text-[#666F88]">En la recepción</p>
                     </div>
                 </div>
             </section>
 
-            <footer class="text-center space-y-12">
+            <footer class="text-center space-y-20">
                 <div data-aos="fade-up">
-                    <div class="polaroid mb-10 max-w-xs mx-auto rotate-[-1deg]">
+                    <div class="polaroid mb-16 max-w-xs mx-auto rotate-[2deg]">
                         <img src="assets/img/IMG_2122.jpg" alt="Final">
                     </div>
-                    <h2 class="playfair text-4xl italic text-[#503459]">¡Acompáñanos a celebrar!</h2>
-                    <p class="text-[#666F88] text-sm">Por favor, confirma tu asistencia antes del 15 de marzo.</p>
+                    <h2 class="playfair text-5xl italic text-[#503459] font-bold mb-6">¡Acompáñanos!</h2>
+                    <p class="text-[#666F88] text-xl font-semibold mb-12">Confirma antes del 15 de marzo.</p>
                 </div>
 
-                <a href="https://wa.me/521234567890" class="btn-confirm">
-                    Confirmar mi Asistencia
-                </a>
+                <div class="flex flex-col items-center">
+                    <p class="mb-6 text-xs uppercase tracking-[0.4em] text-[#788199] font-bold">Presiona aquí</p>
+                    <a href="https://wa.me/521234567890" class="btn-confirm">
+                        Confirmar Asistencia
+                    </a>
+                </div>
 
-                <div class="pt-16">
-                    <p class="pinyon text-[#81638b]">Ixi & Ricardo</p>
-                    <p class="text-[10px] tracking-[0.5em] uppercase text-[#666F88] mt-4 font-bold">17 . Abril . 2027</p>
+                <div class="pt-24 pb-10">
+                    <p class="birthstone text-[#81638b] text-7xl">Ixi & Ricardo</p>
+                    <p class="text-xs tracking-[0.8em] uppercase text-[#666F88] mt-8 font-black">17 . ABRIL . 2027</p>
                 </div>
             </footer>
 
@@ -247,23 +261,28 @@
         const updateCountdown = setInterval(function() {
             const now = new Date().getTime();
             const distance = targetDate - now;
+            
             const d = Math.floor(distance / (1000 * 60 * 60 * 24));
             const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
 
-            document.getElementById("days").innerText = d < 10 ? "0" + d : d;
-            document.getElementById("hours").innerText = h < 10 ? "0" + h : h;
-            document.getElementById("minutes").innerText = m < 10 ? "0" + m : m;
+            document.getElementById("days").innerText = d.toString().padStart(2, '0');
+            document.getElementById("hours").innerText = h.toString().padStart(2, '0');
+            document.getElementById("minutes").innerText = m.toString().padStart(2, '0');
 
             if (distance < 0) {
                 clearInterval(updateCountdown);
-                document.getElementById("countdown").innerHTML = "<p class='playfair text-2xl'>¡Hoy es el gran día!</p>";
+                document.getElementById("countdown").innerHTML = "<p class='playfair text-3xl font-bold'>¡Llegó el gran día!</p>";
             }
         }, 1000);
 
         const music = document.getElementById('musica');
-        function togglePlay() { return music.paused ? music.play() : music.pause(); }
-        window.addEventListener('scroll', () => { if (music.paused) music.play().catch(()=>{}); }, { once: true });
+        function togglePlay() { music.paused ? music.play() : music.pause(); }
+        
+        // Auto-play al primer scroll (mejora experiencia móvil)
+        window.addEventListener('scroll', () => { 
+            if (music.paused) music.play().catch(()=>{}); 
+        }, { once: true });
     </script>
 </body>
 </html>
