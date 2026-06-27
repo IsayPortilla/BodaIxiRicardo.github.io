@@ -334,6 +334,307 @@
                 font-size: clamp(3.5rem, 9vw, 6rem);
             }
         }
+
+        /* Formulario de confirmación */
+        .confirm-card {
+            background: #fff;
+            border-radius: 1.5rem;
+            padding: clamp(1.25rem, 4vw, 2rem);
+            max-width: 28rem;
+            width: 100%;
+            margin: 0 auto;
+            text-align: left;
+            box-shadow: 0 20px 50px rgba(80, 52, 89, 0.15);
+            border: 1px solid rgba(129, 99, 139, 0.12);
+        }
+
+        .confirm-steps {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 1.5rem;
+        }
+
+        .confirm-step {
+            flex: 1;
+            text-align: center;
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: #b5bac9;
+            padding: 8px 4px;
+            border-radius: 8px;
+            background: #f8fafc;
+            transition: all 0.25s ease;
+            line-height: 1.3;
+        }
+
+        .confirm-step.active {
+            color: #503459;
+            background: rgba(218, 201, 223, 0.45);
+        }
+
+        .confirm-step.done {
+            color: #81638b;
+            background: rgba(129, 99, 139, 0.12);
+        }
+
+        .confirm-label {
+            display: block;
+            font-weight: 700;
+            color: #503459;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .confirm-hint {
+            font-size: 0.85rem;
+            color: #666F88;
+            margin-bottom: 0.75rem;
+            line-height: 1.45;
+        }
+
+        .confirm-input {
+            width: 100%;
+            border: 2px solid #dac9df;
+            border-radius: 12px;
+            padding: 12px 14px;
+            font-size: 1rem;
+            color: #503459;
+            outline: none;
+            transition: border-color 0.2s;
+            font-family: inherit;
+        }
+
+        .confirm-input:focus {
+            border-color: #81638b;
+        }
+
+        .family-results {
+            margin-top: 8px;
+            max-height: 180px;
+            overflow-y: auto;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            background: #fafafa;
+        }
+
+        .family-result-btn {
+            display: block;
+            width: 100%;
+            text-align: left;
+            padding: 12px 14px;
+            border: none;
+            background: transparent;
+            color: #503459;
+            font-family: inherit;
+            font-size: 0.95rem;
+            cursor: pointer;
+            border-bottom: 1px solid #eee;
+            transition: background 0.15s;
+        }
+
+        .family-result-btn:last-child {
+            border-bottom: none;
+        }
+
+        .family-result-btn:hover,
+        .family-result-btn:focus {
+            background: rgba(218, 201, 223, 0.35);
+            outline: none;
+        }
+
+        .selected-family-badge {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-top: 12px;
+            padding: 10px 14px;
+            background: rgba(129, 99, 139, 0.1);
+            border-radius: 10px;
+            font-size: 0.9rem;
+            color: #503459;
+        }
+
+        .selected-family-badge button {
+            font-size: 0.75rem;
+            color: #81638b;
+            background: none;
+            border: none;
+            cursor: pointer;
+            text-decoration: underline;
+            font-family: inherit;
+            white-space: nowrap;
+        }
+
+        .guest-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .guest-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 14px;
+            margin-bottom: 8px;
+            background: #f8fafc;
+            border-radius: 12px;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: border-color 0.2s, background 0.2s;
+        }
+
+        .guest-row:has(input:checked) {
+            border-color: #81638b;
+            background: rgba(218, 201, 223, 0.2);
+        }
+
+        .guest-row input {
+            width: 20px;
+            height: 20px;
+            accent-color: #81638b;
+            flex-shrink: 0;
+            cursor: pointer;
+        }
+
+        .guest-name {
+            flex: 1;
+            font-size: 1rem;
+            color: #503459;
+            font-weight: 600;
+        }
+
+        .guest-status {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #666F88;
+        }
+
+        .guest-row:has(input:checked) .guest-status {
+            color: #81638b;
+        }
+
+        .guest-actions {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+
+        .guest-action-btn {
+            flex: 1;
+            min-width: 120px;
+            padding: 8px 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border: 1px solid #dac9df;
+            border-radius: 999px;
+            background: white;
+            color: #503459;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.2s;
+        }
+
+        .guest-action-btn:hover {
+            border-color: #81638b;
+            color: #81638b;
+        }
+
+        .confirm-summary {
+            background: #f8fafc;
+            border-left: 4px solid #81638b;
+            padding: 14px 16px;
+            border-radius: 0 10px 10px 0;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            color: #503459;
+            line-height: 1.5;
+        }
+
+        .confirm-summary strong {
+            color: #81638b;
+        }
+
+        .form-message {
+            padding: 10px 14px;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        .form-message.error {
+            background: #fef2f2;
+            color: #b91c1c;
+            border: 1px solid #fecaca;
+        }
+
+        .form-message.info {
+            background: #f0f9ff;
+            color: #0369a1;
+            border: 1px solid #bae6fd;
+        }
+
+        .form-message.success {
+            background: #f0fdf4;
+            color: #15803d;
+            border: 1px solid #bbf7d0;
+        }
+
+        .btn-whatsapp {
+            width: 100%;
+            padding: 14px 20px;
+            border: none;
+            border-radius: 999px;
+            font-size: 1rem;
+            font-weight: 700;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.25s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-whatsapp:disabled {
+            background: #e5e7eb;
+            color: #9ca3af;
+            cursor: not-allowed;
+        }
+
+        .btn-whatsapp:not(:disabled) {
+            background: #25D366;
+            color: white;
+            box-shadow: 0 8px 24px rgba(37, 211, 102, 0.35);
+        }
+
+        .btn-whatsapp:not(:disabled):hover {
+            background: #1ebe57;
+            transform: translateY(-1px);
+        }
+
+        .confirm-footer-hint {
+            text-align: center;
+            font-size: 0.78rem;
+            color: #666F88;
+            margin-top: 12px;
+            line-height: 1.45;
+        }
+
+        .confirm-section {
+            margin-bottom: 1.25rem;
+        }
+
+        .confirm-section.hidden {
+            display: none;
+        }
     </style>
 
 </head>
@@ -652,137 +953,139 @@
                 </div>
                 <!-- BOTÓN -->
 
-                <!-- POPUP CONFIRMAR ASISTENCIA -->
-<div class="w-full flex justify-center py-4 md:py-6 px-2">
+                <!-- FORMULARIO CONFIRMAR ASISTENCIA -->
+                <div class="w-full flex justify-center py-4 md:py-6 px-2" id="confirmacion-form">
 
-    <div class="bg-white rounded-3xl p-5 md:p-8 max-w-md w-full text-center relative shadow-2xl animate-fadeIn box-border">
-        
-        <button onclick="closePopup()" 
-            class="absolute top-4 right-4 text-gray-500 hover:text-black text-2xl">
-            ×
-        </button>
+                    <div class="confirm-card animate-fadeIn" role="form" aria-labelledby="confirm-title">
 
-        <h2 class="text-2xl md:text-3xl font-bold text-[#81638b] mb-4">
-            Confirmar Asistencia
-        </h2>
+                        <div class="confirm-steps" aria-hidden="true">
+                            <div class="confirm-step active" id="stepIndicator1">1. Familia</div>
+                            <div class="confirm-step" id="stepIndicator2">2. Invitados</div>
+                            <div class="confirm-step" id="stepIndicator3">3. Enviar</div>
+                        </div>
 
-        <p class="text-gray-600 mb-6 text-sm md:text-base">
-            Selecciona tu familia para confirmar su asistencia ✨
-        </p>
+                        <h2 id="confirm-title" class="playfair text-2xl md:text-3xl font-bold text-[#81638b] mb-2 text-center">
+                            Confirmar asistencia
+                        </h2>
+                        <p class="confirm-hint text-center mb-5">
+                            Solo toma un minuto. Sigue los 3 pasos y envía tu respuesta por WhatsApp.
+                        </p>
 
-<select id="familySelect"
-            class="w-full border-2 border-[#81638b] rounded-xl p-3 mb-6 outline-none">
-            <option value="">Cargando familias...</option>
-        </select>
+                        <div id="formMessage" class="form-message hidden" role="alert"></div>
 
-        <!-- LISTA DE PERSONAS POR FAMILIA (se llena al seleccionar) -->
-        <div id="namesValidationContainer" class="text-left mb-6"></div>
+                        <!-- Paso 1: Buscar familia -->
+                        <div class="confirm-section" id="stepFamily">
+                            <label class="confirm-label" for="familySearch">Paso 1 — Encuentra tu familia</label>
+                            <p class="confirm-hint">Escribe el apellido o nombre como aparece en tu invitación.</p>
+                            <input type="text" id="familySearch" class="confirm-input"
+                                placeholder="Ejemplo: Familia González" autocomplete="off"
+                                aria-describedby="familySearchHint">
+                            <p id="familySearchHint" class="confirm-hint mt-2 mb-0">Verás sugerencias mientras escribes.</p>
+                            <div id="familyResults" class="family-results hidden" role="listbox" aria-label="Familias encontradas"></div>
+                            <div id="selectedFamilyBadge" class="selected-family-badge hidden">
+                                <span>Familia: <strong id="selectedFamilyName"></strong></span>
+                                <button type="button" id="changeFamilyBtn">Cambiar</button>
+                            </div>
+                            <select id="familySelect" class="hidden" aria-hidden="true" tabindex="-1">
+                                <option value="">Cargando familias...</option>
+                            </select>
+                        </div>
 
+                        <!-- Paso 2: Marcar invitados -->
+                        <div class="confirm-section hidden" id="stepGuests">
+                            <label class="confirm-label">Paso 2 — ¿Quién asistirá?</label>
+                            <p class="confirm-hint">Marca con ✓ a cada persona que sí podrá acompañarnos.</p>
+                            <div class="guest-actions">
+                                <button type="button" class="guest-action-btn" id="selectAllBtn">✓ Todos asisten</button>
+                                <button type="button" class="guest-action-btn" id="clearAllBtn">Nadie puede ir</button>
+                            </div>
+                            <ul id="namesValidationContainer" class="guest-list" role="group" aria-label="Lista de invitados"></ul>
+                            <p id="guestCountNote" class="confirm-hint mt-2 mb-0"></p>
+                        </div>
 
-        <button onclick="sendWhatsApp()"
-            class="bg-[#81638b] hover:bg-[#6f5478] transition text-white px-6 py-3 rounded-full w-full font-semibold">
-            Enviar por WhatsApp
-        </button>
-    </div>
+                        <!-- Paso 3: Resumen y envío -->
+                        <div class="confirm-section hidden" id="stepSend">
+                            <label class="confirm-label">Paso 3 — Revisa y envía</label>
+                            <div id="confirmSummary" class="confirm-summary"></div>
+                            <button type="button" id="sendWhatsAppBtn" class="btn-whatsapp" disabled
+                                onclick="sendWhatsApp()">
+                                <span aria-hidden="true">💬</span>
+                                Enviar confirmación por WhatsApp
+                            </button>
+                            <p class="confirm-footer-hint">
+                                Se abrirá WhatsApp con el mensaje ya escrito. Solo pulsa <strong>Enviar</strong> allí.
+                            </p>
+                        </div>
 
-</div>
+                    </div>
+
+                </div>
 
 
 
 
 <!-- ===================== MENU INFERIOR DE FAMILIAS ===================== -->
 
-<script>const sheetURL = "https://opensheet.elk.sh/1acN7pMqKXQIa6km4ka4mMbBG36K4XEOxfmqIRGG7XKQ/1";
-let rawData = [];      // Guarda todos los datos del Sheet
-let allFamilies = [];  // Lista de familias únicas (sin duplicados)
-
-// Mapa en memoria para guardar confirmación 0/1 por persona
-// key: `${Familia}__${Nombre}` (ajustable si tu sheet tiene IDs únicos)
+<script>
+const sheetURL = "https://opensheet.elk.sh/1acN7pMqKXQIa6km4ka4mMbBG36K4XEOxfmqIRGG7XKQ/1";
+let rawData = [];
+let allFamilies = [];
 let confirmationByPerson = {};
+let currentFamily = "";
 
-// Mostrar solo el menú inferior de familias
-function showFamiliesMenu() {
-    const menu = document.getElementById('familiesMenu');
-    const input = document.getElementById('familyInput');
-    if (!menu) return;
+function showFormMessage(text, type = "info") {
+    const el = document.getElementById("formMessage");
+    if (!el) return;
+    el.textContent = text;
+    el.className = `form-message ${type}`;
+    el.classList.remove("hidden");
+}
 
-    menu.classList.remove('hidden');
+function hideFormMessage() {
+    const el = document.getElementById("formMessage");
+    if (el) el.classList.add("hidden");
+}
 
-    if (input) {
-        setTimeout(() => {
-            input.focus();
-            if (input.select) input.select();
-        }, 50);
+function setStepIndicators(step) {
+    for (let i = 1; i <= 3; i++) {
+        const indicator = document.getElementById(`stepIndicator${i}`);
+        if (!indicator) continue;
+        indicator.classList.remove("active", "done");
+        if (i < step) indicator.classList.add("done");
+        else if (i === step) indicator.classList.add("active");
     }
 }
 
 function getConfirmationValue(row) {
-    // Intentamos varios nombres de header posibles para la Columna C.
-    // Ajusta si tu header exacto difiere.
-    // Tu sheet tiene cabecera: Familia | Nombres | confirmado (col C)
     const v = row.confirmado ?? row.Confirmado ?? row.Asistencia ?? row.ConF ?? row.C ?? row.estado ?? row['Columna C'] ?? row['Confirmación'];
-    const n = Number(v);
-    return n === 1 ? 1 : 0;
+    return Number(v) === 1 ? 1 : 0;
 }
 
 function buildPersonKey(row) {
-    return `${row.Familia}__${row.Nombre}`;
+    return `${row.Familia}__${row.Nombre ?? row.Nombres}`;
 }
 
 function getFamilyMembers(selectedFamily) {
     return rawData
         .filter(item => item.Familia === selectedFamily && (item.Nombre || item.Nombres))
-
         .map(item => {
             const key = buildPersonKey(item);
             const initial = getConfirmationValue(item);
-            // Si ya hay una selección previa en esta sesión, respeta esa.
             const current = Object.prototype.hasOwnProperty.call(confirmationByPerson, key)
                 ? confirmationByPerson[key]
                 : initial;
-
             confirmationByPerson[key] = current;
-
-            const name = item.Nombre ?? item.Nombres;
             return {
                 key,
-                name,
+                name: item.Nombre ?? item.Nombres,
                 confirmed: current
             };
         });
 }
 
-// Cargar datos desde el Sheet
-async function loadFamilies() {
-    try {
-        const response = await fetch(sheetURL);
-        rawData = await response.json();
-
-        // Inicializar confirmationByPerson con lo que ya venga en la Columna C
-        confirmationByPerson = {};
-        rawData.forEach(row => {
-            if (!row || !row.Familia || !row.Nombre) return;
-            const key = buildPersonKey(row);
-            confirmationByPerson[key] = getConfirmationValue(row);
-        });
-
-        // 1. Filtrar y evitar duplicados en la columna Familia (Columna A)
-        const familySet = new Set(rawData.map(item => item.Familia).filter(Boolean));
-        allFamilies = Array.from(familySet);
-
-        // Renderizar el select inicial
-        renderSelectOptions(allFamilies);
-
-    } catch (error) {
-        console.error("Error cargando familias:", error);
-    }
-}
-
-// Función auxiliar para llenar el select
 function renderSelectOptions(familiesList) {
     const select = document.getElementById("familySelect");
     if (!select) return;
-    
     select.innerHTML = '<option value="">Selecciona tu familia</option>';
     familiesList.forEach(fam => {
         const option = document.createElement("option");
@@ -792,98 +1095,242 @@ function renderSelectOptions(familiesList) {
     });
 }
 
-// FILTRO TIPO BUSCADOR
-function filterFamilies() {
-    const input = document.getElementById("familyInput").value.toLowerCase();
-    const filtered = allFamilies.filter(fam => fam.toLowerCase().includes(input));
-    renderSelectOptions(filtered);
+function renderFamilyResults(filter = "") {
+    const resultsEl = document.getElementById("familyResults");
+    if (!resultsEl) return;
+
+    const query = filter.trim().toLowerCase();
+    const matches = query
+        ? allFamilies.filter(fam => fam.toLowerCase().includes(query))
+        : allFamilies.slice(0, 8);
+
+    resultsEl.innerHTML = "";
+
+    if (allFamilies.length === 0) {
+        resultsEl.classList.add("hidden");
+        return;
+    }
+
+    if (matches.length === 0) {
+        resultsEl.innerHTML = '<p style="padding:12px 14px;color:#666F88;font-size:0.9rem;margin:0;">No encontramos esa familia. Intenta con otro apellido.</p>';
+        resultsEl.classList.remove("hidden");
+        return;
+    }
+
+    matches.forEach(fam => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "family-result-btn";
+        btn.textContent = fam;
+        btn.setAttribute("role", "option");
+        btn.addEventListener("click", () => selectFamily(fam));
+        resultsEl.appendChild(btn);
+    });
+
+    resultsEl.classList.remove("hidden");
 }
 
-// NUEVA FUNCIÓN: mostrar personas por familia con botones de 0/1
-function handleFamilySelection() {
-    const selectedFamily = document.getElementById("familySelect").value;
+function selectFamily(familyName) {
+    currentFamily = familyName;
+
+    const searchInput = document.getElementById("familySearch");
+    const select = document.getElementById("familySelect");
+    const badge = document.getElementById("selectedFamilyBadge");
+    const nameEl = document.getElementById("selectedFamilyName");
+    const resultsEl = document.getElementById("familyResults");
+
+    if (searchInput) {
+        searchInput.value = familyName;
+        searchInput.disabled = true;
+    }
+    if (select) select.value = familyName;
+    if (nameEl) nameEl.textContent = familyName;
+    if (badge) badge.classList.remove("hidden");
+    if (resultsEl) resultsEl.classList.add("hidden");
+
+    hideFormMessage();
+
+    const members = getFamilyMembers(familyName);
+    const anyConfirmed = members.some(m => confirmationByPerson[m.key] === 1);
+    if (!anyConfirmed && members.length > 0) {
+        members.forEach(m => { confirmationByPerson[m.key] = 1; });
+    }
+
+    handleFamilySelection();
+    setStepIndicators(2);
+
+    document.getElementById("stepGuests")?.classList.remove("hidden");
+    document.getElementById("stepSend")?.classList.remove("hidden");
+}
+
+function resetFamilySelection() {
+    currentFamily = "";
+
+    const searchInput = document.getElementById("familySearch");
+    const select = document.getElementById("familySelect");
+    const badge = document.getElementById("selectedFamilyBadge");
+    const guestsSection = document.getElementById("stepGuests");
+    const sendSection = document.getElementById("stepSend");
     const namesContainer = document.getElementById("namesValidationContainer");
 
-    if (!namesContainer) return;
+    if (searchInput) {
+        searchInput.value = "";
+        searchInput.disabled = false;
+        searchInput.focus();
+    }
+    if (select) select.value = "";
+    if (badge) badge.classList.add("hidden");
+    if (guestsSection) guestsSection.classList.add("hidden");
+    if (sendSection) sendSection.classList.add("hidden");
+    if (namesContainer) namesContainer.innerHTML = "";
+
+    setStepIndicators(1);
+    updateSummaryAndButton();
+    renderFamilyResults("");
+}
+
+function handleFamilySelection() {
+    const selectedFamily = currentFamily || document.getElementById("familySelect")?.value;
+    const namesContainer = document.getElementById("namesValidationContainer");
+    if (!namesContainer || !selectedFamily) return;
+
     namesContainer.innerHTML = "";
-
-    if (!selectedFamily) return;
-
     const members = getFamilyMembers(selectedFamily);
 
-    if (members.length > 0) {
-        const title = document.createElement("p");
-        title.innerHTML = "<strong>Selecciona quiénes CONFIRMAN asistencia:</strong>";
-        title.className = "mb-3";
-        namesContainer.appendChild(title);
+    if (members.length === 0) {
+        showFormMessage("No encontramos invitados para esta familia. Verifica el nombre o contáctanos.", "error");
+        return;
+    }
 
-        const ul = document.createElement("ul");
-        ul.style.listStyleType = "none";
-        ul.style.padding = "0";
+    members.forEach(person => {
+        const li = document.createElement("li");
+        const label = document.createElement("label");
+        label.className = "guest-row";
 
-        members.forEach(person => {
-            const li = document.createElement("li");
-            li.style.display = "flex";
-            li.style.alignItems = "center";
-            li.style.justifyContent = "space-between";
-            li.style.gap = "12px";
-            li.style.margin = "8px 0";
-
-            const label = document.createElement("span");
-            label.textContent = person.name;
-            label.style.flex = "1";
-
-            const btn = document.createElement("button");
-            btn.type = "button";
-            btn.className = "px-4 py-2 rounded-full text-sm font-semibold transition";
-            btn.dataset.personKey = person.key;
-
-            function paint() {
-                const confirmed = confirmationByPerson[person.key] === 1;
-                btn.textContent = confirmed ? "✅ Confirmado" : "⬜ No confirmado";
-                btn.style.backgroundColor = confirmed ? "#81638b" : "#e5e7eb";
-                btn.style.color = confirmed ? "white" : "#503459";
-            }
-
-            btn.addEventListener("click", () => {
-                confirmationByPerson[person.key] = confirmationByPerson[person.key] === 1 ? 0 : 1;
-                paint();
-            });
-
-            paint();
-
-            li.appendChild(label);
-            li.appendChild(btn);
-            ul.appendChild(li);
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.checked = confirmationByPerson[person.key] === 1;
+        checkbox.dataset.personKey = person.key;
+        checkbox.addEventListener("change", () => {
+            confirmationByPerson[person.key] = checkbox.checked ? 1 : 0;
+            updateGuestStatus(label, checkbox.checked);
+            updateSummaryAndButton();
         });
 
-        namesContainer.appendChild(ul);
+        const nameSpan = document.createElement("span");
+        nameSpan.className = "guest-name";
+        nameSpan.textContent = person.name;
 
-        // Info extra para que el usuario sepa qué se mandará
-        const note = document.createElement("p");
-        note.style.marginTop = "12px";
-        note.style.color = "#666F88";
-        const confirmedCount = members.filter(m => confirmationByPerson[m.key] === 1).length;
-        note.textContent = `Confirmados para WhatsApp: ${confirmedCount}/${members.length}`;
-        namesContainer.appendChild(note);
-    } else {
-        namesContainer.innerHTML = "<p style='color: red;'>No se encontraron integrantes para esta familia.</p>";
+        const statusSpan = document.createElement("span");
+        statusSpan.className = "guest-status";
+        statusSpan.textContent = checkbox.checked ? "Asiste ✓" : "No asiste";
+
+        label.appendChild(checkbox);
+        label.appendChild(nameSpan);
+        label.appendChild(statusSpan);
+        li.appendChild(label);
+        namesContainer.appendChild(li);
+    });
+
+    updateSummaryAndButton();
+}
+
+function updateGuestStatus(label, isChecked) {
+    const status = label.querySelector(".guest-status");
+    if (status) status.textContent = isChecked ? "Asiste ✓" : "No asiste";
+}
+
+function setAllGuests(confirmed) {
+    if (!currentFamily) return;
+    const members = getFamilyMembers(currentFamily);
+    members.forEach(m => {
+        confirmationByPerson[m.key] = confirmed ? 1 : 0;
+    });
+    handleFamilySelection();
+}
+
+function updateSummaryAndButton() {
+    const summaryEl = document.getElementById("confirmSummary");
+    const sendBtn = document.getElementById("sendWhatsAppBtn");
+    const countNote = document.getElementById("guestCountNote");
+    const family = currentFamily || document.getElementById("familySelect")?.value;
+
+    if (!family) {
+        if (summaryEl) summaryEl.innerHTML = "Primero selecciona tu familia en el paso 1.";
+        if (sendBtn) sendBtn.disabled = true;
+        if (countNote) countNote.textContent = "";
+        setStepIndicators(1);
+        return;
+    }
+
+    const members = getFamilyMembers(family);
+    const confirmed = members.filter(m => confirmationByPerson[m.key] === 1);
+    const notAttending = members.filter(m => confirmationByPerson[m.key] !== 1);
+
+    if (countNote) {
+        countNote.textContent = `${confirmed.length} de ${members.length} persona(s) confirmada(s) para asistir.`;
+    }
+
+    if (summaryEl) {
+        if (confirmed.length === 0) {
+            summaryEl.innerHTML = `<strong>${family}</strong><br>Marca al menos a una persona que sí asistirá para continuar.`;
+        } else {
+            let html = `<strong>Familia:</strong> ${family}<br><strong>Asisten (${confirmed.length}):</strong> ${confirmed.map(m => m.name).join(", ")}`;
+            if (notAttending.length > 0) {
+                html += `<br><strong>No asisten:</strong> ${notAttending.map(m => m.name).join(", ")}`;
+            }
+            summaryEl.innerHTML = html;
+        }
+    }
+
+    if (sendBtn) {
+        sendBtn.disabled = confirmed.length === 0;
+    }
+
+    setStepIndicators(confirmed.length > 0 ? 3 : 2);
+}
+
+async function loadFamilies() {
+    try {
+        const response = await fetch(sheetURL);
+        if (!response.ok) throw new Error("No se pudo cargar la lista");
+        rawData = await response.json();
+
+        confirmationByPerson = {};
+        rawData.forEach(row => {
+            if (!row?.Familia || !(row.Nombre || row.Nombres)) return;
+            confirmationByPerson[buildPersonKey(row)] = getConfirmationValue(row);
+        });
+
+        allFamilies = Array.from(new Set(rawData.map(item => item.Familia).filter(Boolean))).sort((a, b) =>
+            a.localeCompare(b, "es", { sensitivity: "base" })
+        );
+
+        renderSelectOptions(allFamilies);
+
+        const searchInput = document.getElementById("familySearch");
+        if (searchInput) {
+            searchInput.placeholder = allFamilies.length
+                ? "Ejemplo: " + allFamilies[0]
+                : "Escribe el nombre de tu familia";
+        }
+
+        if (allFamilies.length === 0) {
+            showFormMessage("No hay familias disponibles por el momento. Intenta más tarde.", "error");
+        }
+    } catch (error) {
+        console.error("Error cargando familias:", error);
+        showFormMessage("No pudimos cargar la lista de familias. Revisa tu conexión e intenta de nuevo.", "error");
     }
 }
 
-// POPUP
-function closePopup() {
-    const popup = document.getElementById('familyPopup');
-    if (!popup) return;
-    popup.classList.add('hidden');
-}
-
-// WHATSAPP
 function sendWhatsApp() {
-    const family = document.getElementById("familySelect").value;
+    hideFormMessage();
+    const family = currentFamily || document.getElementById("familySelect")?.value;
 
     if (!family) {
-        alert("Por favor selecciona tu familia");
+        showFormMessage("Primero busca y selecciona tu familia en el paso 1.", "error");
+        document.getElementById("familySearch")?.focus();
         return;
     }
 
@@ -893,27 +1340,56 @@ function sendWhatsApp() {
         .map(m => m.name);
 
     if (confirmedNames.length === 0) {
-        alert("Selecciona al menos una persona confirmada para enviar por WhatsApp.");
+        showFormMessage("Marca con ✓ al menos a una persona que sí podrá asistir.", "error");
         return;
     }
 
-    const message = `Hola ✨\nConfirmamos asistencia para la familia: ${family}\n\nConfirmados:\n- ${confirmedNames.join("\n- ")}`;
-    const phone = "527222663174";
+    const notAttending = members
+        .filter(m => confirmationByPerson[m.key] !== 1)
+        .map(m => m.name);
 
-    const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
-    window.open(url, "_blank");
+    let message = `Hola ✨\n\nConfirmamos asistencia para la boda de Ixi & Ricardo.\n\nFamilia: ${family}\n\n✅ Asisten:\n- ${confirmedNames.join("\n- ")}`;
+    if (notAttending.length > 0) {
+        message += `\n\n❌ No asisten:\n- ${notAttending.join("\n- ")}`;
+    }
+
+    const phone = "527222663174";
+    window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, "_blank");
+    showFormMessage("¡Listo! Se abrió WhatsApp. Solo pulsa Enviar para completar tu confirmación.", "success");
 }
 
-// Escuchar cambios en el select
 document.addEventListener("DOMContentLoaded", () => {
+    const searchInput = document.getElementById("familySearch");
     const select = document.getElementById("familySelect");
-    if (select) {
-        select.addEventListener("change", handleFamilySelection);
+    const changeFamilyBtn = document.getElementById("changeFamilyBtn");
+    const selectAllBtn = document.getElementById("selectAllBtn");
+    const clearAllBtn = document.getElementById("clearAllBtn");
+
+    if (searchInput) {
+        searchInput.addEventListener("input", () => {
+            if (searchInput.disabled) return;
+            hideFormMessage();
+            renderFamilyResults(searchInput.value);
+        });
+        searchInput.addEventListener("focus", () => {
+            if (!searchInput.disabled) renderFamilyResults(searchInput.value);
+        });
     }
+
+    document.addEventListener("click", (e) => {
+        const results = document.getElementById("familyResults");
+        if (results && !results.contains(e.target) && e.target !== searchInput) {
+            if (!currentFamily) results.classList.add("hidden");
+        }
+    });
+
+    if (changeFamilyBtn) changeFamilyBtn.addEventListener("click", resetFamilySelection);
+    if (selectAllBtn) selectAllBtn.addEventListener("click", () => setAllGuests(true));
+    if (clearAllBtn) clearAllBtn.addEventListener("click", () => setAllGuests(false));
+    if (select) select.addEventListener("change", handleFamilySelection);
+
     loadFamilies();
 });
-
-    
 </script>
 
 <style>
