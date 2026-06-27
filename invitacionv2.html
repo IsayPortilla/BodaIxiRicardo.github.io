@@ -23,15 +23,25 @@
             --table-bg: #1e2126;
         }
 
+        html {
+            overflow-x: hidden;
+            box-sizing: border-box;
+        }
+
+        *, *::before, *::after {
+            box-sizing: inherit;
+        }
+
         body {
             background-color: var(--table-bg);
             background-image: radial-gradient(circle at center, #2d323c 0%, #111317 100%);
             font-family: 'Cormorant Garamond', serif;
             display: flex;
             justify-content: center;
-            padding: 50px 15px;
+            padding: clamp(20px, 5vw, 50px) clamp(10px, 3vw, 15px);
             color: var(--p-dark);
             overflow-x: hidden;
+            min-width: 0;
         }
 
         /* Tipografías/paddings responsivos (escala por viewport / densidad) */
@@ -93,29 +103,28 @@
         }
 
         .flower-tl {
-
-            top: clamp(-18px, -2.5vw, -10px);
-            left: clamp(-18px, -2.5vw, -10px);
-            width: clamp(170px, 30vw, 350px);
+            top: clamp(-12px, -2vw, -10px);
+            left: clamp(-12px, -2vw, -10px);
+            width: clamp(90px, 22vw, 350px);
         }
 
         .flower-tr {
-            top: clamp(-22px, -2.8vw, -15px);
-            right: clamp(-22px, -2.8vw, -15px);
-            width: clamp(160px, 28vw, 320px);
+            top: clamp(-14px, -2.2vw, -15px);
+            right: clamp(-14px, -2.2vw, -15px);
+            width: clamp(85px, 20vw, 320px);
         }
 
         .flower-bl {
-            bottom: clamp(-22px, -2.8vw, -15px);
-            left: clamp(-22px, -2.8vw, -15px);
-            width: clamp(160px, 28vw, 320px);
+            bottom: clamp(-14px, -2.2vw, -15px);
+            left: clamp(-14px, -2.2vw, -15px);
+            width: clamp(85px, 20vw, 320px);
             transform: rotate(-180deg);
         }
 
         .flower-br {
-            bottom: clamp(-18px, -2.5vw, -10px);
-            right: clamp(-18px, -2.5vw, -10px);
-            width: clamp(170px, 30vw, 350px);
+            bottom: clamp(-12px, -2vw, -10px);
+            right: clamp(-12px, -2vw, -10px);
+            width: clamp(90px, 22vw, 350px);
             transform: rotate(180deg);
         }
 
@@ -134,9 +143,7 @@
                 inset 5px 5px 20px rgba(255, 255, 255, 0.4),
                 inset -5px -5px 20px rgba(0, 0, 0, 0.1);
 
-            padding: 70px 50px;
             position: relative;
-            border-radius: 4px;
             overflow: hidden;
         }
 
@@ -154,9 +161,38 @@
 
         .inner-border {
             border: 1px solid rgba(80, 52, 89, 0.15);
-            padding: 40px 25px;
+            padding: clamp(24px, 5vw, 40px) clamp(14px, 3vw, 25px);
             position: relative;
             z-index: 10;
+            min-width: 0;
+        }
+
+        /* Tipografía fluida */
+        .hero-title {
+            font-size: clamp(2.25rem, 11vw, 8rem);
+            line-height: 1.05;
+        }
+
+        .section-heading {
+            font-size: clamp(1.75rem, 5.5vw, 3rem);
+            line-height: 1.15;
+        }
+
+        .section-heading-lg {
+            font-size: clamp(2rem, 6vw, 2.5rem);
+            line-height: 1.2;
+        }
+
+        .tracking-section {
+            letter-spacing: clamp(0.1em, 1.2vw, 0.5em);
+        }
+
+        .quote-block {
+            max-width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: clamp(12px, 3vw, 24px);
+            font-size: clamp(1rem, 2.5vw, 1.25rem);
         }
 
         /* POLAROID */
@@ -164,9 +200,17 @@
             background: #ffffff;
             padding: 12px 12px 45px 12px;
             box-shadow: 15px 20px 40px rgba(0, 0, 0, 0.2);
-            display: inline-block;
+            display: block;
+            max-width: 100%;
+            width: 100%;
             border: 1px solid rgba(0, 0, 0, 0.05);
             position: relative;
+        }
+
+        .polaroid-wrap {
+            overflow: hidden;
+            min-width: 0;
+            padding: 4px;
         }
 
         .polaroid img {
@@ -189,13 +233,34 @@
         }
 
         /* CUENTA REGRESIVA */
+        #countdown {
+            flex-wrap: wrap;
+            gap: clamp(8px, 2vw, 16px);
+        }
+
         .countdown-item {
             background: rgba(255, 255, 255, 0.4);
             backdrop-filter: blur(5px);
-            padding: 20px;
-            min-width: 100px;
+            padding: clamp(10px, 2.5vw, 20px);
+            flex: 1 1 clamp(72px, 22vw, 100px);
+            min-width: clamp(72px, 22vw, 100px);
+            max-width: 120px;
             border-radius: 4px;
             box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .countdown-item span:first-child {
+            font-size: clamp(1.5rem, 5vw, 3rem);
+        }
+
+        .dress-code-box {
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
+        }
+
+        main.paper-sheet .grid > * {
+            min-width: 0;
         }
 
         .btn-confirm {
@@ -230,40 +295,43 @@
         }
 
         @media (max-width: 768px) {
-            .flower {
-                width: auto !important;
-            }
-
-            .inner-border {
-                padding: clamp(28px, 4vw, 40px) clamp(14px, 3vw, 10px);
-            }
-
             .birthstone {
-                font-size: clamp(2.2rem, 8vw, 3rem) !important;
+                font-size: clamp(2rem, 7vw, 3rem) !important;
             }
 
-            .countdown-item {
-                min-width: clamp(70px, 18vw, 80px);
-                padding: 10px;
+            .paper-sheet {
+                box-shadow:
+                    12px 12px 30px rgba(0, 0, 0, 0.5),
+                    inset 5px 5px 20px rgba(255, 255, 255, 0.4),
+                    inset -5px -5px 20px rgba(0, 0, 0, 0.1);
+            }
+
+            .polaroid {
+                padding: 10px 10px 35px 10px;
+            }
+
+            .section-padded {
+                padding-left: clamp(12px, 4vw, 48px) !important;
+                padding-right: clamp(12px, 4vw, 48px) !important;
             }
         }
 
         @media (max-width: 480px) {
-            body {
-                padding: 28px 10px;
-            }
-
-            .paper-sheet {
-                padding: clamp(40px, 8vh, 60px) clamp(12px, 4vw, 15px);
-            }
-
             .polaroid {
-                padding: 10px;
+                padding: 8px 8px 28px 8px;
+                box-shadow: 8px 10px 24px rgba(0, 0, 0, 0.18);
             }
 
-            #countdown {
-                gap: 10px;
-                flex-wrap: wrap;
+            .audio-control {
+                bottom: 16px;
+                right: 16px;
+                padding: 12px;
+            }
+        }
+
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .hero-title {
+                font-size: clamp(3.5rem, 9vw, 6rem);
             }
         }
     </style>
@@ -285,135 +353,124 @@
 
         <div class="inner-border">
 
-            <header class="text-center mb-28">
-                <div class="polaroid rotate-[-2deg] mb-14 max-w-sm mx-auto" data-aos="fade-down">
+            <header class="text-center mb-16 md:mb-28">
+                <div class="polaroid rotate-[-2deg] mb-10 md:mb-14 max-w-sm mx-auto" data-aos="fade-down">
                     <img src="assets/img/portada.jpg" alt="Portada">
                 </div>
 
 
-                <h1 class="text-7xl md:text-9xl playfair mb-4">Ixi & Ricardo</h1>
-                <p class="birthstone text-5xl text-[#81638b]">Faltan solo...</p>
+                <h1 class="hero-title playfair mb-4 px-2">Ixi & Ricardo</h1>
+                <p class="birthstone text-4xl md:text-5xl text-[#81638b]">Faltan solo...</p>
 
-                <div id="countdown" class="flex justify-center gap-4 mt-12" data-aos="zoom-in">
+                <div id="countdown" class="flex justify-center mt-8 md:mt-12 px-2" data-aos="zoom-in">
                     <div class="countdown-item border-b-4 border-[#81638b]">
-                        <span id="days" class="block text-4xl md:text-5xl font-bold">00</span>
+                        <span id="days" class="block font-bold">00</span>
                         <span class="text-[10px] uppercase tracking-widest font-black text-[#81638b]">Días</span>
                     </div>
                     <div class="countdown-item border-b-4 border-[#666F88]">
-                        <span id="hours" class="block text-4xl md:text-5xl font-bold">00</span>
+                        <span id="hours" class="block font-bold">00</span>
                         <span class="text-[10px] uppercase tracking-widest font-black text-[#666F88]">Hrs</span>
                     </div>
                     <div class="countdown-item border-b-4 border-[#81638b]">
-                        <span id="minutes" class="block text-4xl md:text-5xl font-bold">00</span>
+                        <span id="minutes" class="block font-bold">00</span>
                         <span class="text-[10px] uppercase tracking-widest font-black text-[#81638b]">Min</span>
                     </div>
                 </div>
             </header>
 
-            <div class="text-center mb-16" data-aos="fade-up">
-                <p class="uppercase tracking-[0.5em] text-base md:text-xl text-[#666F88] mb-14 font-bold">
+            <div class="text-center mb-12 md:mb-16" data-aos="fade-up">
+                <p class="uppercase tracking-section text-sm md:text-xl text-[#666F88] mb-10 md:mb-14 font-bold px-2">
                     Con la bendición de Dios y nuestros padres
                 </p>
 
 
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-4xl mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 max-w-4xl mx-auto px-2">
                     <div class="space-y-1">
-                        <p class="uppercase tracking-[0.5em] text-base md:text-xl text-[#666F88] mb-14 font-bold">Padres
+                        <p class="uppercase tracking-section text-sm md:text-xl text-[#666F88] mb-8 md:mb-14 font-bold">Padres
                             de la Novia
                         </p>
-                        <p class="playfair text-2xl md:text-3xl text-[#503459]">Yarida González</p>
-                        <p class="playfair text-2xl md:text-3xl text-[#503459]">Jose L. Martínez</p>
+                        <p class="playfair text-xl md:text-3xl text-[#503459]">Yarida González</p>
+                        <p class="playfair text-xl md:text-3xl text-[#503459]">Jose L. Martínez</p>
                     </div>
 
                     <div class="space-y-1">
-                        <p class="uppercase tracking-[0.5em] text-base md:text-xl text-[#666F88] mb-14 font-bold">Padres
+                        <p class="uppercase tracking-section text-sm md:text-xl text-[#666F88] mb-8 md:mb-14 font-bold">Padres
                             del Novio
                         </p>
-                        <br>
-                        <p class="playfair text-2xl md:text-3xl text-[#503459]">Elsa C. Torres </p>
+                        <p class="playfair text-xl md:text-3xl text-[#503459]">Elsa C. Torres </p>
 
-                        <p class="playfair text-2xl md:text-3xl text-[#503459]">Alan R. Portilla</p>
-                        <br>
+                        <p class="playfair text-xl md:text-3xl text-[#503459]">Alan R. Portilla</p>
                     </div>
                 </div>
-                <br>
-                <div class="mb-14">
-                    <p class="uppercase tracking-[0.5em] text-base md:text-xl text-[#666F88] mb-14 font-bold">Nuestros
+                <div class="mb-10 md:mb-14 mt-8">
+                    <p class="uppercase tracking-section text-sm md:text-xl text-[#666F88] mb-8 md:mb-14 font-bold">Nuestros
                         Padrinos</p>
-                    <p class="playfair text-2xl md:text-3xl text-[#503459]">Xochitl González & David Olvera</p>
+                    <p class="playfair text-xl md:text-3xl text-[#503459] px-2">Xochitl González & David Olvera</p>
                 </div>
             </div>
 
 
-            <section class="text-center mb-32" data-aos="fade-up">
-                <h3 class="text-5xl playfair text-[#503459] mb-4 font-bold">Acompañanos en este día especial</h3>
+            <section class="text-center mb-20 md:mb-32 px-2" data-aos="fade-up">
+                <h3 class="section-heading playfair text-[#503459] mb-4 font-bold px-2">Acompañanos en este día especial</h3>
 
-                <div class="polaroid mb-14 max-w-2xl mx-auto">
+                <div class="polaroid mb-10 md:mb-14 max-w-2xl mx-auto">
                     <img src="assets/img/jardin.jpg" alt="Jardín">
                 </div>
-                <div class="space-y-4">
-                    <p class="bold text-2xl mb-20 text-[#503459]">Hora de la ceremonia 16:00 hrs</p>
-                    <p class="bold text-2xl mb-20 text-[#503459]">En el</p>
-                    <p class="text-4xl font-bold text-[#503459]">Jardín Paraíso del Lago</p>
+                <div class="space-y-4 px-2">
+                    <p class="bold text-lg md:text-2xl mb-12 md:mb-20 text-[#503459]">Hora de la ceremonia 16:00 hrs</p>
+                    <p class="bold text-lg md:text-2xl mb-12 md:mb-20 text-[#503459]">En el</p>
+                    <p class="text-2xl md:text-4xl font-bold text-[#503459]">Jardín Paraíso del Lago</p>
 
-<p class="text-[#81638b] text-xl leading-relaxed italic border-l-4 border-[#dac9df] pl-6 py-2">
+<p class="quote-block text-[#81638b] leading-relaxed italic border-l-4 border-[#dac9df] py-2 mx-auto max-w-xl">
                         "En un rincón mágico de Jiutepec, rodeados de naturaleza y amor, uniremos nuestras vidas para
                         siempre."
                     </p>
-                    <p class="text-2xl italic text-[#666F88] font-semibold">Jiutepec, Morelos</p>
+                    <p class="text-xl md:text-2xl italic text-[#666F88] font-semibold">Jiutepec, Morelos</p>
                     <a href="https://maps.app.goo.gl/5XHYRAx1yzNRYgas7" target="_blank"
-                        class="text-sm border-b-2 border-[#81638b] text-[#81638b] uppercase tracking-[0.3em] mt-8 inline-block font-black py-2">Ver
+                        class="text-xs md:text-sm border-b-2 border-[#81638b] text-[#81638b] uppercase tracking-[0.2em] md:tracking-[0.3em] mt-8 inline-block font-black py-2">Ver
                         Ubicación en Maps</a>
                 </div>
             </section>
 
-            <section class="grid md:grid-cols-2 gap-12 items-center mb-32 px-4">
-                <div data-aos="fade-right">
+            <section class="grid md:grid-cols-2 gap-8 md:gap-12 items-center mb-20 md:mb-32 px-2 md:px-4">
+                <div class="polaroid-wrap" data-aos="fade-right">
                     <div class="polaroid rotate-[3deg]">
 
                         <img src="assets/img/gal1.jpg" alt="Foto 1">
                     </div>
                 </div>
-                <div data-aos="fade-right">
+                <div class="polaroid-wrap" data-aos="fade-right">
                     <div class="polaroid rotate-[3deg]">
                         <img src="assets/img/gal2.jpg" alt="Foto 1">
                     </div>
                 </div>
-                <div data-aos="fade-right">
+                <div class="polaroid-wrap" data-aos="fade-right">
                     <div class="polaroid rotate-[3deg]">
                         <img src="assets/img/foto3.jpg" alt="Foto 1">
                     </div>
                 </div>
-                <div class="text-center md:text-left" data-aos="fade-left">
-                    <h3 class="text-4xl playfair text-[#503459] mb-2 font-bold">Sábado, 17 de Abril</h3>
-                    <p class="text-2xl font-light italic text-[#666F88] mb-6">2027</p>
+                <div class="text-center md:text-left px-2" data-aos="fade-left">
+                    <h3 class="section-heading-lg playfair text-[#503459] mb-2 font-bold">Sábado, 17 de Abril</h3>
+                    <p class="text-xl md:text-2xl font-light italic text-[#666F88] mb-6">2027</p>
 
-<p class="text-[#81638b] text-xl leading-relaxed italic border-l-4 border-[#dac9df] pl-6 py-2">
+<p class="quote-block text-[#81638b] leading-relaxed italic border-l-4 border-[#dac9df] py-2 md:mx-0 mx-auto">
                        “Dos almas, un mismo destino… acompáñanos a celebrar nuestro amor.”
                     </p>
                 </div>
             </section>
 
-            <section class="bg-black/5 p-12 text-center border-y border-white/40 mb-32 shadow-inner" data-aos="fade-up">
-                <h4 class="playfair text-4xl mb-6 text-[#503459] font-bold">Código de Vestimenta</h4>
-                <p class="text-2xl italic mb-10 text-[#666F88] font-bold">Garden - Formal </p>
-                <!-- <div class="bg-white/90 py-4 px-12 inline-block border-x-4 border-[#81638b] shadow-sm mb-12">
-                    <p class="text-[20px] md:text-xs uppercase tracking-[0.5em] font-black text-[#503459]">
-                     Ayúdanos con la armonía visual: evita los colores.<br>
-                        NO BLANCO • NO ROJO • NO AZUL • NO LILA<br>
-                    </p>
-                </div> -->
+            <section class="bg-black/5 p-6 md:p-12 text-center border-y border-white/40 mb-20 md:mb-32 shadow-inner section-padded" data-aos="fade-up">
+                <h4 class="playfair section-heading-lg mb-6 text-[#503459] font-bold">Código de Vestimenta</h4>
+                <p class="text-xl md:text-2xl italic mb-8 md:mb-10 text-[#666F88] font-bold">Garden - Formal </p>
                 <div
-                    class="bg-white/90 py-6 px-8 md:px-12 inline-block border-x-4 border-[#81638b] shadow-sm mb-12 text-center">
-                    <div
-                        class="bg-white/90 py-6 px-8 md:px-12 inline-block border-x-4 border-[#81638b] shadow-sm mb-12 text-center">
+                    class="dress-code-box bg-white/90 py-5 px-4 md:py-6 md:px-12 border-x-4 border-[#81638b] shadow-sm mb-8 md:mb-12 text-center mx-auto max-w-2xl">
                         <p
-                            class="text-[14px] md:text-xs uppercase tracking-[0.3em] md:tracking-[0.5em] font-black text-[#503459] mb-6">
+                            class="text-[12px] md:text-xs uppercase tracking-[0.2em] md:tracking-[0.5em] font-black text-[#503459] mb-6">
                             Ayúdanos con la armonía visual: evita los colores
                         </p>
 
-                        <div style="display: flex; justify-content: center; gap: 24px; flex-wrap: wrap;">
+                        <div class="flex justify-center gap-4 md:gap-6 flex-wrap">
 
                             <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
                                 <div style="position: relative; width: 36px; height: 36px;">
@@ -503,30 +560,28 @@
                                     LILA</span>
                             </div>
                         </div>
-                    </div>
-                    <br>
-                    <div class="border-t border-[#666F88] pt-6">
-                        <h4 class="playfair text-2xl mb-2 font-bold">¡Los Regalos!</h4>
+                    <div class="border-t border-[#666F88] pt-6 mt-6">
+                        <h4 class="playfair text-xl md:text-2xl mb-2 font-bold">¡Los Regalos!</h4>
                     </div>
                     <div class="border-t border-[#fff] pt-6">
-                        <h4 class="playfair text-2xl mb-2 font-bold">Liverpool</h4>
-                        <p class="text-md text-[#666F88]"><a
+                        <h4 class="playfair text-xl md:text-2xl mb-2 font-bold">Liverpool</h4>
+                        <p class="text-sm md:text-base text-[#666F88] break-words"><a
                                 href="https://mesaderegalos.liverpool.com.mx/milistaderegalos/51989426" target="_blank"
                                 rel="noopener noreferrer">Evento: 51989426</a></p>
                     </div>
                     <div class="border-t border-[#666F88] pt-6">
-                        <h4 class="playfair text-2xl mb-2 font-bold">Lo más importante es compartir este día contigo. Si
+                        <h4 class="playfair text-lg md:text-2xl mb-2 font-bold px-2">Lo más importante es compartir este día contigo. Si
                             gustas hacernos un presente, lo recibiremos con mucho cariño.</h4>
                     </div>
                 </div>
             </section>
-            <section class="text-center mb-32" data-aos="fade-up">
-                <div class="mb-16">
-                    <h3 class="pinyon text-6xl text-[#81638b] mb-2">Hospedaje</h3>
-                    <h4 class="playfair text-2xl uppercase tracking-[0.3em] text-[#503459] font-bold">Sugerencias para
+            <section class="text-center mb-20 md:mb-32 px-2" data-aos="fade-up">
+                <div class="mb-12 md:mb-16">
+                    <h3 class="pinyon text-5xl md:text-6xl text-[#81638b] mb-2">Hospedaje</h3>
+                    <h4 class="playfair text-lg md:text-2xl uppercase tracking-section text-[#503459] font-bold px-2">Sugerencias para
                         tu estancia</h4>
                 </div>
-                <div class="max-w-2xl mx-auto mb-16 px-6">
+                <div class="max-w-2xl mx-auto mb-12 md:mb-16 px-4 md:px-6">
                     <div class="border-t border-b border-[#dac9df] py-4">
                         <p class="text-[#666F88] italic text-lg leading-relaxed">
                             "Deseamos que tu estancia sea tan especial como este día. Hemos seleccionado estos lugares
@@ -537,7 +592,7 @@
                         </p>
                     </div>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-16 max-w-6xl mx-auto px-8">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-16 max-w-6xl mx-auto px-4 md:px-8">
                     <div class="group" data-aos="fade-up" data-aos-delay="100">
                         <div
                             class="polaroid transition-transform duration-500 group-hover:rotate-0 rotate-[-2deg] mb-6">
@@ -587,31 +642,31 @@
 
                 </div>
             </section>
-            <footer class="text-center space-y-20">
+            <footer class="text-center space-y-12 md:space-y-20">
                 <div data-aos="fade-up">
-                    <div class="polaroid mb-16 max-w-xs mx-auto rotate-[2deg]">
+                    <div class="polaroid mb-12 md:mb-16 max-w-xs mx-auto rotate-[2deg]">
                         <img src="assets/img/IMG_2122.jpg" alt="Final">
                     </div>
-                    <h2 class="playfair text-5xl italic text-[#503459] font-bold mb-6">¡Acompáñanos!</h2>
-                    <p class="text-[#666F88] text-xl font-semibold mb-12">Confirma antes del 15 de marzo.</p>
+                    <h2 class="playfair text-3xl md:text-5xl italic text-[#503459] font-bold mb-6 px-2">¡Acompáñanos!</h2>
+                    <p class="text-[#666F88] text-lg md:text-xl font-semibold mb-8 md:mb-12 px-2">Confirma antes del 15 de marzo.</p>
                 </div>
                 <!-- BOTÓN -->
 
                 <!-- POPUP CONFIRMAR ASISTENCIA -->
-<div class="w-full flex justify-center py-6">
+<div class="w-full flex justify-center py-4 md:py-6 px-2">
 
-    <div class="bg-white rounded-3xl p-8 max-w-md w-[90%] text-center relative shadow-2xl animate-fadeIn">
+    <div class="bg-white rounded-3xl p-5 md:p-8 max-w-md w-full text-center relative shadow-2xl animate-fadeIn box-border">
         
         <button onclick="closePopup()" 
             class="absolute top-4 right-4 text-gray-500 hover:text-black text-2xl">
             ×
         </button>
 
-        <h2 class="text-3xl font-bold text-[#81638b] mb-4">
+        <h2 class="text-2xl md:text-3xl font-bold text-[#81638b] mb-4">
             Confirmar Asistencia
         </h2>
 
-        <p class="text-gray-600 mb-6">
+        <p class="text-gray-600 mb-6 text-sm md:text-base">
             Selecciona tu familia para confirmar su asistencia ✨
         </p>
 
@@ -863,7 +918,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 <style>
 body {
-    padding-bottom: 120px; /* importante para que no tape el menú */
+    padding-bottom: clamp(80px, 15vh, 120px);
 }
 </style>
 
