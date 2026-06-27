@@ -1,0 +1,92 @@
+body {
+  margin: 0;
+  font-family: 'Playfair Display', serif;
+  background: #f8f8f6;
+  color: #2c2c2c;
+}
+
+.nombres {
+  font-family: 'Allura', cursive;
+  font-size: 4rem;
+  line-height: 1.1;
+}
+
+.titulo-script {
+  font-family: 'Allura', cursive;
+  font-size: 3rem;
+  color: #7fa7cc;
+}
+
+.blanco { color: #fff; }
+
+.portada {
+  height: 100vh;
+  background: linear-gradient(#4a6b7c, #9bbad6);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+.btn-entrar {
+  margin-top: 30px;
+  padding: 12px 32px;
+  border: 1px solid white;
+  color: white;
+  text-decoration: none;
+}
+
+.invitacion-editorial,
+.ceremonia-detalle,
+.calendario-editorial,
+.timeline,
+.galeria {
+  padding: 90px 20px;
+  text-align: center;
+}
+
+.foto-rasgada img {
+  width: 100%;
+  clip-path: polygon(2% 0%,98% 2%,100% 95%,96% 100%,4% 98%,0% 92%);
+}
+
+.asistencia {
+  background: #9bbad6;
+  padding: 90px 20px;
+  text-align: center;
+}
+
+.calendario {
+  max-width: 320px;
+  margin: auto;
+}
+
+.evento {
+  background: #7fa7cc;
+  color: white;
+  border-radius: 50%;
+  padding: 6px;
+}
+
+.timeline .evento-timeline {
+  margin: 14px 0;
+}
+
+.galeria {
+  overflow: hidden;
+}
+
+.galeria-track {
+  display: flex;
+  gap: 20px;
+}
+
+.fade {
+  animation: fadeUp 1.5s ease forwards;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
