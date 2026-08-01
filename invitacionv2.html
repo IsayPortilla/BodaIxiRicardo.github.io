@@ -5,12 +5,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ixi & Ricardo | 17.04.2027</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
+    <link rel="preconnect" href="https://unpkg.com">
     <link
         href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Playfair+Display:ital,wght@0,700;1,700&family=Birthstone+Bounce:wght@500&family=Pinyon+Script&display=swap"
         rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet"></noscript>
 
     <style>
         :root {
@@ -646,15 +649,15 @@
 
 <body>
 
-    <audio id="musica" loop>
+    <audio id="musica" loop preload="none">
         <source src="assets/audio/musica.mp3" type="audio/mpeg">
     </audio>
     <div class="audio-control" onclick="togglePlay()">🎵</div>
 
     <main class="paper-sheet">
         <img src="assets/img/flor1.png" class="flower flower-tl" alt="" loading="lazy" decoding="async">
-        <img src="assets/img/flor3.png" class="flower flower-tr" alt="" loading="lazy" decoding="async">
-        <img src="assets/img/flor3.png" class="flower flower-bl" alt="" loading="lazy" decoding="async">
+        <img src="assets/img/flor3.jpg" class="flower flower-tr" alt="" loading="lazy" decoding="async">
+        <img src="assets/img/flor3.jpg" class="flower flower-bl" alt="" loading="lazy" decoding="async">
         <img src="assets/img/flor1.png" class="flower flower-br" alt="" loading="lazy" decoding="async">
 
         <div class="inner-border">
@@ -1424,6 +1427,8 @@ body {
         </div>
     </main>
 
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js" defer></script>
     <script>
         function initAOS() {
             if (typeof AOS === "undefined") return;
@@ -1433,17 +1438,12 @@ body {
             AOS.init({
                 duration: isMobile ? 600 : 1200,
                 once: true,
-                disable: isMobile ? true : false
+                disable: isMobile
             });
             document.documentElement.classList.add("aos-ready");
         }
 
-        if (document.readyState === "loading") {
-            document.addEventListener("DOMContentLoaded", initAOS);
-        } else {
-            initAOS();
-        }
-
+        window.addEventListener("load", initAOS);
         setTimeout(() => document.documentElement.classList.add("aos-ready"), 2500);
 
         const targetDate = new Date("April 17, 2027 17:00:00").getTime();
