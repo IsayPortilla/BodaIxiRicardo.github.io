@@ -137,104 +137,18 @@
         .input-field:focus {
             border-color: var(--p-mid);
         }
-
-        .sheet-guide {
-            background: #f8fafc;
-            border: 1px dashed var(--p-soft);
-            border-radius: 12px;
-            padding: 14px 16px;
-            font-size: 0.85rem;
-            line-height: 1.55;
-            color: #374151;
-        }
-
-        .sheet-guide table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 10px;
-            font-size: 0.8rem;
-        }
-
-        .sheet-guide th,
-        .sheet-guide td {
-            border: 1px solid #e5e7eb;
-            padding: 6px 8px;
-            text-align: left;
-        }
-
-        .sheet-guide th {
-            background: #ede9fe;
-            color: #503459;
-        }
-
-        .sheet-link {
-            color: #81638b;
-            font-weight: 700;
-            word-break: break-all;
-        }
     </style>
 </head>
 
 <body class="min-h-screen p-4 md:p-8">
     <div class="max-w-5xl mx-auto space-y-6">
 
-        <header class="text-center">
-            <h1 class="playfair text-3xl md:text-4xl font-bold text-[#503459]">Envío por familia</h1>
-            <p class="text-[#666F88] mt-2">WhatsApp · Columna A (familia) · E (teléfono) · F (mensaje)</p>
-        </header>
-
-        <section class="card p-5 md:p-6 space-y-4">
-            <h2 class="font-bold text-lg text-[#503459]">Configuración</h2>
-
-            <div class="sheet-guide">
-                <p class="font-bold text-[#503459] mb-1">Google Sheet conectado</p>
-                <a href="https://docs.google.com/spreadsheets/d/1acN7pMqKXQIa6km4ka4mMbBG36K4XEOxfmqIRGG7XKQ/edit?gid=920926980"
-                    target="_blank" rel="noopener noreferrer" class="sheet-link">
-                    Abrir invitados Isay en Google Sheets →
-                </a>
-                <p class="mt-3 text-[#666F88]">
-                    En la fila 1 agrega los encabezados <strong>Telefono</strong> (col. E) y <strong>Mensaje</strong> (col. F).
-                    Pon teléfono y mensaje <em>una vez por familia</em> (en cualquier fila de ese grupo).
-                </p>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Col.</th>
-                            <th>Encabezado</th>
-                            <th>Uso</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr><td>A</td><td>Familia</td><td>✓ Ya existe</td></tr>
-                        <tr><td>B</td><td>Nombres</td><td>✓ Invitados</td></tr>
-                        <tr><td>C</td><td>confirmado</td><td>✓ RSVP</td></tr>
-                        <tr><td>D</td><td>184</td><td>—</td></tr>
-                        <tr><td>E</td><td><strong>Telefono</strong></td><td>WhatsApp (10 dígitos)</td></tr>
-                        <tr><td>F</td><td><strong>Mensaje</strong></td><td>Texto personalizado</td></tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div>
-                <label class="block text-sm font-bold text-[#666F88] mb-1" for="inviteLink">
-                    Link de invitación (se añade al final del mensaje)
-                </label>
-                <input type="url" id="inviteLink" class="input-field" placeholder="https://...">
-            </div>
-
-            <div>
-                <label class="block text-sm font-bold text-[#666F88] mb-1" for="linkLabel">
-                    Texto antes del link (opcional)
-                </label>
-                <input type="text" id="linkLabel" class="input-field" value="Ver invitación:">
-            </div>
-
-            <div class="flex flex-wrap gap-3">
-                <button type="button" id="reloadBtn" class="btn-secondary">↻ Recargar Excel</button>
-                <button type="button" id="clearSentBtn" class="btn-secondary">Limpiar marcas de enviado</button>
-            </div>
-
+        <section class="card p-4 md:p-5 flex flex-wrap items-center justify-between gap-3">
             <p id="loadStatus" class="text-sm text-[#666F88]">Cargando datos...</p>
+            <div class="flex flex-wrap gap-3">
+                <button type="button" id="reloadBtn" class="btn-secondary">↻ Recargar</button>
+                <button type="button" id="clearSentBtn" class="btn-secondary">Limpiar enviados</button>
+            </div>
         </section>
 
         <section class="grid grid-cols-2 md:grid-cols-4 gap-3" id="statsBar">
@@ -267,10 +181,10 @@
     </div>
 
     <script>
-        // Hoja: invitados Isay · gid=920926980 · pestaña "Hoja 1"
-        const GOOGLE_SHEET_URL = "https://docs.google.com/spreadsheets/d/1acN7pMqKXQIa6km4ka4mMbBG36K4XEOxfmqIRGG7XKQ/edit?gid=920926980";
         const sheetURL = "https://opensheet.elk.sh/1acN7pMqKXQIa6km4ka4mMbBG36K4XEOxfmqIRGG7XKQ/Hoja%201";
         const SENT_STORAGE_KEY = "ixi_ricardo_wa_sent_v1";
+        const LINK_LABEL = "Ver invitación:";
+        let inviteLink = "";
 
         let familyGroups = [];
         let sentFamilies = loadSentFamilies();
@@ -384,8 +298,6 @@
         function renderFamilies() {
             const container = document.getElementById("familiesList");
             const query = document.getElementById("searchInput").value.trim().toLowerCase();
-            const inviteLink = document.getElementById("inviteLink").value.trim();
-            const linkLabel = document.getElementById("linkLabel").value.trim();
 
             const filtered = familyGroups.filter(g =>
                 !query || g.familia.toLowerCase().includes(query)
@@ -400,7 +312,7 @@
 
             container.innerHTML = filtered.map(group => {
                 const status = getFamilyStatus(group);
-                const fullMessage = buildFullMessage(group.message, inviteLink, linkLabel);
+                const fullMessage = buildFullMessage(group.message, inviteLink, LINK_LABEL);
                 const canSend = group.phone && fullMessage;
                 const badgeClass = {
                     ok: "badge-ok",
@@ -460,9 +372,7 @@
             const group = familyGroups.find(g => g.familia === familia);
             if (!group) return;
 
-            const inviteLink = document.getElementById("inviteLink").value.trim();
-            const linkLabel = document.getElementById("linkLabel").value.trim();
-            const fullMessage = buildFullMessage(group.message, inviteLink, linkLabel);
+            const fullMessage = buildFullMessage(group.message, inviteLink, LINK_LABEL);
 
             if (!group.phone) {
                 alert("Esta familia no tiene teléfono en la columna E.");
@@ -508,10 +418,7 @@
                 const withMessage = familyGroups.filter(g => g.message).length;
 
                 if (withPhone === 0 || withMessage === 0) {
-                    statusEl.innerHTML = `Cargadas <strong>${familyGroups.length}</strong> familias. ` +
-                        `<span class="text-amber-700">Faltan datos en columnas E y/o F. ` +
-                        `<a href="${GOOGLE_SHEET_URL}" target="_blank" rel="noopener" class="sheet-link">Edita el Google Sheet</a> ` +
-                        `y agrega <em>Telefono</em> y <em>Mensaje</em> en la fila 1.</span>`;
+                    statusEl.innerHTML = `Cargadas <strong>${familyGroups.length}</strong> familias · faltan teléfono (E) o mensaje (F).`;
                 } else {
                     statusEl.innerHTML = `Cargadas <strong>${familyGroups.length}</strong> familias · ` +
                         `<strong>${withPhone}</strong> con teléfono · <strong>${withMessage}</strong> con mensaje.`;
@@ -528,10 +435,8 @@
         }
 
         document.addEventListener("DOMContentLoaded", () => {
-            document.getElementById("inviteLink").value = getDefaultInviteLink();
+            inviteLink = getDefaultInviteLink();
 
-            document.getElementById("inviteLink").addEventListener("input", renderFamilies);
-            document.getElementById("linkLabel").addEventListener("input", renderFamilies);
             document.getElementById("searchInput").addEventListener("input", renderFamilies);
             document.getElementById("reloadBtn").addEventListener("click", loadSheet);
             document.getElementById("clearSentBtn").addEventListener("click", () => {
