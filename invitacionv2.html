@@ -635,6 +635,11 @@
         .confirm-section.hidden {
             display: none;
         }
+        /* Fallback: si AOS no carga en móvil, el contenido sigue visible */
+        html:not(.aos-ready) [data-aos] {
+            opacity: 1 !important;
+            transform: none !important;
+        }
     </style>
 
 </head>
@@ -646,17 +651,17 @@
     </audio>
     <div class="audio-control" onclick="togglePlay()">🎵</div>
 
-    <main class="paper-sheet" data-aos="fade-in">
-        <img src="assets/img/flor1.png" class="flower flower-tl" alt="deco">
-        <img src="assets/img/flor3.png" class="flower flower-tr" alt="deco">
-        <img src="assets/img/flor3.png" class="flower flower-bl" alt="deco">
-        <img src="assets/img/flor1.png" class="flower flower-br" alt="deco">
+    <main class="paper-sheet">
+        <img src="assets/img/flor1.png" class="flower flower-tl" alt="" loading="lazy" decoding="async">
+        <img src="assets/img/flor3.png" class="flower flower-tr" alt="" loading="lazy" decoding="async">
+        <img src="assets/img/flor3.png" class="flower flower-bl" alt="" loading="lazy" decoding="async">
+        <img src="assets/img/flor1.png" class="flower flower-br" alt="" loading="lazy" decoding="async">
 
         <div class="inner-border">
 
             <header class="text-center mb-16 md:mb-28">
                 <div class="polaroid rotate-[-2deg] mb-10 md:mb-14 max-w-sm mx-auto" data-aos="fade-down">
-                    <img src="assets/img/portada.jpg" alt="Portada">
+                    <img src="assets/img/portada.jpg" alt="Portada" fetchpriority="high" decoding="async">
                 </div>
 
 
@@ -716,7 +721,7 @@
                 <h3 class="section-heading playfair text-[#503459] mb-4 font-bold px-2">Acompañanos en este día especial</h3>
 
                 <div class="polaroid mb-10 md:mb-14 max-w-2xl mx-auto">
-                    <img src="assets/img/jardin.jpg" alt="Jardín">
+                    <img src="assets/img/jardin.jpg" alt="Jardín" loading="lazy" decoding="async">
                 </div>
                 <div class="space-y-4 px-2">
                     <p class="bold text-lg md:text-2xl mb-12 md:mb-20 text-[#503459]">Hora de la ceremonia 16:00 hrs</p>
@@ -738,17 +743,17 @@
                 <div class="polaroid-wrap" data-aos="fade-right">
                     <div class="polaroid rotate-[3deg]">
 
-                        <img src="assets/img/gal1.jpg" alt="Foto 1">
+                        <img src="assets/img/gal1.jpg" alt="Foto 1" loading="lazy" decoding="async">
                     </div>
                 </div>
                 <div class="polaroid-wrap" data-aos="fade-right">
                     <div class="polaroid rotate-[3deg]">
-                        <img src="assets/img/gal2.jpg" alt="Foto 1">
+                        <img src="assets/img/gal2.jpg" alt="Foto 2" loading="lazy" decoding="async">
                     </div>
                 </div>
                 <div class="polaroid-wrap" data-aos="fade-right">
                     <div class="polaroid rotate-[3deg]">
-                        <img src="assets/img/foto3.jpg" alt="Foto 1">
+                        <img src="assets/img/foto3.jpg" alt="Foto 3" loading="lazy" decoding="async">
                     </div>
                 </div>
                 <div class="text-center md:text-left px-2" data-aos="fade-left">
@@ -946,7 +951,7 @@
             <footer class="text-center space-y-12 md:space-y-20">
                 <div data-aos="fade-up">
                     <div class="polaroid mb-12 md:mb-16 max-w-xs mx-auto rotate-[2deg]">
-                        <img src="assets/img/IMG_2122.jpg" alt="Final">
+                        <img src="assets/img/IMG_2122.jpg" alt="Final" loading="lazy" decoding="async">
                     </div>
                     <h2 class="playfair text-3xl md:text-5xl italic text-[#503459] font-bold mb-6 px-2">¡Acompáñanos!</h2>
                     <p class="text-[#666F88] text-lg md:text-xl font-semibold mb-8 md:mb-12 px-2">Confirma antes del 15 de marzo.</p>
@@ -1420,7 +1425,26 @@ body {
     </main>
 
     <script>
-        AOS.init({ duration: 1200, once: true });
+        function initAOS() {
+            if (typeof AOS === "undefined") return;
+            const isMobile = window.matchMedia("(max-width: 768px)").matches
+                || /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+            AOS.init({
+                duration: isMobile ? 600 : 1200,
+                once: true,
+                disable: isMobile ? true : false
+            });
+            document.documentElement.classList.add("aos-ready");
+        }
+
+        if (document.readyState === "loading") {
+            document.addEventListener("DOMContentLoaded", initAOS);
+        } else {
+            initAOS();
+        }
+
+        setTimeout(() => document.documentElement.classList.add("aos-ready"), 2500);
 
         const targetDate = new Date("April 17, 2027 17:00:00").getTime();
         const updateCountdown = setInterval(function () {

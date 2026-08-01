@@ -74,6 +74,25 @@
             .flower {
                 width: 160px;
             }
+
+            .paper-canvas {
+                padding: 1.75rem 1.25rem;
+                border-width: 10px;
+            }
+
+            .hero-name {
+                font-size: clamp(2.5rem, 12vw, 4.5rem);
+                line-height: 1.05;
+            }
+
+            .hero-subtitle {
+                font-size: clamp(2.5rem, 10vw, 3.5rem);
+            }
+
+            .hero-tagline {
+                letter-spacing: clamp(0.12em, 1.5vw, 0.5em);
+                font-size: 0.75rem;
+            }
         }
 
         .playfair {
@@ -164,26 +183,26 @@
     <main
         class="paper-canvas max-w-4xl w-full mx-auto p-10 md:p-24 border-[16px] border-white animate__animated animate__fadeIn">
 
-        <img src="assets/img/flor1.png" class="flower flower-tl animate__animated animate__fadeIn" alt="deco">
-        <img src="assets/img/flor3.png" class="flower flower-tr animate__animated animate__fadeIn" alt="deco">
-        <img src="assets/img/flor3.png" class="flower flower-bl animate__animated animate__fadeIn" alt="deco">
-        <img src="assets/img/flor1.png" class="flower flower-br animate__animated animate__fadeIn" alt="deco">
+        <img src="assets/img/flor1.png" class="flower flower-tl animate__animated animate__fadeIn" alt="" loading="lazy" decoding="async">
+        <img src="assets/img/flor3.png" class="flower flower-tr animate__animated animate__fadeIn" alt="" loading="lazy" decoding="async">
+        <img src="assets/img/flor3.png" class="flower flower-bl animate__animated animate__fadeIn" alt="" loading="lazy" decoding="async">
+        <img src="assets/img/flor1.png" class="flower flower-br animate__animated animate__fadeIn" alt="" loading="lazy" decoding="async">
 
         <div class="absolute top-0 left-0 w-24 h-24 border-t-2 border-l-2 border-[#b5bac9] m-8 z-10"></div>
         <div class="absolute bottom-0 right-0 w-24 h-24 border-b-2 border-r-2 border-[#b5bac9] m-8 z-10"></div>
 
         <div class="text-center space-y-10 relative z-10">
             <p
-                class="uppercase tracking-[0.5em] text-base md:text-lg text-[#666F88] animate__animated animate__fadeInDown animate__delay-1s font-semibold">
+                class="hero-tagline uppercase tracking-[0.5em] text-base md:text-lg text-[#666F88] animate__animated animate__fadeInDown animate__delay-1s font-semibold px-2">
                 Uniendo nuestras vidas
             </p>
 
             <div class="ornament">❦</div>
 
-            <div class="py-6">
-                <h1 class="text-7xl md:text-9xl playfair name-focus mb-4">Ixi & Ricardo</h1>
+            <div class="py-6 px-2">
+                <h1 class="hero-name text-7xl md:text-9xl playfair name-focus mb-4">Ixi & Ricardo</h1>
                 <p
-                    class="serif-script text-5xl md:text-7xl text-[#81638b] animate__animated animate__fadeIn animate__delay-2s">
+                    class="hero-subtitle serif-script text-5xl md:text-7xl text-[#81638b] animate__animated animate__fadeIn animate__delay-2s">
                     Nuestra Boda
                 </p>
             </div>

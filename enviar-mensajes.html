@@ -202,9 +202,14 @@
         }
 
         function getDefaultInviteLink() {
-            const origin = window.location.origin;
-            const path = window.location.pathname.replace(/[^/]*$/, "");
-            return origin + path + "index.html";
+            const production = "https://isayportilla.github.io/BodaIxiRicardo.github.io/index.html";
+            const host = window.location.hostname;
+            if (host === "127.0.0.1" || host === "localhost") return production;
+            if (window.location.protocol.startsWith("http")) {
+                const path = window.location.pathname.replace(/[^/]*$/, "");
+                return window.location.origin + path + "index.html";
+            }
+            return production;
         }
 
         function getField(row, ...keys) {
