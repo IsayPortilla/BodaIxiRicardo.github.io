@@ -103,6 +103,18 @@
             font-family: 'Pinyon Script', cursive;
         }
 
+        .invite-link {
+            display: block;
+            text-decoration: none;
+            color: inherit;
+            cursor: pointer;
+            transition: opacity 0.25s ease;
+        }
+
+        .invite-link:hover {
+            opacity: 0.92;
+        }
+
         .wax-seal {
             background: radial-gradient(circle, #81638b 0%, #503459 100%);
             width: 85px;
@@ -114,15 +126,13 @@
             color: white;
             font-weight: 700;
             box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
-            cursor: pointer;
-            transition: transform 0.3s;
-            text-decoration: none;
             margin: 0 auto;
             position: relative;
             z-index: 10;
+            transition: transform 0.3s;
         }
 
-        .wax-seal:hover {
+        .invite-link:hover .wax-seal {
             transform: scale(1.1) rotate(5deg);
         }
 
@@ -214,19 +224,20 @@
                     Ver Invitación
                 </p>
             </div> -->
-            <div class="pt-12 animate__animated animate__zoomIn animate__delay-3s text-center">
+            <a href="invitacionv2.html"
+                class="invite-link pt-12 animate__animated animate__zoomIn animate__delay-3s text-center">
                 <p class="mb-5 text-xs uppercase tracking-[0.3em] text-[#788199] font-bold">
                     Presiona aquí
                 </p>
 
-                <a href="invitacionv2.html" class="wax-seal">
+                <div class="wax-seal" aria-hidden="true">
                     <span>I&R</span>
-                </a>
+                </div>
 
                 <p class="mt-5 text-[#81638b] birthstone text-4xl">
                     Ver Invitación
                 </p>
-            </div>
+            </a>
 
         </div>
     </main>

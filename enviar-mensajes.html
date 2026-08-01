@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Envío por familia | Ixi & Ricardo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Playfair+Display:wght@700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --p-dark: #503459;
+            --p-mid: #81638b;
+            --p-soft: #dac9df;
+            --steel: #666F88;
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background: #eef1f5;
+            color: var(--p-dark);
+        }
+
+        .playfair {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 14px;
+            border: 1px solid rgba(129, 99, 139, 0.12);
+            box-shadow: 0 8px 24px rgba(80, 52, 89, 0.06);
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 10px;
+            border-radius: 999px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .badge-ok {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .badge-warn {
+            background: #fef9c3;
+            color: #854d0e;
+        }
+
+        .badge-error {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .badge-sent {
+            background: #ede9fe;
+            color: #5b21b6;
+        }
+
+        .btn-wa {
+            background: #25D366;
+            color: white;
+            font-weight: 700;
+            border-radius: 10px;
+            padding: 10px 16px;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+        }
+
+        .btn-wa:hover:not(:disabled) {
+            background: #1ebe57;
+            transform: translateY(-1px);
+        }
+
+        .btn-wa:disabled {
+            background: #d1d5db;
+            color: #9ca3af;
+            cursor: not-allowed;
+        }
+
+        .btn-secondary {
+            background: white;
+            border: 1px solid var(--p-soft);
+            color: var(--p-dark);
+            font-weight: 600;
+            border-radius: 10px;
+            padding: 8px 14px;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--p-mid);
+            color: var(--p-mid);
+        }
+
+        .family-row.sent {
+            opacity: 0.72;
+            background: #fafafa;
+        }
+
+        .preview-box {
+            background: #f8fafc;
+            border-left: 3px solid var(--p-mid);
+            padding: 10px 12px;
+            border-radius: 0 8px 8px 0;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            white-space: pre-wrap;
+            word-break: break-word;
+            color: #374151;
+        }
+
+        .input-field {
+            width: 100%;
+            border: 2px solid var(--p-soft);
+            border-radius: 10px;
+            padding: 10px 12px;
+            font-family: inherit;
+            font-size: 0.95rem;
+            outline: none;
+        }
+
+        .input-field:focus {
+            border-color: var(--p-mid);
+        }
+
+        .sheet-guide {
+            background: #f8fafc;
+            border: 1px dashed var(--p-soft);
+            border-radius: 12px;
+            padding: 14px 16px;
+            font-size: 0.85rem;
+            line-height: 1.55;
+            color: #374151;
+        }
+
+        .sheet-guide table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            font-size: 0.8rem;
+        }
+
+        .sheet-guide th,
+        .sheet-guide td {
+            border: 1px solid #e5e7eb;
+            padding: 6px 8px;
+            text-align: left;
+        }
+
+        .sheet-guide th {
+            background: #ede9fe;
+            color: #503459;
+        }
+
+        .sheet-link {
+            color: #81638b;
+            font-weight: 700;
+            word-break: break-all;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen p-4 md:p-8">
+    <div class="max-w-5xl mx-auto space-y-6">
+
+        <header class="text-center">
+            <h1 class="playfair text-3xl md:text-4xl font-bold text-[#503459]">Envío por familia</h1>
+            <p class="text-[#666F88] mt-2">WhatsApp · Columna A (familia) · E (teléfono) · F (mensaje)</p>
+        </header>
+
+        <section class="card p-5 md:p-6 space-y-4">
+            <h2 class="font-bold text-lg text-[#503459]">Configuración</h2>
+
+            <div class="sheet-guide">
+                <p class="font-bold text-[#503459] mb-1">Google Sheet conectado</p>
+                <a href="https://docs.google.com/spreadsheets/d/1acN7pMqKXQIa6km4ka4mMbBG36K4XEOxfmqIRGG7XKQ/edit?gid=920926980"
+                    target="_blank" rel="noopener noreferrer" class="sheet-link">
+                    Abrir invitados Isay en Google Sheets →
+                </a>
+                <p class="mt-3 text-[#666F88]">
+                    En la fila 1 agrega los encabezados <strong>Telefono</strong> (col. E) y <strong>Mensaje</strong> (col. F).
+                    Pon teléfono y mensaje <em>una vez por familia</em> (en cualquier fila de ese grupo).
+                </p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Col.</th>
+                            <th>Encabezado</th>
+                            <th>Uso</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>A</td><td>Familia</td><td>✓ Ya existe</td></tr>
+                        <tr><td>B</td><td>Nombres</td><td>✓ Invitados</td></tr>
+                        <tr><td>C</td><td>confirmado</td><td>✓ RSVP</td></tr>
+                        <tr><td>D</td><td>184</td><td>—</td></tr>
+                        <tr><td>E</td><td><strong>Telefono</strong></td><td>WhatsApp (10 dígitos)</td></tr>
+                        <tr><td>F</td><td><strong>Mensaje</strong></td><td>Texto personalizado</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div>
+                <label class="block text-sm font-bold text-[#666F88] mb-1" for="inviteLink">
+                    Link de invitación (se añade al final del mensaje)
+                </label>
+                <input type="url" id="inviteLink" class="input-field" placeholder="https://...">
+            </div>
+
+            <div>
+                <label class="block text-sm font-bold text-[#666F88] mb-1" for="linkLabel">
+                    Texto antes del link (opcional)
+                </label>
+                <input type="text" id="linkLabel" class="input-field" value="Ver invitación:">
+            </div>
+
+            <div class="flex flex-wrap gap-3">
+                <button type="button" id="reloadBtn" class="btn-secondary">↻ Recargar Excel</button>
+                <button type="button" id="clearSentBtn" class="btn-secondary">Limpiar marcas de enviado</button>
+            </div>
+
+            <p id="loadStatus" class="text-sm text-[#666F88]">Cargando datos...</p>
+        </section>
+
+        <section class="grid grid-cols-2 md:grid-cols-4 gap-3" id="statsBar">
+            <div class="card p-4 text-center">
+                <p class="text-2xl font-bold text-[#503459]" id="statTotal">0</p>
+                <p class="text-xs uppercase tracking-wide text-[#666F88] font-bold">Familias</p>
+            </div>
+            <div class="card p-4 text-center">
+                <p class="text-2xl font-bold text-green-700" id="statReady">0</p>
+                <p class="text-xs uppercase tracking-wide text-[#666F88] font-bold">Listas</p>
+            </div>
+            <div class="card p-4 text-center">
+                <p class="text-2xl font-bold text-amber-600" id="statIncomplete">0</p>
+                <p class="text-xs uppercase tracking-wide text-[#666F88] font-bold">Incompletas</p>
+            </div>
+            <div class="card p-4 text-center">
+                <p class="text-2xl font-bold text-violet-700" id="statSent">0</p>
+                <p class="text-xs uppercase tracking-wide text-[#666F88] font-bold">Enviadas</p>
+            </div>
+        </section>
+
+        <section class="card p-4 md:p-5">
+            <input type="search" id="searchInput" class="input-field" placeholder="Buscar familia...">
+        </section>
+
+        <section id="familiesList" class="space-y-4">
+            <p class="text-center text-[#666F88] py-8">Cargando familias...</p>
+        </section>
+
+    </div>
+
+    <script>
+        // Hoja: invitados Isay · gid=920926980 · pestaña "Hoja 1"
+        const GOOGLE_SHEET_URL = "https://docs.google.com/spreadsheets/d/1acN7pMqKXQIa6km4ka4mMbBG36K4XEOxfmqIRGG7XKQ/edit?gid=920926980";
+        const sheetURL = "https://opensheet.elk.sh/1acN7pMqKXQIa6km4ka4mMbBG36K4XEOxfmqIRGG7XKQ/Hoja%201";
+        const SENT_STORAGE_KEY = "ixi_ricardo_wa_sent_v1";
+
+        let familyGroups = [];
+        let sentFamilies = loadSentFamilies();
+
+        function loadSentFamilies() {
+            try {
+                return JSON.parse(localStorage.getItem(SENT_STORAGE_KEY) || "{}");
+            } catch {
+                return {};
+            }
+        }
+
+        function saveSentFamilies() {
+            localStorage.setItem(SENT_STORAGE_KEY, JSON.stringify(sentFamilies));
+        }
+
+        function getDefaultInviteLink() {
+            const origin = window.location.origin;
+            const path = window.location.pathname.replace(/[^/]*$/, "");
+            return origin + path + "index.html";
+        }
+
+        function getField(row, ...keys) {
+            for (const key of keys) {
+                const val = row[key];
+                if (val !== undefined && val !== null && String(val).trim() !== "") {
+                    return String(val).trim();
+                }
+            }
+            return "";
+        }
+
+        function normalizePhone(phone) {
+            let digits = String(phone).replace(/\D/g, "");
+            if (digits.length === 10) digits = "52" + digits;
+            return digits;
+        }
+
+        function buildFamilyGroups(rawData) {
+            const groups = {};
+
+            rawData.forEach(row => {
+                const familia = getField(row, "Familia", "familia", "FAMILIA");
+                if (!familia) return;
+
+                if (!groups[familia]) {
+                    groups[familia] = {
+                        familia,
+                        phone: "",
+                        message: "",
+                        members: []
+                    };
+                }
+
+                const phone = getField(
+                    row,
+                    "Telefono", "Teléfono", "telefono", "WhatsApp", "whatsapp",
+                    "Celular", "celular", "Numero", "Número", "numero", "Phone", "phone", "E"
+                );
+                const message = getField(
+                    row,
+                    "Mensaje", "mensaje", "Message", "message", "Texto", "texto", "F"
+                );
+                const name = getField(row, "Nombres", "Nombre", "nombres", "nombre");
+
+                if (phone && !groups[familia].phone) groups[familia].phone = phone;
+                if (message && !groups[familia].message) groups[familia].message = message;
+                if (name && !groups[familia].members.includes(name)) {
+                    groups[familia].members.push(name);
+                }
+            });
+
+            return Object.values(groups).sort((a, b) =>
+                a.familia.localeCompare(b.familia, "es", { sensitivity: "base" })
+            );
+        }
+
+        function buildFullMessage(baseMessage, link, linkLabel) {
+            const text = (baseMessage || "").trim();
+            const url = (link || "").trim();
+            if (!url) return text;
+
+            const label = (linkLabel || "Ver invitación:").trim();
+            const suffix = label ? `${label} ${url}` : url;
+            return text ? `${text}\n\n${suffix}` : suffix;
+        }
+
+        function getFamilyStatus(group) {
+            const hasPhone = !!group.phone;
+            const hasMessage = !!group.message;
+            const isSent = !!sentFamilies[group.familia];
+
+            if (isSent) return { type: "sent", label: "Enviada" };
+            if (hasPhone && hasMessage) return { type: "ok", label: "Lista" };
+            if (!hasPhone && !hasMessage) return { type: "error", label: "Sin tel. ni msg." };
+            if (!hasPhone) return { type: "error", label: "Sin teléfono" };
+            return { type: "warn", label: "Sin mensaje" };
+        }
+
+        function updateStats(filtered = familyGroups) {
+            const ready = filtered.filter(g => g.phone && g.message).length;
+            const sent = filtered.filter(g => sentFamilies[g.familia]).length;
+            const incomplete = filtered.length - ready;
+
+            document.getElementById("statTotal").textContent = filtered.length;
+            document.getElementById("statReady").textContent = ready;
+            document.getElementById("statIncomplete").textContent = incomplete;
+            document.getElementById("statSent").textContent = sent;
+        }
+
+        function renderFamilies() {
+            const container = document.getElementById("familiesList");
+            const query = document.getElementById("searchInput").value.trim().toLowerCase();
+            const inviteLink = document.getElementById("inviteLink").value.trim();
+            const linkLabel = document.getElementById("linkLabel").value.trim();
+
+            const filtered = familyGroups.filter(g =>
+                !query || g.familia.toLowerCase().includes(query)
+            );
+
+            updateStats(filtered);
+
+            if (filtered.length === 0) {
+                container.innerHTML = '<p class="text-center text-[#666F88] py-8">No hay familias que coincidan.</p>';
+                return;
+            }
+
+            container.innerHTML = filtered.map(group => {
+                const status = getFamilyStatus(group);
+                const fullMessage = buildFullMessage(group.message, inviteLink, linkLabel);
+                const canSend = group.phone && fullMessage;
+                const badgeClass = {
+                    ok: "badge-ok",
+                    warn: "badge-warn",
+                    error: "badge-error",
+                    sent: "badge-sent"
+                }[status.type];
+
+                const membersText = group.members.length
+                    ? group.members.slice(0, 4).join(", ") + (group.members.length > 4 ? ` (+${group.members.length - 4})` : "")
+                    : "—";
+
+                return `
+                    <article class="card p-4 md:p-5 family-row ${status.type === "sent" ? "sent" : ""}" data-family="${escapeAttr(group.familia)}">
+                        <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
+                            <div class="flex-1 min-w-0 space-y-2">
+                                <div class="flex flex-wrap items-center gap-2">
+                                    <h3 class="font-bold text-lg text-[#503459]">${escapeHtml(group.familia)}</h3>
+                                    <span class="badge ${badgeClass}">${status.label}</span>
+                                </div>
+                                <p class="text-sm text-[#666F88]"><strong>Invitados:</strong> ${escapeHtml(membersText)}</p>
+                                <p class="text-sm text-[#666F88]"><strong>Teléfono (col. E):</strong> ${group.phone ? escapeHtml(group.phone) : '<span class="text-red-600">Falta</span>'}</p>
+                                <details class="mt-2">
+                                    <summary class="text-sm font-bold text-[#81638b] cursor-pointer select-none">Ver mensaje completo</summary>
+                                    <div class="preview-box mt-2">${escapeHtml(fullMessage || "Sin mensaje")}</div>
+                                </details>
+                            </div>
+                            <div class="flex flex-col gap-2 shrink-0">
+                                <button type="button" class="btn-wa" ${canSend ? "" : "disabled"}
+                                    onclick="openWhatsApp('${escapeAttr(group.familia)}')">
+                                    💬 Enviar WhatsApp
+                                </button>
+                                <button type="button" class="btn-secondary"
+                                    onclick="toggleSent('${escapeAttr(group.familia)}')">
+                                    ${sentFamilies[group.familia] ? "↩ Desmarcar enviado" : "✓ Marcar enviado"}
+                                </button>
+                            </div>
+                        </div>
+                    </article>
+                `;
+            }).join("");
+        }
+
+        function escapeHtml(str) {
+            return String(str)
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;");
+        }
+
+        function escapeAttr(str) {
+            return String(str).replace(/\\/g, "\\\\").replace(/'/g, "\\'");
+        }
+
+        function openWhatsApp(familia) {
+            const group = familyGroups.find(g => g.familia === familia);
+            if (!group) return;
+
+            const inviteLink = document.getElementById("inviteLink").value.trim();
+            const linkLabel = document.getElementById("linkLabel").value.trim();
+            const fullMessage = buildFullMessage(group.message, inviteLink, linkLabel);
+
+            if (!group.phone) {
+                alert("Esta familia no tiene teléfono en la columna E.");
+                return;
+            }
+            if (!fullMessage) {
+                alert("Esta familia no tiene mensaje en la columna F.");
+                return;
+            }
+
+            const phone = normalizePhone(group.phone);
+            const url = `https://wa.me/${phone}?text=${encodeURIComponent(fullMessage)}`;
+            window.open(url, "_blank");
+
+            sentFamilies[familia] = true;
+            saveSentFamilies();
+            renderFamilies();
+        }
+
+        function toggleSent(familia) {
+            if (sentFamilies[familia]) {
+                delete sentFamilies[familia];
+            } else {
+                sentFamilies[familia] = true;
+            }
+            saveSentFamilies();
+            renderFamilies();
+        }
+
+        async function loadSheet() {
+            const statusEl = document.getElementById("loadStatus");
+            statusEl.textContent = "Cargando datos del Excel...";
+            statusEl.className = "text-sm text-[#666F88]";
+
+            try {
+                const response = await fetch(sheetURL);
+                if (!response.ok) throw new Error("Error al conectar con la hoja");
+
+                const rawData = await response.json();
+                familyGroups = buildFamilyGroups(rawData);
+
+                const withPhone = familyGroups.filter(g => g.phone).length;
+                const withMessage = familyGroups.filter(g => g.message).length;
+
+                if (withPhone === 0 || withMessage === 0) {
+                    statusEl.innerHTML = `Cargadas <strong>${familyGroups.length}</strong> familias. ` +
+                        `<span class="text-amber-700">Faltan datos en columnas E y/o F. ` +
+                        `<a href="${GOOGLE_SHEET_URL}" target="_blank" rel="noopener" class="sheet-link">Edita el Google Sheet</a> ` +
+                        `y agrega <em>Telefono</em> y <em>Mensaje</em> en la fila 1.</span>`;
+                } else {
+                    statusEl.innerHTML = `Cargadas <strong>${familyGroups.length}</strong> familias · ` +
+                        `<strong>${withPhone}</strong> con teléfono · <strong>${withMessage}</strong> con mensaje.`;
+                }
+
+                renderFamilies();
+            } catch (error) {
+                console.error(error);
+                statusEl.textContent = "No se pudo cargar el Excel. Revisa tu conexión.";
+                statusEl.className = "text-sm text-red-600";
+                document.getElementById("familiesList").innerHTML =
+                    '<p class="text-center text-red-600 py-8">Error al cargar los datos.</p>';
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            document.getElementById("inviteLink").value = getDefaultInviteLink();
+
+            document.getElementById("inviteLink").addEventListener("input", renderFamilies);
+            document.getElementById("linkLabel").addEventListener("input", renderFamilies);
+            document.getElementById("searchInput").addEventListener("input", renderFamilies);
+            document.getElementById("reloadBtn").addEventListener("click", loadSheet);
+            document.getElementById("clearSentBtn").addEventListener("click", () => {
+                if (confirm("¿Quitar todas las marcas de enviado?")) {
+                    sentFamilies = {};
+                    saveSentFamilies();
+                    renderFamilies();
+                }
+            });
+
+            loadSheet();
+        });
+    </script>
+</body>
+
+</html>
