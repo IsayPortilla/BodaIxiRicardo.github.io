@@ -5,14 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Invitación: Ixi & Ricardo</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://cdn.tailwindcss.com">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Playfair+Display:ital,wght@0,700;1,700&family=Pinyon+Script&family=Birthstone+Bounce:wght@400;500&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" media="print" onload="this.media='all'">
-    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"></noscript>
     <style>
         :root {
             --dark-purple: #503459;
@@ -23,18 +15,25 @@
 
         body {
             background-color: #d1d5db;
-            /* Quicksand como base: Redondeada y con buen grosor */
-            font-family: 'Quicksand', sans-serif;
+            font-family: Georgia, "Times New Roman", serif;
             color: var(--dark-purple);
+            margin: 0;
         }
 
         .paper-canvas {
             background-color: var(--paper-color);
-            background-image: url('https://www.transparenttextures.com/patterns/cream-paper.png');
+            background-image: radial-gradient(circle at 20% 20%, rgba(255,255,255,0.7), transparent 40%),
+                radial-gradient(circle at 80% 80%, rgba(129,99,139,0.08), transparent 45%);
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2), inset 0 0 100px rgba(0, 0, 0, 0.05);
             position: relative;
             overflow: hidden;
             z-index: 1;
+            max-width: 56rem;
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 2.5rem;
+            border: 16px solid white;
         }
 
         .flower {
@@ -98,9 +97,58 @@
             }
         }
 
-        .playfair {
-            font-family: 'Playfair Display', serif;
+        @media (min-width: 768px) {
+            .paper-canvas {
+                padding: 6rem;
+            }
+            .md\:p-10 { padding: 2.5rem; }
+            .md\:text-lg { font-size: 1.125rem; }
         }
+
+        .playfair {
+            font-family: Georgia, "Times New Roman", serif;
+            font-weight: 700;
+        }
+
+        .flex { display: flex; }
+        .items-center { align-items: center; }
+        .justify-center { justify-content: center; }
+        .min-h-screen { min-height: 100vh; }
+        .p-4 { padding: 1rem; }
+        .text-center { text-align: center; }
+        .space-y-10 > * + * { margin-top: 2.5rem; }
+        .relative { position: relative; }
+        .z-10 { z-index: 10; }
+        .absolute { position: absolute; }
+        .top-0 { top: 0; }
+        .left-0 { left: 0; }
+        .bottom-0 { bottom: 0; }
+        .right-0 { right: 0; }
+        .w-24 { width: 6rem; }
+        .h-24 { height: 6rem; }
+        .m-8 { margin: 2rem; }
+        .border-t-2 { border-top: 2px solid; }
+        .border-l-2 { border-left: 2px solid; }
+        .border-b-2 { border-bottom: 2px solid; }
+        .border-r-2 { border-right: 2px solid; }
+        .border-\[\#b5bac9\] { border-color: #b5bac9; }
+        .uppercase { text-transform: uppercase; }
+        .font-semibold { font-weight: 600; }
+        .font-bold { font-weight: 700; }
+        .py-6 { padding-top: 1.5rem; padding-bottom: 1.5rem; }
+        .px-2 { padding-left: 0.5rem; padding-right: 0.5rem; }
+        .mb-4 { margin-bottom: 1rem; }
+        .mb-5 { margin-bottom: 1.25rem; }
+        .mt-5 { margin-top: 1.25rem; }
+        .pt-12 { padding-top: 3rem; }
+        .text-xs { font-size: 0.75rem; }
+        .text-base { font-size: 1rem; }
+        .text-4xl { font-size: 2.25rem; }
+        .text-\[\#666F88\] { color: #666F88; }
+        .text-\[\#788199\] { color: #788199; }
+        .text-\[\#81638b\] { color: #81638b; }
+        .tracking-\[0\.3em\] { letter-spacing: 0.3em; }
+        .tracking-\[0\.5em\] { letter-spacing: 0.5em; }
 
         .name-focus {
             animation: tracking-in-expand 1.5s cubic-bezier(0.215, 0.610, 0.355, 1.000) both;
@@ -122,7 +170,12 @@
         }
 
         .serif-script {
-            font-family: 'Pinyon Script', cursive;
+            font-family: "Segoe Script", "Brush Script MT", cursive;
+        }
+
+        .birthstone {
+            font-family: "Segoe Script", "Brush Script MT", cursive;
+            font-weight: 500;
         }
 
         .invite-link {
@@ -159,18 +212,12 @@
         }
 
         .wax-seal span {
-            font-family: "Birthstone Bounce", cursive;
-            font-weight: 500;
-            font-size: 2.2rem;
+            font-family: Georgia, serif;
+            font-weight: 700;
+            font-size: 1.6rem;
             line-height: 1;
             display: block;
-            margin-top: -4px;
-        }
-
-        .birthstone {
-            font-family: "Birthstone Bounce", cursive;
-            font-weight: 500;
-            font-style: normal;
+            margin-top: -2px;
         }
 
         .ornament {
@@ -183,8 +230,7 @@
 
 <body class="flex items-center justify-center min-h-screen p-4 md:p-10">
 
-    <main
-        class="paper-canvas max-w-4xl w-full mx-auto p-10 md:p-24 border-[16px] border-white animate__animated animate__fadeIn">
+    <main class="paper-canvas">
 
         <img src="assets/img/flor1.png" class="flower flower-tl animate__animated animate__fadeIn" alt="" loading="lazy" decoding="async">
         <img src="assets/img/flor3.png" class="flower flower-tr animate__animated animate__fadeIn" alt="" loading="lazy" decoding="async">
@@ -264,7 +310,30 @@
         </div>
     </main>
 
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        // Fuentes y animaciones solo si hay buena conexión (WiFi / 4G estable)
+        (function () {
+            const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+            const slow = conn && (conn.saveData || /2g/i.test(conn.effectiveType || ""));
+            if (slow) return;
+
+            const font = document.createElement("link");
+            font.rel = "stylesheet";
+            font.href = "https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Playfair+Display:ital,wght@0,700;1,700&family=Pinyon+Script&family=Birthstone+Bounce:wght@400;500&display=swap";
+            document.head.appendChild(font);
+
+            font.onload = function () {
+                document.body.style.fontFamily = "'Quicksand', sans-serif";
+                document.querySelectorAll(".playfair").forEach(el => el.style.fontFamily = "'Playfair Display', serif");
+                document.querySelectorAll(".serif-script").forEach(el => el.style.fontFamily = "'Pinyon Script', cursive");
+                document.querySelectorAll(".birthstone").forEach(el => el.style.fontFamily = "'Birthstone Bounce', cursive");
+                document.querySelectorAll(".wax-seal span").forEach(el => {
+                    el.style.fontFamily = "'Birthstone Bounce', cursive";
+                    el.style.fontSize = "2.2rem";
+                });
+            };
+        })();
+    </script>
 </body>
 
 </html>
