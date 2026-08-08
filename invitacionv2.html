@@ -1140,7 +1140,12 @@
 <!-- ===================== MENU INFERIOR DE FAMILIAS ===================== -->
 
 <script>
-const sheetURL = "data/invitados.json";
+// Excel en vivo (Google Sheet). Si falla la red, usa copia local.
+const sheetURLs = [
+    "https://opensheet.elk.sh/1acN7pMqKXQIa6km4ka4mMbBG36K4XEOxfmqIRGG7XKQ/Hoja%201",
+    "https://opensheet.elk.sh/1acN7pMqKXQIa6km4ka4mMbBG36K4XEOxfmqIRGG7XKQ/1",
+    "data/invitados.json"
+];
 let rawData = [];
 let allFamilies = [];
 let confirmationByPerson = {};
@@ -1403,41 +1408,58 @@ function updateSummaryAndButton() {
     setStepIndicators(confirmed.length > 0 ? 3 : 2);
 }
 
-async function loadFamilies() {
+async function fetchSheetData(url) {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 15000);
     try {
-        const controller = new AbortController();
-        const timer = setTimeout(() => controller.abort(), 15000);
-        const response = await fetch(sheetURL, { signal: controller.signal, cache: "no-store" });
+        const response = await fetch(url, { signal: controller.signal, cache: "no-store" });
+        if (!response.ok) throw new Error("HTTP " + response.status);
+        return await response.json();
+    } finally {
         clearTimeout(timer);
-        if (!response.ok) throw new Error("No se pudo cargar la lista");
-        rawData = await response.json();
-
-        confirmationByPerson = {};
-        rawData.forEach(row => {
-            if (!row?.Familia || !(row.Nombre || row.Nombres)) return;
-            confirmationByPerson[buildPersonKey(row)] = getConfirmationValue(row);
-        });
-
-        allFamilies = Array.from(new Set(rawData.map(item => item.Familia).filter(Boolean))).sort((a, b) =>
-            a.localeCompare(b, "es", { sensitivity: "base" })
-        );
-
-        renderSelectOptions(allFamilies);
-
-        const searchInput = document.getElementById("familySearch");
-        if (searchInput) {
-            searchInput.placeholder = allFamilies.length
-                ? "Ejemplo: " + allFamilies[0]
-                : "Escribe el nombre de tu familia";
-        }
-
-        if (allFamilies.length === 0) {
-            showFormMessage("No hay familias disponibles por el momento. Intenta más tarde.", "error");
-        }
-    } catch (error) {
-        console.error("Error cargando familias:", error);
-        showFormMessage("No pudimos cargar la lista de familias. Revisa tu conexión e intenta de nuevo.", "error");
     }
+}
+
+async function loadFamilies() {
+    let lastError = null;
+
+    for (const url of sheetURLs) {
+        try {
+            rawData = await fetchSheetData(url);
+
+            confirmationByPerson = {};
+            rawData.forEach(row => {
+                if (!row?.Familia || !(row.Nombre || row.Nombres)) return;
+                confirmationByPerson[buildPersonKey(row)] = getConfirmationValue(row);
+            });
+
+            allFamilies = Array.from(new Set(rawData.map(item => item.Familia).filter(Boolean))).sort((a, b) =>
+                a.localeCompare(b, "es", { sensitivity: "base" })
+            );
+
+            renderSelectOptions(allFamilies);
+
+            const searchInput = document.getElementById("familySearch");
+            if (searchInput) {
+                searchInput.placeholder = allFamilies.length
+                    ? "Ejemplo: " + allFamilies[0]
+                    : "Escribe el nombre de tu familia";
+            }
+
+            if (allFamilies.length === 0) {
+                showFormMessage("No hay familias disponibles por el momento. Intenta más tarde.", "error");
+            } else {
+                hideFormMessage();
+            }
+            return;
+        } catch (error) {
+            lastError = error;
+            console.warn("No se pudo cargar desde", url, error);
+        }
+    }
+
+    console.error("Error cargando familias:", lastError);
+    showFormMessage("No pudimos cargar la lista de familias. Revisa tu conexión e intenta de nuevo.", "error");
 }
 
 function sendWhatsApp() {

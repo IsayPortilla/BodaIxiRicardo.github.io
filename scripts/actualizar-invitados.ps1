@@ -1,6 +1,6 @@
-# Actualiza data/invitados.json desde el Google Sheet (requiere internet solo para esta actualización).
-# Uso: clic derecho > Ejecutar con PowerShell, o desde la raíz del proyecto:
-#   powershell -ExecutionPolicy Bypass -File scripts/actualizar-invitados.ps1
+# Opcional: copia de respaldo local del Google Sheet.
+# La invitación lee el Excel en vivo desde la web; este JSON solo se usa si falla la red.
+# Uso: powershell -ExecutionPolicy Bypass -File scripts/actualizar-invitados.ps1
 
 $ErrorActionPreference = "Stop"
 $root = Split-Path -Parent $PSScriptRoot
