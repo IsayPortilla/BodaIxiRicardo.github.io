@@ -290,12 +290,16 @@
 
     <script>
         const SHEET_URLS = [
-            "https://opensheet.elk.sh/1acN7pMqKXQIa6km4ka4mMbBG36K4XEOxfmqIRGG7XKQ/Hoja%201",
-            "https://opensheet.elk.sh/1acN7pMqKXQIa6km4ka4mMbBG36K4XEOxfmqIRGG7XKQ/1"
+            "data/invitados.json"
         ];
         const SENT_STORAGE_KEY = "ixi_ricardo_wa_sent_v1";
         const LINK_LABEL = "Ver invitación:";
-        const INVITE_LINK = "https://isayportilla.github.io/BodaIxiRicardo.github.io/index.html";
+        const INVITE_LINK = (function () {
+            if (location.protocol.startsWith("http")) {
+                return location.origin + location.pathname.replace(/[^/]*$/, "") + "index.html";
+            }
+            return "https://isayportilla.github.io/BodaIxiRicardo.github.io/index.html";
+        })();
         const FETCH_TIMEOUT_MS = 25000;
 
         let familyGroups = [];

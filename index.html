@@ -256,44 +256,8 @@
                 </p>
             </div>
 
-            <!-- <link rel="preconnect" href="https://fonts.googleapis.com">
-            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-            <link
-                href="https://fonts.googleapis.com/css2?family=Playwrite+AT:ital,wght@0,100..400;1,100..400&display=swap"
-                rel="stylesheet">
-
-            <style>
-                /* Definimos la clase para Playwrite AT */
-                .playwrite {
-                    font-family: "Playwrite AT", cursive;
-                    font-optical-sizing: auto;
-                    font-style: normal;
-                }
-
-                /* Ajuste para que el sello no se vea saturado con la nueva letra */
-                .wax-seal span {
-                    font-family: "Playwrite AT", cursive;
-                    font-size: 1.4rem;
-                    /* Un poco más pequeña para que quepa bien el "I&R" */
-                    letter-spacing: -1px;
-                }
-            </style>
-
-            <div class="pt-12 animate__animated animate__zoomIn animate__delay-3s text-center">
-                <p class="mb-5 text-xs uppercase tracking-[0.3em] text-[#788199] font-bold">
-                    Presiona aquí
-                </p>
-
-                <a href="invitacion.html" class="wax-seal">
-                    <span>I&R</span>
-                </a>
-
-                <p class="mt-5 text-[#81638b] playwrite text-2xl">
-                    Ver Invitación
-                </p>
-            </div> -->
             <a href="invitacionv2.html"
-                class="invite-link pt-12 animate__animated animate__zoomIn animate__delay-3s text-center">
+                class="invite-link pt-12 text-center">
                 <p class="mb-5 text-xs uppercase tracking-[0.3em] text-[#788199] font-bold">
                     Presiona aquí
                 </p>
@@ -309,31 +273,6 @@
 
         </div>
     </main>
-
-    <script>
-        // En móvil no cargar Google Fonts (bloquea en datos). Fuentes del sistema primero.
-        (function () {
-            const isMobile = window.matchMedia("(max-width: 768px)").matches
-                || /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-            if (isMobile) return;
-
-            const font = document.createElement("link");
-            font.rel = "stylesheet";
-            font.href = "https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Playfair+Display:ital,wght@0,700;1,700&family=Pinyon+Script&family=Birthstone+Bounce:wght@400;500&display=swap";
-            document.head.appendChild(font);
-
-            font.onload = function () {
-                document.body.style.fontFamily = "'Quicksand', sans-serif";
-                document.querySelectorAll(".playfair").forEach(el => el.style.fontFamily = "'Playfair Display', serif");
-                document.querySelectorAll(".serif-script").forEach(el => el.style.fontFamily = "'Pinyon Script', cursive");
-                document.querySelectorAll(".birthstone").forEach(el => el.style.fontFamily = "'Birthstone Bounce', cursive");
-                document.querySelectorAll(".wax-seal span").forEach(el => {
-                    el.style.fontFamily = "'Birthstone Bounce', cursive";
-                    el.style.fontSize = "2.2rem";
-                });
-            };
-        })();
-    </script>
 </body>
 
 </html>

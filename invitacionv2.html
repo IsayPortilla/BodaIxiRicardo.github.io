@@ -1140,7 +1140,7 @@
 <!-- ===================== MENU INFERIOR DE FAMILIAS ===================== -->
 
 <script>
-const sheetURL = "https://opensheet.elk.sh/1acN7pMqKXQIa6km4ka4mMbBG36K4XEOxfmqIRGG7XKQ/1";
+const sheetURL = "data/invitados.json";
 let rawData = [];
 let allFamilies = [];
 let confirmationByPerson = {};
@@ -1558,7 +1558,7 @@ body {
         </div>
     </main>
 
-        // Sin auto-descarga de música en datos móviles (ahorra ~3.3 MB)
+    <script>
         const music = document.getElementById('musica');
         function togglePlay() {
             if (!music) return;
@@ -1568,34 +1568,19 @@ body {
         const isMobile = window.matchMedia("(max-width: 768px)").matches
             || /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 
-        // En móvil: CERO dependencias externas (CDN). Así carga solo con GitHub Pages.
+        // Todo local: sin Fonts/Tailwind/CDN. AOS solo desde vendor/ en escritorio.
         document.documentElement.classList.add("aos-ready");
 
         (function loadExtras() {
             if (isMobile) return;
 
-            const font = document.createElement("link");
-            font.rel = "stylesheet";
-            font.href = "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Playfair+Display:ital,wght@0,700;1,700&family=Birthstone+Bounce:wght@500&family=Pinyon+Script&display=swap";
-            document.head.appendChild(font);
-            font.onload = function () {
-                document.body.style.fontFamily = "'Cormorant Garamond', serif";
-                document.querySelectorAll(".playfair").forEach(el => el.style.fontFamily = "'Playfair Display', serif");
-                document.querySelectorAll(".pinyon").forEach(el => el.style.fontFamily = "'Pinyon Script', cursive");
-                document.querySelectorAll(".birthstone").forEach(el => el.style.fontFamily = "'Birthstone Bounce', cursive");
-            };
-
-            const tw = document.createElement("script");
-            tw.src = "https://cdn.tailwindcss.com";
-            document.body.appendChild(tw);
-
             const aosCss = document.createElement("link");
             aosCss.rel = "stylesheet";
-            aosCss.href = "https://unpkg.com/aos@2.3.1/dist/aos.css";
+            aosCss.href = "vendor/aos/aos.css";
             document.head.appendChild(aosCss);
 
             const aosJs = document.createElement("script");
-            aosJs.src = "https://unpkg.com/aos@2.3.1/dist/aos.js";
+            aosJs.src = "vendor/aos/aos.js";
             aosJs.onload = function () {
                 if (typeof AOS !== "undefined") {
                     AOS.init({ duration: 1200, once: true });
