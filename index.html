@@ -311,11 +311,11 @@
     </main>
 
     <script>
-        // Fuentes y animaciones solo si hay buena conexión (WiFi / 4G estable)
+        // En móvil no cargar Google Fonts (bloquea en datos). Fuentes del sistema primero.
         (function () {
-            const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-            const slow = conn && (conn.saveData || /2g/i.test(conn.effectiveType || ""));
-            if (slow) return;
+            const isMobile = window.matchMedia("(max-width: 768px)").matches
+                || /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+            if (isMobile) return;
 
             const font = document.createElement("link");
             font.rel = "stylesheet";

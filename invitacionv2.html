@@ -1405,7 +1405,10 @@ function updateSummaryAndButton() {
 
 async function loadFamilies() {
     try {
-        const response = await fetch(sheetURL);
+        const controller = new AbortController();
+        const timer = setTimeout(() => controller.abort(), 15000);
+        const response = await fetch(sheetURL, { signal: controller.signal, cache: "no-store" });
+        clearTimeout(timer);
         if (!response.ok) throw new Error("No se pudo cargar la lista");
         rawData = await response.json();
 
@@ -1501,7 +1504,30 @@ document.addEventListener("DOMContentLoaded", () => {
     if (clearAllBtn) clearAllBtn.addEventListener("click", () => setAllGuests(false));
     if (select) select.addEventListener("change", handleFamilySelection);
 
-    loadFamilies();
+    // Cargar el Excel solo cuando el usuario llega al formulario (no al abrir la página)
+    const formEl = document.getElementById("confirmacion-form");
+    let familiesLoaded = false;
+    function loadFamiliesOnce() {
+        if (familiesLoaded) return;
+        familiesLoaded = true;
+        loadFamilies();
+    }
+    if (formEl && "IntersectionObserver" in window) {
+        const io = new IntersectionObserver((entries) => {
+            if (entries.some(e => e.isIntersecting)) {
+                loadFamiliesOnce();
+                io.disconnect();
+            }
+        }, { rootMargin: "200px" });
+        io.observe(formEl);
+    } else {
+        setTimeout(loadFamiliesOnce, 2500);
+    }
+
+    const searchInputEarly = document.getElementById("familySearch");
+    if (searchInputEarly) {
+        searchInputEarly.addEventListener("focus", loadFamiliesOnce, { once: true });
+    }
 });
 </script>
 
@@ -1532,7 +1558,6 @@ body {
         </div>
     </main>
 
-    <script>
         // Sin auto-descarga de música en datos móviles (ahorra ~3.3 MB)
         const music = document.getElementById('musica');
         function togglePlay() {
@@ -1542,15 +1567,12 @@ body {
 
         const isMobile = window.matchMedia("(max-width: 768px)").matches
             || /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-        const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-        const slowNet = !!(conn && (conn.saveData || /2g/i.test(conn.effectiveType || "")));
 
-        // Fuentes / Tailwind / AOS solo si la red no es lenta
+        // En móvil: CERO dependencias externas (CDN). Así carga solo con GitHub Pages.
+        document.documentElement.classList.add("aos-ready");
+
         (function loadExtras() {
-            if (slowNet) {
-                document.documentElement.classList.add("aos-ready");
-                return;
-            }
+            if (isMobile) return;
 
             const font = document.createElement("link");
             font.rel = "stylesheet";
@@ -1567,27 +1589,20 @@ body {
             tw.src = "https://cdn.tailwindcss.com";
             document.body.appendChild(tw);
 
-            if (!isMobile) {
-                const aosCss = document.createElement("link");
-                aosCss.rel = "stylesheet";
-                aosCss.href = "https://unpkg.com/aos@2.3.1/dist/aos.css";
-                document.head.appendChild(aosCss);
+            const aosCss = document.createElement("link");
+            aosCss.rel = "stylesheet";
+            aosCss.href = "https://unpkg.com/aos@2.3.1/dist/aos.css";
+            document.head.appendChild(aosCss);
 
-                const aosJs = document.createElement("script");
-                aosJs.src = "https://unpkg.com/aos@2.3.1/dist/aos.js";
-                aosJs.onload = function () {
-                    if (typeof AOS !== "undefined") {
-                        AOS.init({ duration: 1200, once: true });
-                    }
-                    document.documentElement.classList.add("aos-ready");
-                };
-                document.body.appendChild(aosJs);
-            } else {
-                document.documentElement.classList.add("aos-ready");
-            }
+            const aosJs = document.createElement("script");
+            aosJs.src = "https://unpkg.com/aos@2.3.1/dist/aos.js";
+            aosJs.onload = function () {
+                if (typeof AOS !== "undefined") {
+                    AOS.init({ duration: 1200, once: true });
+                }
+            };
+            document.body.appendChild(aosJs);
         })();
-
-        setTimeout(() => document.documentElement.classList.add("aos-ready"), 2000);
 
         const targetDate = new Date("April 17, 2027 17:00:00").getTime();
         const updateCountdown = setInterval(function () {
