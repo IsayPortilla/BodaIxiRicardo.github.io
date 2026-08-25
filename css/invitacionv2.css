@@ -395,6 +395,10 @@
         }
 
         @media (max-width: 768px) {
+            .flower {
+                display: none !important;
+            }
+
             .birthstone {
                 font-size: clamp(2rem, 7vw, 3rem) !important;
             }

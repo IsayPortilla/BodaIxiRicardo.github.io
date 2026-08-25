@@ -13,6 +13,15 @@ function togglePlay() {
     }
 }
 
+/* Flores decorativas solo en pantallas grandes (evita ~1MB en datos móviles) */
+(function loadDesktopFlowers() {
+    if (window.matchMedia && !window.matchMedia("(min-width: 769px)").matches) return;
+    document.querySelectorAll("[data-desktop-src]").forEach(function (img) {
+        img.src = img.getAttribute("data-desktop-src");
+        img.removeAttribute("data-desktop-src");
+    });
+})();
+
 (function initCountdown() {
     var targetDate = new Date("April 17, 2027 17:00:00").getTime();
     setInterval(function () {
