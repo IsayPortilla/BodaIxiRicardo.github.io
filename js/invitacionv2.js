@@ -1,8 +1,16 @@
-const music = document.getElementById("musica");
+var music = null;
 
 function togglePlay() {
-    if (!music) return;
-    music.paused ? music.play().catch(function () {}) : music.pause();
+    if (!music) {
+        music = new Audio("assets/audio/musica.mp3");
+        music.loop = true;
+        music.preload = "auto";
+    }
+    if (music.paused) {
+        music.play().catch(function () {});
+    } else {
+        music.pause();
+    }
 }
 
 (function initCountdown() {
