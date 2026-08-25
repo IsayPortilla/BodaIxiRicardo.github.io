@@ -5,8 +5,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ixi & Ricardo | 17.04.2027</title>
+    <script>
+        (function () {
+            var path = location.pathname;
+            if (!/\.html?$/i.test(path) && !path.endsWith("/")) {
+                location.replace(path + "/" + location.search + location.hash);
+            }
+        })();
+    </script>
+    <style>
+        /* Crítico: visible aunque css/invitacionv2.css tarde en cargar */
+        html, body { margin: 0; }
+        body {
+            background: #111317;
+            color: #503459;
+            font-family: Georgia, "Times New Roman", serif;
+            display: flex;
+            justify-content: center;
+            padding: 20px 10px;
+        }
+        .paper-sheet {
+            width: 100%;
+            max-width: 900px;
+            background: #e2e8f0;
+            padding: 40px 16px;
+            border-radius: 4px;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-title { font-size: clamp(2.25rem, 11vw, 5rem); margin: 0 0 .5rem; text-align: center; }
+        [data-aos] { opacity: 1 !important; transform: none !important; }
+    </style>
     <link rel="stylesheet" href="css/invitacionv2.css">
-    <!-- AOS solo se carga en escritorio (en móvil ocultaba todo el contenido) -->
 
 </head>
 
@@ -400,8 +430,8 @@
 
         </div>
     </main>
-    <script src="js/confirmacion.js" defer></script>
     <script src="js/invitacionv2.js" defer></script>
+    <script src="js/confirmacion.js" defer></script>
 </body>
 
 </html>

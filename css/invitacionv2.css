@@ -735,18 +735,11 @@
         .confirm-section.hidden {
             display: none;
         }
-        /* Contenido siempre visible. AOS solo anima en escritorio si se carga. */
+        /* Nunca ocultar contenido (AOS desactivado) */
         [data-aos] {
             opacity: 1 !important;
             transform: none !important;
-        }
-
-        html.aos-on [data-aos] {
-            opacity: 0 !important;
-        }
-
-        html.aos-on [data-aos].aos-animate {
-            opacity: 1 !important;
+            transition: none !important;
         }
 
 body {

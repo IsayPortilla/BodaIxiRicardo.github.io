@@ -5,55 +5,117 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Invitación: Ixi & Ricardo</title>
-    <link rel="stylesheet" href="css/index.css">
+    <script>
+        /* Evita 404 de CSS/JS en GitHub Pages cuando falta la / final */
+        (function () {
+            var path = location.pathname;
+            if (!/\.html?$/i.test(path) && !path.endsWith("/")) {
+                location.replace(path + "/" + location.search + location.hash);
+            }
+        })();
+    </script>
+    <!-- CSS crítico inline: la página se ve aunque falle la red -->
+    <style>
+        :root { --dark-purple:#503459; --mid-purple:#81638b; --paper:#fcfaf7; }
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            background: #d1d5db;
+            color: var(--dark-purple);
+            font-family: Georgia, "Times New Roman", serif;
+        }
+        .paper-canvas {
+            width: 100%;
+            max-width: 56rem;
+            background: var(--paper);
+            padding: 2rem 1.25rem;
+            border: 10px solid #fff;
+            box-shadow: 0 20px 50px rgba(0,0,0,.2);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        @media (min-width:768px) {
+            .paper-canvas { padding: 4rem 6rem; border-width: 16px; }
+        }
+        .flower { display: none; }
+        @media (min-width:768px) {
+            .flower {
+                display: block;
+                position: absolute;
+                width: 180px;
+                opacity: .85;
+                pointer-events: none;
+                z-index: 0;
+            }
+            .flower-tl { top: 8px; left: 8px; }
+            .flower-tr { top: 8px; right: 8px; }
+            .flower-bl { bottom: 8px; left: 8px; transform: rotate(180deg); }
+            .flower-br { bottom: 8px; right: 8px; transform: rotate(180deg); }
+        }
+        .content { position: relative; z-index: 2; }
+        .tag { text-transform: uppercase; letter-spacing: .25em; font-size: .75rem; color: #666F88; font-weight: 700; margin: 0 0 1rem; }
+        .ornament { color: var(--mid-purple); font-size: 2rem; margin: .5rem 0 1rem; }
+        h1 {
+            font-size: clamp(2.5rem, 11vw, 5.5rem);
+            line-height: 1.05;
+            margin: 0 0 .75rem;
+        }
+        .subtitle {
+            font-family: "Segoe Script", "Brush Script MT", cursive;
+            font-size: clamp(2rem, 8vw, 3.5rem);
+            color: var(--mid-purple);
+            margin: 0 0 2.5rem;
+        }
+        .invite-link {
+            display: block;
+            text-decoration: none;
+            color: inherit;
+            padding-top: 1rem;
+        }
+        .press { font-size: .7rem; text-transform: uppercase; letter-spacing: .3em; color: #788199; font-weight: 700; margin: 0 0 1rem; }
+        .wax-seal {
+            width: 85px; height: 85px; margin: 0 auto;
+            border-radius: 50%;
+            background: radial-gradient(circle, #81638b 0%, #503459 100%);
+            color: #fff; font-weight: 700; font-size: 1.5rem;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 3px 3px 10px rgba(0,0,0,.3);
+        }
+        .ver {
+            margin-top: 1rem;
+            font-family: "Segoe Script", "Brush Script MT", cursive;
+            font-size: 2rem;
+            color: var(--mid-purple);
+        }
+    </style>
 </head>
 
-<body class="flex items-center justify-center min-h-screen p-4 md:p-10">
-
+<body>
     <main class="paper-canvas">
+        <img src="assets/img/flor1.png" class="flower flower-tl" alt="" loading="lazy" decoding="async" width="180" height="150">
+        <img src="assets/img/flor3.png" class="flower flower-tr" alt="" loading="lazy" decoding="async" width="180" height="180">
+        <img src="assets/img/flor3.png" class="flower flower-bl" alt="" loading="lazy" decoding="async" width="180" height="180">
+        <img src="assets/img/flor1.png" class="flower flower-br" alt="" loading="lazy" decoding="async" width="180" height="150">
 
-        <img src="assets/img/flor1.png" class="flower flower-tl animate__animated animate__fadeIn" alt="" loading="lazy" decoding="async">
-        <img src="assets/img/flor3.png" class="flower flower-tr animate__animated animate__fadeIn" alt="" loading="lazy" decoding="async">
-        <img src="assets/img/flor3.png" class="flower flower-bl animate__animated animate__fadeIn" alt="" loading="lazy" decoding="async">
-        <img src="assets/img/flor1.png" class="flower flower-br animate__animated animate__fadeIn" alt="" loading="lazy" decoding="async">
-
-        <div class="absolute top-0 left-0 w-24 h-24 border-t-2 border-l-2 border-[#b5bac9] m-8 z-10"></div>
-        <div class="absolute bottom-0 right-0 w-24 h-24 border-b-2 border-r-2 border-[#b5bac9] m-8 z-10"></div>
-
-        <div class="text-center space-y-10 relative z-10">
-            <p
-                class="hero-tagline uppercase tracking-[0.5em] text-base md:text-lg text-[#666F88] animate__animated animate__fadeInDown animate__delay-1s font-semibold px-2">
-                Uniendo nuestras vidas
-            </p>
-
+        <div class="content">
+            <p class="tag">Uniendo nuestras vidas</p>
             <div class="ornament">❦</div>
+            <h1>Ixi & Ricardo</h1>
+            <p class="subtitle">Nuestra Boda</p>
 
-            <div class="py-6 px-2">
-                <h1 class="hero-name text-7xl md:text-9xl playfair name-focus mb-4">Ixi & Ricardo</h1>
-                <p
-                    class="hero-subtitle serif-script text-5xl md:text-7xl text-[#81638b] animate__animated animate__fadeIn animate__delay-2s">
-                    Nuestra Boda
-                </p>
-            </div>
-
-            <a href="invitacionv2.html"
-                class="invite-link pt-12 text-center">
-                <p class="mb-5 text-xs uppercase tracking-[0.3em] text-[#788199] font-bold">
-                    Presiona aquí
-                </p>
-
-                <div class="wax-seal" aria-hidden="true">
-                    <span>I&R</span>
-                </div>
-
-                <p class="mt-5 text-[#81638b] birthstone text-4xl">
-                    Ver Invitación
-                </p>
+            <a href="invitacionv2.html" class="invite-link">
+                <p class="press">Presiona aquí</p>
+                <div class="wax-seal">I&R</div>
+                <p class="ver">Ver Invitación</p>
             </a>
-
         </div>
     </main>
 </body>
 
 </html>
-
