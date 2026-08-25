@@ -735,10 +735,18 @@
         .confirm-section.hidden {
             display: none;
         }
-        /* Fallback: si AOS no carga en móvil, el contenido sigue visible */
-        html:not(.aos-ready) [data-aos] {
+        /* Contenido siempre visible. AOS solo anima en escritorio si se carga. */
+        [data-aos] {
             opacity: 1 !important;
             transform: none !important;
+        }
+
+        html.aos-on [data-aos] {
+            opacity: 0 !important;
+        }
+
+        html.aos-on [data-aos].aos-animate {
+            opacity: 1 !important;
         }
 
 body {
