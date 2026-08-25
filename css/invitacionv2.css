@@ -395,10 +395,6 @@
         }
 
         @media (max-width: 768px) {
-            .flower {
-                display: none !important;
-            }
-
             .birthstone {
                 font-size: clamp(2rem, 7vw, 3rem) !important;
             }
@@ -739,11 +735,18 @@
         .confirm-section.hidden {
             display: none;
         }
-        /* Nunca ocultar contenido (AOS desactivado) */
+        /* Contenido siempre visible. AOS solo anima en escritorio si se carga. */
         [data-aos] {
             opacity: 1 !important;
             transform: none !important;
-            transition: none !important;
+        }
+
+        html.aos-on [data-aos] {
+            opacity: 0 !important;
+        }
+
+        html.aos-on [data-aos].aos-animate {
+            opacity: 1 !important;
         }
 
 body {

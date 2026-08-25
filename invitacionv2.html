@@ -5,72 +5,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ixi & Ricardo | 17.04.2027</title>
-    <script>
-        /* Corrige rutas relativas sin redirigir (evita bucle con el 301 de GitHub Pages) */
-        (function () {
-            var p = location.pathname;
-            var base = document.createElement("base");
-            if (/\.html?$/i.test(p)) base.href = p.replace(/[^/]+$/, "");
-            else base.href = p.endsWith("/") ? p : p + "/";
-            document.head.insertBefore(base, document.head.firstChild);
-        })();
-    </script>
-    <style>
-        /* Crítico: visible aunque css/invitacionv2.css tarde en cargar */
-        html, body { margin: 0; }
-        body {
-            background: #111317;
-            color: #503459;
-            font-family: Georgia, "Times New Roman", serif;
-            display: flex;
-            justify-content: center;
-            padding: 20px 10px;
-        }
-        .paper-sheet {
-            width: 100%;
-            max-width: 900px;
-            background: #e2e8f0;
-            padding: 40px 16px;
-            border-radius: 4px;
-            position: relative;
-            overflow: hidden;
-        }
-        .hero-title { font-size: clamp(2.25rem, 11vw, 5rem); margin: 0 0 .5rem; text-align: center; }
-        [data-aos] { opacity: 1 !important; transform: none !important; }
-        .audio-control {
-            position: fixed; top: 12px; right: 12px; z-index: 50;
-            width: 44px; height: 44px; border-radius: 50%;
-            background: #503459; color: #fff; display: flex;
-            align-items: center; justify-content: center;
-            font-size: 1.25rem; cursor: pointer;
-            box-shadow: 0 4px 12px rgba(0,0,0,.35);
-        }
-    </style>
-    <link rel="stylesheet" href="css/invitacionv2.css" media="print" onload="this.media='all'">
-    <noscript><link rel="stylesheet" href="css/invitacionv2.css"></noscript>
+    <link rel="stylesheet" href="css/invitacionv2.css">
+    <!-- AOS solo se carga en escritorio (en móvil ocultaba todo el contenido) -->
 
 </head>
 
 <body>
 
-    <!-- El audio se crea solo al pulsar play (evita bajar 3.5MB al abrir) -->
-    <div class="audio-control" id="audioBtn" onclick="togglePlay()" title="Música" aria-label="Reproducir música">🎵</div>
+    <audio id="musica" loop preload="none">
+        <source src="assets/audio/musica.mp3" type="audio/mpeg">
+    </audio>
+    <div class="audio-control" onclick="togglePlay()">🎵</div>
 
     <main class="paper-sheet">
-        <!-- Flores solo en escritorio (no se descargan en datos móviles) -->
-        <img class="flower flower-tl" alt="" width="180" height="150" data-desktop-src="assets/img/flor1.png">
-        <img class="flower flower-tr" alt="" width="180" height="180" data-desktop-src="assets/img/flor3.png">
-        <img class="flower flower-bl" alt="" width="180" height="180" data-desktop-src="assets/img/flor3.png">
-        <img class="flower flower-br" alt="" width="180" height="150" data-desktop-src="assets/img/flor1.png">
+        <img src="assets/img/flor1.png" class="flower flower-tl" alt="" loading="lazy" decoding="async">
+        <img src="assets/img/flor3.png" class="flower flower-tr" alt="" loading="lazy" decoding="async">
+        <img src="assets/img/flor3.png" class="flower flower-bl" alt="" loading="lazy" decoding="async">
+        <img src="assets/img/flor1.png" class="flower flower-br" alt="" loading="lazy" decoding="async">
 
         <div class="inner-border">
 
             <header class="text-center mb-16 md:mb-28">
                 <div class="polaroid rotate-[-2deg] mb-10 md:mb-14 max-w-sm mx-auto" data-aos="fade-down">
-                    <picture>
-                        <source media="(max-width: 768px)" srcset="assets/img/portada-sm.jpg" type="image/jpeg">
-                        <img src="assets/img/portada-sm.jpg" alt="Portada" width="720" height="900" decoding="async" fetchpriority="high">
-                    </picture>
+                    <img src="assets/img/portada.jpg" alt="Portada" fetchpriority="high" decoding="async">
                 </div>
 
 
@@ -130,10 +87,7 @@
                 <h3 class="section-heading playfair text-[#503459] mb-4 font-bold px-2">Acompañanos en este día especial</h3>
 
                 <div class="polaroid mb-10 md:mb-14 max-w-2xl mx-auto">
-                    <picture>
-                        <source media="(max-width: 768px)" srcset="assets/img/jardin-sm.jpg" type="image/jpeg">
-                        <img src="assets/img/jardin-sm.jpg" alt="Jardín" loading="lazy" decoding="async" width="720" height="540">
-                    </picture>
+                    <img src="assets/img/jardin.jpg" alt="Jardín" loading="lazy" decoding="async">
                 </div>
                 <div class="space-y-4 px-2">
                     <p class="bold text-lg md:text-2xl mb-12 md:mb-20 text-[#503459]">Hora de la ceremonia 16:00 hrs</p>
@@ -155,17 +109,17 @@
                 <div class="polaroid-wrap" data-aos="fade-right">
                     <div class="polaroid rotate-[3deg]">
 
-                        <img src="assets/img/gal1-sm.jpg" alt="Foto 1" loading="lazy" decoding="async" width="640" height="480">
+                        <img src="assets/img/gal1.jpg" alt="Foto 1" loading="lazy" decoding="async">
                     </div>
                 </div>
                 <div class="polaroid-wrap" data-aos="fade-right">
                     <div class="polaroid rotate-[3deg]">
-                        <img src="assets/img/gal2-sm.jpg" alt="Foto 2" loading="lazy" decoding="async" width="640" height="480">
+                        <img src="assets/img/gal2.jpg" alt="Foto 2" loading="lazy" decoding="async">
                     </div>
                 </div>
                 <div class="polaroid-wrap" data-aos="fade-right">
                     <div class="polaroid rotate-[3deg]">
-                        <img src="assets/img/foto3-sm.jpg" alt="Foto 3" loading="lazy" decoding="async" width="640" height="480">
+                        <img src="assets/img/foto3.jpg" alt="Foto 3" loading="lazy" decoding="async">
                     </div>
                 </div>
                 <div class="text-center md:text-left px-2" data-aos="fade-left">
@@ -363,7 +317,7 @@
             <footer class="text-center space-y-12 md:space-y-20">
                 <div data-aos="fade-up">
                     <div class="polaroid mb-12 md:mb-16 max-w-xs mx-auto rotate-[2deg]">
-                        <img src="assets/img/IMG_2122-sm.jpg" alt="Final" loading="lazy" decoding="async" width="720" height="540">
+                        <img src="assets/img/IMG_2122.jpg" alt="Final" loading="lazy" decoding="async">
                     </div>
                     <h2 class="playfair text-3xl md:text-5xl italic text-[#503459] font-bold mb-6 px-2">¡Acompáñanos!</h2>
                     <p class="text-[#666F88] text-lg md:text-xl font-semibold mb-8 md:mb-12 px-2">Confirma antes del 15 de marzo.</p>
@@ -446,35 +400,8 @@
 
         </div>
     </main>
+    <script src="js/confirmacion.js" defer></script>
     <script src="js/invitacionv2.js" defer></script>
-    <!-- confirmacion.js se carga al llegar al formulario (ahorra datos) -->
-    <script>
-        (function () {
-            var loaded = false;
-            function loadConfirm() {
-                if (loaded) return;
-                loaded = true;
-                var s = document.createElement("script");
-                s.src = "js/confirmacion.js";
-                s.defer = true;
-                document.body.appendChild(s);
-            }
-            var form = document.getElementById("confirmacion-form");
-            if (form && "IntersectionObserver" in window) {
-                var io = new IntersectionObserver(function (entries) {
-                    if (entries.some(function (e) { return e.isIntersecting; })) {
-                        loadConfirm();
-                        io.disconnect();
-                    }
-                }, { rootMargin: "300px" });
-                io.observe(form);
-            } else {
-                setTimeout(loadConfirm, 4000);
-            }
-            var search = document.getElementById("familySearch");
-            if (search) search.addEventListener("focus", loadConfirm, { once: true });
-        })();
-    </script>
 </body>
 
 </html>
