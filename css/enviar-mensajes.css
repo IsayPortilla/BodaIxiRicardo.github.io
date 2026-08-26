@@ -236,3 +236,28 @@
             padding: 2rem;
             color: var(--steel);
         }
+
+        .wa-toast {
+            position: fixed;
+            left: 50%;
+            bottom: 1.25rem;
+            transform: translateX(-50%) translateY(120%);
+            max-width: min(92vw, 420px);
+            background: #503459;
+            color: #fff;
+            padding: 0.85rem 1.1rem;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            line-height: 1.4;
+            box-shadow: 0 10px 30px rgba(0,0,0,.25);
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: transform .25s ease, opacity .25s ease;
+            text-align: center;
+        }
+
+        .wa-toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }

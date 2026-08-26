@@ -77,9 +77,45 @@
         }
 
         function buildFullMessage(baseMessage) {
-            const text = (baseMessage || "").trim();
+            const text = (baseMessage || "").trim().normalize("NFC");
             const suffix = `${LINK_LABEL} ${INVITE_LINK}`;
             return text ? `${text}\n\n${suffix}` : suffix;
+        }
+
+        function showToast(message) {
+            let el = document.getElementById("waToast");
+            if (!el) {
+                el = document.createElement("div");
+                el.id = "waToast";
+                el.className = "wa-toast";
+                document.body.appendChild(el);
+            }
+            el.textContent = message;
+            el.classList.add("show");
+            clearTimeout(showToast._timer);
+            showToast._timer = setTimeout(() => el.classList.remove("show"), 3500);
+        }
+
+        async function copyText(text) {
+            try {
+                await navigator.clipboard.writeText(text);
+                return true;
+            } catch {
+                try {
+                    const ta = document.createElement("textarea");
+                    ta.value = text;
+                    ta.setAttribute("readonly", "");
+                    ta.style.position = "fixed";
+                    ta.style.left = "-9999px";
+                    document.body.appendChild(ta);
+                    ta.select();
+                    const ok = document.execCommand("copy");
+                    document.body.removeChild(ta);
+                    return ok;
+                } catch {
+                    return false;
+                }
+            }
         }
 
         function getFamilyStatus(group) {
@@ -108,10 +144,6 @@
                 .replace(/</g, "&lt;")
                 .replace(/>/g, "&gt;")
                 .replace(/"/g, "&quot;");
-        }
-
-        function escapeAttr(str) {
-            return String(str).replace(/\\/g, "\\\\").replace(/'/g, "\\'");
         }
 
         function renderFamilies() {
@@ -153,10 +185,12 @@
                             </div>
                             <div class="family-actions">
                                 <button type="button" class="btn-wa" ${canSend ? "" : "disabled"}
-                                    onclick="openWhatsApp('${escapeAttr(group.familia)}')">💬 Enviar WhatsApp</button>
+                                    data-action="whatsapp" data-familia="${escapeHtml(group.familia)}">Enviar WhatsApp</button>
+                                <button type="button" class="btn-secondary" ${canSend ? "" : "disabled"}
+                                    data-action="copy" data-familia="${escapeHtml(group.familia)}">Copiar mensaje</button>
                                 <button type="button" class="btn-secondary"
-                                    onclick="toggleSent('${escapeAttr(group.familia)}')">
-                                    ${sentFamilies[group.familia] ? "↩ Desmarcar" : "✓ Marcar enviado"}
+                                    data-action="toggle-sent" data-familia="${escapeHtml(group.familia)}">
+                                    ${sentFamilies[group.familia] ? "Desmarcar" : "Marcar enviado"}
                                 </button>
                             </div>
                         </div>
@@ -164,17 +198,37 @@
             }).join("");
         }
 
-        function openWhatsApp(familia) {
+        async function openWhatsApp(familia) {
             const group = familyGroups.find(g => g.familia === familia);
             if (!group || !group.phone) return;
 
+            // wa.me?text= suele romper emojis en WhatsApp Web (aparecen como).
+            // Copiamos el texto UTF-8 intacto y abrimos el chat; si el texto llega mal, Ctrl+V lo pega bien.
             const fullMessage = buildFullMessage(group.message);
             const phone = normalizePhone(group.phone);
-            window.open(`https://wa.me/${phone}?text=${encodeURIComponent(fullMessage)}`, "_blank");
+            const copied = await copyText(fullMessage);
+
+            const waUrl = `https://api.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(fullMessage)}`;
+            const win = window.open(waUrl, "_blank");
+            if (!win) {
+                location.href = waUrl;
+            }
+
+            showToast(copied
+                ? "Chat abierto. Si los emojis salen mal, pega con Ctrl+V (mensaje ya copiado)."
+                : "Chat abierto. Usa Copiar mensaje si faltan emojis.");
 
             sentFamilies[familia] = true;
             saveSentFamilies();
             renderFamilies();
+        }
+
+        async function copyMessage(familia) {
+            const group = familyGroups.find(g => g.familia === familia);
+            if (!group) return;
+            const fullMessage = buildFullMessage(group.message);
+            const ok = await copyText(fullMessage);
+            showToast(ok ? "Mensaje copiado. Pégalo en WhatsApp con Ctrl+V." : "No se pudo copiar. Abre el mensaje y selecciónalo manualmente.");
         }
 
         function toggleSent(familia) {
@@ -234,6 +288,16 @@
                 saveSentFamilies();
                 renderFamilies();
             }
+        });
+
+        document.getElementById("familiesList").addEventListener("click", (e) => {
+            const btn = e.target.closest("[data-action]");
+            if (!btn || btn.disabled) return;
+            const familia = btn.getAttribute("data-familia");
+            const action = btn.getAttribute("data-action");
+            if (action === "whatsapp") openWhatsApp(familia);
+            else if (action === "copy") copyMessage(familia);
+            else if (action === "toggle-sent") toggleSent(familia);
         });
 
         loadSheet();
