@@ -197,21 +197,19 @@
             const group = familyGroups.find(g => g.familia === familia);
             if (!group || !group.phone) return;
 
-            // wa.me?text= suele romper emojis en WhatsApp Web (aparecen como).
-            // Copiamos el texto UTF-8 intacto y abrimos el chat; si el texto llega mal, Ctrl+V lo pega bien.
             const fullMessage = buildFullMessage(group.message);
             const phone = normalizePhone(group.phone);
-            const copied = await copyText(fullMessage);
 
-            const waUrl = `https://api.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(fullMessage)}`;
+            // Importante: NO meter el texto en la URL.
+            // WhatsApp Web convierte emojis a "" cuando vienen en ?text=
+            const copied = await copyText(fullMessage);
+            const waUrl = `https://api.whatsapp.com/send?phone=${phone}`;
             const win = window.open(waUrl, "_blank");
-            if (!win) {
-                location.href = waUrl;
-            }
+            if (!win) location.href = waUrl;
 
             showToast(copied
-                ? "Chat abierto. Si los emojis salen mal, pega con Ctrl+V (mensaje ya copiado)."
-                : "Chat abierto. Usa Copiar mensaje si faltan emojis.");
+                ? "Mensaje copiado con emojis. En el chat pega con Ctrl+V (o mantén pulsado → Pegar)."
+                : "No se pudo copiar solo. Usa el botón Copiar mensaje y luego pega en WhatsApp.");
 
             sentFamilies[familia] = true;
             saveSentFamilies();

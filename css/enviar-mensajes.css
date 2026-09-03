@@ -56,6 +56,14 @@
             gap: 0.5rem;
         }
 
+        .hint-text {
+            width: 100%;
+            margin: 0.25rem 0 0;
+            font-size: 0.85rem;
+            line-height: 1.45;
+            color: var(--steel);
+        }
+
         .stats {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
