@@ -96,20 +96,25 @@
                 await navigator.clipboard.writeText(text);
                 return true;
             } catch {
-                try {
-                    const ta = document.createElement("textarea");
-                    ta.value = text;
-                    ta.setAttribute("readonly", "");
-                    ta.style.position = "fixed";
-                    ta.style.left = "-9999px";
-                    document.body.appendChild(ta);
-                    ta.select();
-                    const ok = document.execCommand("copy");
-                    document.body.removeChild(ta);
-                    return ok;
-                } catch {
-                    return false;
-                }
+                return copyTextSync(text);
+            }
+        }
+
+        function copyTextSync(text) {
+            try {
+                const ta = document.createElement("textarea");
+                ta.value = text;
+                ta.setAttribute("readonly", "");
+                ta.style.cssText = "position:fixed;top:0;left:0;width:1px;height:1px;padding:0;border:0;opacity:0;";
+                document.body.appendChild(ta);
+                ta.focus();
+                ta.select();
+                ta.setSelectionRange(0, ta.value.length);
+                const ok = document.execCommand("copy");
+                document.body.removeChild(ta);
+                return ok;
+            } catch {
+                return false;
             }
         }
 
@@ -180,7 +185,7 @@
                             </div>
                             <div class="family-actions">
                                 <button type="button" class="btn-wa" ${canSend ? "" : "disabled"}
-                                    data-action="whatsapp" data-familia="${escapeHtml(group.familia)}">Enviar WhatsApp</button>
+                                    data-action="whatsapp" data-familia="${escapeHtml(group.familia)}">Preparar envío</button>
                                 <button type="button" class="btn-secondary" ${canSend ? "" : "disabled"}
                                     data-action="copy" data-familia="${escapeHtml(group.familia)}">Copiar mensaje</button>
                                 <button type="button" class="btn-secondary"
@@ -193,61 +198,78 @@
             }).join("");
         }
 
-        function isMobileDevice() {
-            return /Android|iPhone|iPad|iPod|IEMobile|Opera Mini/i.test(navigator.userAgent)
-                || (navigator.maxTouchPoints > 1 && /Mac/i.test(navigator.platform || ""));
+        let activeSend = null;
+
+        function setModalStatus(text, isError) {
+            const el = document.getElementById("modalStatus");
+            if (!el) return;
+            el.textContent = text || "";
+            el.style.color = isError ? "#991b1b" : "#166534";
         }
 
-        function openExternalUrl(url) {
-            // <a> click dispara mejor el protocolo whatsapp:// que window.open
-            const a = document.createElement("a");
-            a.href = url;
-            a.rel = "noopener";
-            a.style.display = "none";
-            document.body.appendChild(a);
-            a.click();
-            a.remove();
+        function closeSendModal() {
+            const modal = document.getElementById("sendModal");
+            if (!modal) return;
+            modal.classList.add("hidden");
+            modal.setAttribute("aria-hidden", "true");
+            activeSend = null;
+            setModalStatus("");
         }
 
-        async function openWhatsApp(familia) {
+        function openSendModal(familia) {
             const group = familyGroups.find(g => g.familia === familia);
             if (!group || !group.phone) return;
 
             const fullMessage = buildFullMessage(group.message);
             const phone = normalizePhone(group.phone);
-            const encoded = encodeURIComponent(fullMessage);
-            const copied = await copyText(fullMessage);
+            activeSend = { familia, phone, fullMessage };
 
-            if (isMobileDevice()) {
-                // En celular el texto en la URL suele funcionar bien
-                openExternalUrl(`https://wa.me/${phone}?text=${encoded}`);
-                showToast(copied
-                    ? "WhatsApp abierto. Si falta el texto, pégalo."
-                    : "WhatsApp abierto.");
-            } else {
-                // App de computadora: bug conocido — hay que abrir el chat y luego reenviar con texto.
-                // El mensaje también queda en el portapapeles por si no aparece.
-                openExternalUrl(`whatsapp://send?phone=${phone}`);
-                setTimeout(() => {
-                    openExternalUrl(`whatsapp://send?phone=${phone}&text=${encoded}`);
-                }, 1400);
+            document.getElementById("modalFamily").textContent = group.familia;
+            document.getElementById("modalPhone").textContent = phone;
+            const ta = document.getElementById("modalMessage");
+            ta.value = fullMessage;
 
-                showToast(copied
-                    ? "Se abrió WhatsApp Desktop. Si el mensaje no aparece en la caja, pulsa Ctrl+V y luego Enviar."
-                    : "Se abrió WhatsApp Desktop. Usa Copiar mensaje y pega con Ctrl+V.");
-            }
+            const modal = document.getElementById("sendModal");
+            modal.classList.remove("hidden");
+            modal.setAttribute("aria-hidden", "false");
 
-            sentFamilies[familia] = true;
-            saveSentFamilies();
-            renderFamilies();
+            // Copia al abrir (gesto del click) — lo más fiable en Windows
+            const copied = copyTextSync(fullMessage);
+            ta.focus();
+            ta.select();
+            setModalStatus(copied
+                ? "Mensaje ya copiado. Ahora abre WhatsApp y pega con Ctrl+V."
+                : "No se pudo copiar solo. Selecciona el texto y pulsa Ctrl+C.");
+        }
+
+        function openWhatsAppDesktop() {
+            if (!activeSend) return;
+            // Solo número: la app de Windows casi nunca acepta ?text=
+            const url = `whatsapp://send?phone=${activeSend.phone}`;
+            // iframe + location ayudan según el navegador
+            const iframe = document.createElement("iframe");
+            iframe.style.display = "none";
+            iframe.src = url;
+            document.body.appendChild(iframe);
+            setTimeout(() => iframe.remove(), 2500);
+            try { window.location.href = url; } catch (_) {}
+            setModalStatus("Si se abrió WhatsApp, pega con Ctrl+V y pulsa Enviar.");
+        }
+
+        function openWhatsAppWeb() {
+            if (!activeSend) return;
+            // Sin texto en la URL (los emojis se rompen). Pegar con Ctrl+V.
+            const url = `https://web.whatsapp.com/send?phone=${activeSend.phone}`;
+            window.open(url, "_blank", "noopener");
+            setModalStatus("WhatsApp Web abierto. En el chat pega con Ctrl+V y envía.");
         }
 
         async function copyMessage(familia) {
             const group = familyGroups.find(g => g.familia === familia);
             if (!group) return;
             const fullMessage = buildFullMessage(group.message);
-            const ok = await copyText(fullMessage);
-            showToast(ok ? "Mensaje copiado. Pégalo en WhatsApp con Ctrl+V." : "No se pudo copiar. Abre el mensaje y selecciónalo manualmente.");
+            const ok = copyTextSync(fullMessage) || await copyText(fullMessage);
+            showToast(ok ? "Mensaje copiado. Pégalo en WhatsApp con Ctrl+V." : "No se pudo copiar. Abre Preparar envío y cópialo ahí.");
         }
 
         function toggleSent(familia) {
@@ -255,6 +277,15 @@
             else sentFamilies[familia] = true;
             saveSentFamilies();
             renderFamilies();
+        }
+
+        function markActiveSent() {
+            if (!activeSend) return;
+            sentFamilies[activeSend.familia] = true;
+            saveSentFamilies();
+            renderFamilies();
+            setModalStatus("Marcado como enviado.");
+            setTimeout(closeSendModal, 700);
         }
 
         async function fetchSheet(url) {
@@ -314,9 +345,27 @@
             if (!btn || btn.disabled) return;
             const familia = btn.getAttribute("data-familia");
             const action = btn.getAttribute("data-action");
-            if (action === "whatsapp") openWhatsApp(familia);
+            if (action === "whatsapp") openSendModal(familia);
             else if (action === "copy") copyMessage(familia);
             else if (action === "toggle-sent") toggleSent(familia);
+        });
+
+        document.getElementById("sendModal").addEventListener("click", (e) => {
+            if (e.target.closest("[data-close-modal]")) closeSendModal();
+        });
+        document.getElementById("modalCopyBtn").addEventListener("click", () => {
+            if (!activeSend) return;
+            const ok = copyTextSync(activeSend.fullMessage);
+            const ta = document.getElementById("modalMessage");
+            ta.focus();
+            ta.select();
+            setModalStatus(ok ? "Copiado. Ahora abre WhatsApp y pega con Ctrl+V." : "Selecciona el texto y pulsa Ctrl+C.");
+        });
+        document.getElementById("modalDesktopBtn").addEventListener("click", openWhatsAppDesktop);
+        document.getElementById("modalWebBtn").addEventListener("click", openWhatsAppWeb);
+        document.getElementById("modalDoneBtn").addEventListener("click", markActiveSent);
+        document.addEventListener("keydown", (e) => {
+            if (e.key === "Escape") closeSendModal();
         });
 
         loadSheet();
