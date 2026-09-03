@@ -193,23 +193,49 @@
             }).join("");
         }
 
+        function isMobileDevice() {
+            return /Android|iPhone|iPad|iPod|IEMobile|Opera Mini/i.test(navigator.userAgent)
+                || (navigator.maxTouchPoints > 1 && /Mac/i.test(navigator.platform || ""));
+        }
+
+        function openExternalUrl(url) {
+            // <a> click dispara mejor el protocolo whatsapp:// que window.open
+            const a = document.createElement("a");
+            a.href = url;
+            a.rel = "noopener";
+            a.style.display = "none";
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+        }
+
         async function openWhatsApp(familia) {
             const group = familyGroups.find(g => g.familia === familia);
             if (!group || !group.phone) return;
 
             const fullMessage = buildFullMessage(group.message);
             const phone = normalizePhone(group.phone);
-
-            // Importante: NO meter el texto en la URL.
-            // WhatsApp Web convierte emojis a "" cuando vienen en ?text=
+            const encoded = encodeURIComponent(fullMessage);
             const copied = await copyText(fullMessage);
-            const waUrl = `https://api.whatsapp.com/send?phone=${phone}`;
-            const win = window.open(waUrl, "_blank");
-            if (!win) location.href = waUrl;
 
-            showToast(copied
-                ? "Mensaje copiado con emojis. En el chat pega con Ctrl+V (o mantén pulsado → Pegar)."
-                : "No se pudo copiar solo. Usa el botón Copiar mensaje y luego pega en WhatsApp.");
+            if (isMobileDevice()) {
+                // En celular el texto en la URL suele funcionar bien
+                openExternalUrl(`https://wa.me/${phone}?text=${encoded}`);
+                showToast(copied
+                    ? "WhatsApp abierto. Si falta el texto, pégalo."
+                    : "WhatsApp abierto.");
+            } else {
+                // App de computadora: bug conocido — hay que abrir el chat y luego reenviar con texto.
+                // El mensaje también queda en el portapapeles por si no aparece.
+                openExternalUrl(`whatsapp://send?phone=${phone}`);
+                setTimeout(() => {
+                    openExternalUrl(`whatsapp://send?phone=${phone}&text=${encoded}`);
+                }, 1400);
+
+                showToast(copied
+                    ? "Se abrió WhatsApp Desktop. Si el mensaje no aparece en la caja, pulsa Ctrl+V y luego Enviar."
+                    : "Se abrió WhatsApp Desktop. Usa Copiar mensaje y pega con Ctrl+V.");
+            }
 
             sentFamilies[familia] = true;
             saveSentFamilies();
