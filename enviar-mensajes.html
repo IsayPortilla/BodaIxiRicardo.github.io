@@ -18,7 +18,7 @@
                 <button type="button" id="reloadBtn" class="btn-secondary">↻ Recargar</button>
                 <button type="button" id="clearSentBtn" class="btn-secondary">Limpiar enviados</button>
             </div>
-            <p class="hint-text">En la PC: pulsa <strong>Preparar envío</strong>, copia el mensaje, abre WhatsApp y pega con <strong>Ctrl+V</strong>. WhatsApp Desktop no pega el texto solo (limitación de la app).</p>
+            <p class="hint-text">Al pulsar <strong>Enviar WhatsApp</strong> se abre el chat con el mensaje ya escrito (incluye emojis). En la PC usa <strong>WhatsApp Web</strong> en el navegador; solo confirma Enviar.</p>
         </section>
 
         <section class="stats" id="statsBar">
@@ -49,30 +49,6 @@
         </section>
 
     </div>
-
-    <div id="sendModal" class="modal hidden" aria-hidden="true">
-        <div class="modal-backdrop" data-close-modal></div>
-        <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-            <button type="button" class="modal-close" data-close-modal aria-label="Cerrar">×</button>
-            <h2 id="modalTitle" class="modal-title">Enviar a <span id="modalFamily">familia</span></h2>
-            <p class="modal-phone">Tel: <strong id="modalPhone"></strong></p>
-            <ol class="modal-steps">
-                <li>Copia el mensaje (botón de abajo).</li>
-                <li>Abre el chat en WhatsApp.</li>
-                <li>Pega con <strong>Ctrl+V</strong> y pulsa Enviar.</li>
-            </ol>
-            <label class="modal-label" for="modalMessage">Mensaje</label>
-            <textarea id="modalMessage" class="modal-message" rows="10" readonly></textarea>
-            <div class="modal-actions">
-                <button type="button" id="modalCopyBtn" class="btn-wa">1. Copiar mensaje</button>
-                <button type="button" id="modalDesktopBtn" class="btn-secondary">2. Abrir WhatsApp Desktop</button>
-                <button type="button" id="modalWebBtn" class="btn-secondary">2. Abrir WhatsApp Web</button>
-                <button type="button" id="modalDoneBtn" class="btn-secondary">Marcar como enviado</button>
-            </div>
-            <p id="modalStatus" class="modal-status"></p>
-        </div>
-    </div>
-
     <script src="js/enviar-mensajes.js" defer></script>
 </body>
 
