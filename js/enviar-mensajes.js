@@ -9,7 +9,7 @@
             if (location.protocol.startsWith("http")) {
                 return location.origin + location.pathname.replace(/[^/]*$/, "") + "index.html";
             }
-            return "https://isayportilla.github.io/BodaIxiRicardo.github.io/index.html";
+            return "https://bodaixiricardogithub.vercel.app/";
         })();
         const FETCH_TIMEOUT_MS = 25000;
 
