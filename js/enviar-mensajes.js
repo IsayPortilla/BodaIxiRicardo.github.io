@@ -5,12 +5,7 @@
         ];
         const SENT_STORAGE_KEY = "ixi_ricardo_wa_sent_v1";
         const LINK_LABEL = "Ver invitación:";
-        const INVITE_LINK = (function () {
-            if (location.protocol.startsWith("http")) {
-                return location.origin + location.pathname.replace(/[^/]*$/, "") + "index.html";
-            }
-            return "https://bodaixiricardogithub.vercel.app/";
-        })();
+        const INVITE_LINK = "https://bodaixiricardogithub.vercel.app/";
         const FETCH_TIMEOUT_MS = 25000;
 
         let familyGroups = [];
