@@ -64,6 +64,31 @@
             color: var(--steel);
         }
 
+        .target-row {
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.65rem 1rem;
+            margin-top: 0.35rem;
+        }
+
+        .target-label {
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--steel);
+        }
+
+        .target-opt {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
         .stats {
             display: grid;
             grid-template-columns: repeat(2, 1fr);

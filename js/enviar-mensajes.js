@@ -78,23 +78,58 @@
             return /Android|iPhone|iPad|iPod|IEMobile|Opera Mini/i.test(navigator.userAgent);
         }
 
-        function buildWhatsAppUrl(phone, message) {
-            const encoded = encodeURIComponent(message);
+        const WA_TARGET_KEY = "ixi_ricardo_wa_target_v1";
+
+        function getWaTarget() {
+            const saved = localStorage.getItem(WA_TARGET_KEY);
+            if (saved === "desktop" || saved === "web") return saved;
+            return "desktop";
+        }
+
+        function setWaTarget(target) {
+            localStorage.setItem(WA_TARGET_KEY, target);
+        }
+
+        function syncTargetRadios() {
+            const current = getWaTarget();
+            document.querySelectorAll('input[name="waTarget"]').forEach((el) => {
+                el.checked = el.value === current;
+            });
+        }
+
+        function encodeWaText(message) {
+            return encodeURIComponent(message).replace(/[!'()*]/g, (c) =>
+                "%" + c.charCodeAt(0).toString(16).toUpperCase()
+            );
+        }
+
+        function buildWhatsAppUrl(phone, message, target) {
+            const encoded = encodeWaText(message);
+            if (target === "web") {
+                return `https://web.whatsapp.com/send/?phone=${phone}&text=${encoded}&type=phone_number&app_absent=1`;
+            }
             if (isMobileDevice()) {
                 return `https://wa.me/${phone}?text=${encoded}`;
             }
-            // app_absent=1 evita que Windows abra la app Desktop (esa app ignora el texto)
-            return `https://web.whatsapp.com/send/?phone=${phone}&text=${encoded}&type=phone_number&app_absent=1`;
+            return `whatsapp://send?phone=${phone}&text=${encoded}`;
         }
 
         function openWhatsAppUrl(url) {
             const a = document.createElement("a");
             a.href = url;
-            a.target = "_blank";
             a.rel = "noopener noreferrer";
+            if (!url.startsWith("whatsapp:")) a.target = "_blank";
             document.body.appendChild(a);
             a.click();
             a.remove();
+
+            if (url.startsWith("whatsapp:")) {
+                const frame = document.createElement("iframe");
+                frame.style.cssText = "position:fixed;width:0;height:0;border:0;opacity:0;pointer-events:none";
+                frame.src = url;
+                document.body.appendChild(frame);
+                setTimeout(() => frame.remove(), 4000);
+            }
         }
 
         function showToast(message) {
@@ -224,13 +259,14 @@
 
             const fullMessage = buildFullMessage(group.message);
             const phone = normalizePhone(group.phone);
+            const target = isMobileDevice() ? "mobile" : getWaTarget();
             copyTextSync(fullMessage);
-            openWhatsAppUrl(buildWhatsAppUrl(phone, fullMessage));
+            openWhatsAppUrl(buildWhatsAppUrl(phone, fullMessage, target));
 
             sentFamilies[familia] = true;
             saveSentFamilies();
             renderFamilies();
-            showToast("Chat abierto con el mensaje listo. Pulsa Enviar en WhatsApp.");
+            showToast("Mensaje listo en WhatsApp. Pulsa Enviar.");
         }
 
         async function copyMessage(familia) {
@@ -293,5 +329,12 @@
             else if (action === "copy") copyMessage(familia);
             else if (action === "toggle-sent") toggleSent(familia);
         });
+
+        document.querySelectorAll('input[name="waTarget"]').forEach((el) => {
+            el.addEventListener("change", () => {
+                if (el.checked) setWaTarget(el.value);
+            });
+        });
+        syncTargetRadios();
 
         loadSheet();

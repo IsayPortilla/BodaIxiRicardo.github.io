@@ -18,7 +18,12 @@
                 <button type="button" id="reloadBtn" class="btn-secondary">↻ Recargar</button>
                 <button type="button" id="clearSentBtn" class="btn-secondary">Limpiar enviados</button>
             </div>
-            <p class="hint-text">Al pulsar <strong>Enviar WhatsApp</strong> se abre el chat con el mensaje ya escrito (incluye emojis). En la PC usa <strong>WhatsApp Web</strong> en el navegador; solo confirma Enviar.</p>
+            <div class="target-row" role="group" aria-label="Dónde abrir WhatsApp">
+                <span class="target-label">Enviar a:</span>
+                <label class="target-opt"><input type="radio" name="waTarget" value="desktop"> App de escritorio</label>
+                <label class="target-opt"><input type="radio" name="waTarget" value="web"> WhatsApp Web</label>
+            </div>
+            <p class="hint-text">El mensaje se copia y se escribe solo en el chat (igual que en el celular). En la PC elige <strong>App de escritorio</strong> o <strong>WhatsApp Web</strong>. Luego pulsa Enviar en WhatsApp.</p>
         </section>
 
         <section class="stats" id="statsBar">
