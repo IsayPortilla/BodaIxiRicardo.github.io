@@ -1,8 +1,3 @@
-// Excel en vivo (Google Sheet) — unica dependencia externa
-const sheetURLs = [
-    "https://opensheet.elk.sh/1acN7pMqKXQIa6km4ka4mMbBG36K4XEOxfmqIRGG7XKQ/Hoja%201",
-    "https://opensheet.elk.sh/1acN7pMqKXQIa6km4ka4mMbBG36K4XEOxfmqIRGG7XKQ/1"
-];
 let rawData = [];
 let allFamilies = [];
 let confirmationByPerson = {};
@@ -265,58 +260,38 @@ function updateSummaryAndButton() {
     setStepIndicators(confirmed.length > 0 ? 3 : 2);
 }
 
-async function fetchSheetData(url) {
-    const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), 15000);
-    try {
-        const response = await fetch(url, { signal: controller.signal, cache: "no-store" });
-        if (!response.ok) throw new Error("HTTP " + response.status);
-        return await response.json();
-    } finally {
-        clearTimeout(timer);
-    }
-}
-
 async function loadFamilies() {
-    let lastError = null;
+    try {
+        rawData = await GuestSheet.loadRows();
 
-    for (const url of sheetURLs) {
-        try {
-            rawData = await fetchSheetData(url);
+        confirmationByPerson = {};
+        rawData.forEach(row => {
+            if (!row?.Familia || !(row.Nombre || row.Nombres)) return;
+            confirmationByPerson[buildPersonKey(row)] = getConfirmationValue(row);
+        });
 
-            confirmationByPerson = {};
-            rawData.forEach(row => {
-                if (!row?.Familia || !(row.Nombre || row.Nombres)) return;
-                confirmationByPerson[buildPersonKey(row)] = getConfirmationValue(row);
-            });
+        allFamilies = Array.from(new Set(rawData.map(item => item.Familia).filter(Boolean))).sort((a, b) =>
+            a.localeCompare(b, "es", { sensitivity: "base" })
+        );
 
-            allFamilies = Array.from(new Set(rawData.map(item => item.Familia).filter(Boolean))).sort((a, b) =>
-                a.localeCompare(b, "es", { sensitivity: "base" })
-            );
+        renderSelectOptions(allFamilies);
 
-            renderSelectOptions(allFamilies);
-
-            const searchInput = document.getElementById("familySearch");
-            if (searchInput) {
-                searchInput.placeholder = allFamilies.length
-                    ? "Ejemplo: " + allFamilies[0]
-                    : "Escribe el nombre de tu familia";
-            }
-
-            if (allFamilies.length === 0) {
-                showFormMessage("No hay familias disponibles por el momento. Intenta más tarde.", "error");
-            } else {
-                hideFormMessage();
-            }
-            return;
-        } catch (error) {
-            lastError = error;
-            console.warn("No se pudo cargar desde", url, error);
+        const searchInput = document.getElementById("familySearch");
+        if (searchInput) {
+            searchInput.placeholder = allFamilies.length
+                ? "Ejemplo: " + allFamilies[0]
+                : "Escribe el nombre de tu familia";
         }
-    }
 
-    console.error("Error cargando familias:", lastError);
-    showFormMessage("No pudimos cargar la lista de familias. Revisa tu conexión e intenta de nuevo.", "error");
+        if (allFamilies.length === 0) {
+            showFormMessage("No hay familias disponibles por el momento. Intenta más tarde.", "error");
+        } else {
+            hideFormMessage();
+        }
+    } catch (error) {
+        console.error("Error cargando familias:", error);
+        showFormMessage("No pudimos cargar la lista de familias. Revisa tu conexión e intenta de nuevo.", "error");
+    }
 }
 
 function sendWhatsApp() {

@@ -1,12 +1,6 @@
-// Excel en vivo (Google Sheet) — unica dependencia externa
-        const SHEET_URLS = [
-            "https://opensheet.elk.sh/1acN7pMqKXQIa6km4ka4mMbBG36K4XEOxfmqIRGG7XKQ/Hoja%201",
-            "https://opensheet.elk.sh/1acN7pMqKXQIa6km4ka4mMbBG36K4XEOxfmqIRGG7XKQ/1"
-        ];
         const SENT_STORAGE_KEY = "ixi_ricardo_wa_sent_v1";
         const LINK_LABEL = "Ver invitación:";
         const INVITE_LINK = "https://bodaixiricardogithub.vercel.app/";
-        const FETCH_TIMEOUT_MS = 25000;
 
         let familyGroups = [];
         let sentFamilies = loadSentFamilies();
@@ -254,46 +248,30 @@
             renderFamilies();
         }
 
-        async function fetchSheet(url) {
-            const controller = new AbortController();
-            const timer = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
-            try {
-                const response = await fetch(url, { signal: controller.signal, cache: "no-store" });
-                if (!response.ok) throw new Error("HTTP " + response.status);
-                return await response.json();
-            } finally {
-                clearTimeout(timer);
-            }
-        }
-
         async function loadSheet() {
             const statusEl = document.getElementById("loadStatus");
             statusEl.textContent = "Cargando Excel...";
             statusEl.className = "status-text";
 
-            for (let i = 0; i < SHEET_URLS.length; i++) {
-                try {
-                    const rawData = await fetchSheet(SHEET_URLS[i]);
-                    familyGroups = buildFamilyGroups(rawData);
+            try {
+                const rawData = await GuestSheet.loadRows();
+                familyGroups = buildFamilyGroups(rawData);
 
-                    const withPhone = familyGroups.filter(g => g.phone).length;
-                    const withMessage = familyGroups.filter(g => g.message).length;
+                const withPhone = familyGroups.filter(g => g.phone).length;
+                const withMessage = familyGroups.filter(g => g.message).length;
 
-                    statusEl.innerHTML = withPhone === 0 || withMessage === 0
-                        ? `<strong>${familyGroups.length}</strong> familias · faltan teléfono o mensaje en el Excel.`
-                        : `<strong>${familyGroups.length}</strong> familias · <strong>${withPhone}</strong> listas para enviar.`;
+                statusEl.innerHTML = withPhone === 0 || withMessage === 0
+                    ? `<strong>${familyGroups.length}</strong> familias · faltan teléfono o mensaje en el Excel.`
+                    : `<strong>${familyGroups.length}</strong> familias · <strong>${withPhone}</strong> listas para enviar.`;
 
-                    renderFamilies();
-                    return;
-                } catch (err) {
-                    console.warn("Intento", i + 1, "falló:", err);
-                }
+                renderFamilies();
+            } catch (err) {
+                console.error("Error cargando Excel:", err);
+                statusEl.textContent = "Sin conexión al Excel. Usa WiFi o toca Recargar.";
+                statusEl.className = "status-text error";
+                document.getElementById("familiesList").innerHTML =
+                    '<p class="empty-msg error">No se pudieron cargar los datos.<br>Verifica tu señal e intenta de nuevo.</p>';
             }
-
-            statusEl.textContent = "Sin conexión al Excel. Usa WiFi o toca Recargar.";
-            statusEl.className = "status-text error";
-            document.getElementById("familiesList").innerHTML =
-                '<p class="empty-msg error">No se pudieron cargar los datos.<br>Verifica tu señal e intenta de nuevo.</p>';
         }
 
         document.getElementById("searchInput").addEventListener("input", renderFamilies);
